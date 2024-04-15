@@ -13,8 +13,8 @@ public class Surgeon implements Serializable {
 		private Date hiredate;
 		
 		public Surgeon () {
-			super();
-			this.surgery = new List<surgery>();
+	
+		
 		}
 		
 		
