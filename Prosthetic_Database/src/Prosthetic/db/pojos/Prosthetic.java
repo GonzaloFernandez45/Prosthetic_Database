@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class Prosthetic implements Serializable {
 	
-	private int ID;
-	private int Price;
+	private Integer ID;
+	private Integer Price;
 	private String Size;
 	private List<Need> needs;
 	private List<Option> options;
