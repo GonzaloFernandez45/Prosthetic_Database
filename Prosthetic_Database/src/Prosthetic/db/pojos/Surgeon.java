@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Surgeon implements Serializable {
 
@@ -13,11 +14,11 @@ public class Surgeon implements Serializable {
 		private String surname;
 		private String specialization;
 		private Date hiredate;
-		private List<Surgery> surgery;
+		private List<Surgery> surgeries;
 		
 		public Surgeon () {
 			super();
-			this.surgery = new ArrayList<Surgery>();
+			this.surgeries = new ArrayList<Surgery>();
 			
 		}
 
@@ -70,11 +71,24 @@ public class Surgeon implements Serializable {
 		}
 
 		public List<Surgery> getSurgery() {
-			return surgery;
+			return surgeries;
 		}
 
 		public void setSurgery(List<Surgery> surgery) {
-			this.surgery = surgery;
+			this.surgeries = surgery;
 		}
+		public void addSurgery (Surgery surgery) {
+			if(!surgeries.contains(surgery)) {
+				this.surgeries.add(surgery);
+			}
+		}
+			
+		public void removeSurgery (Surgery surgery) {
+			if(surgeries.contains(surgery)) {
+				this.surgeries.remove(surgery);
+				
+				}
+			}
+		
 		
 }
