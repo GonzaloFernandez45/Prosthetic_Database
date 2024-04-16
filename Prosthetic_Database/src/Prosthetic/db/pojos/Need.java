@@ -71,6 +71,16 @@ public class Need implements Serializable {
 		return "Need [id = " + id + ", type= " +type+ "]";
 	}
 	
-	//TODO metodos para remover y añadir a la lista de protesis
-
+	
+		public void addProsthetic (Prosthetic prosthetic) {
+			if(!prosthetics.contains(prosthetic)) {
+				this.prosthetics.add(prosthetic);
+			}
+		}
+		
+		public void removeProsthetic (Prosthetic prosthetic) {
+			if(prosthetics.contains(prosthetic)) {
+				this.prosthetics.remove(prosthetic);
+			}
+		}
 }
