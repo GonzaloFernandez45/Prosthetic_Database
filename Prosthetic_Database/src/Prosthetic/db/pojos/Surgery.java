@@ -1,8 +1,13 @@
 package Prosthetic.db.pojos;
 
 import java.util.Objects;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Surgery {
+
+public class Surgery implements Serializable {
 	private String type;
 	private String date;	
 	private String time;
