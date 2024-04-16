@@ -70,4 +70,17 @@ public class Option implements Serializable {
 	}
 	
 	
+		public void addProsthetic (Prosthetic prosthetic) {
+			if(!prosthetics.contains(prosthetic)) {
+				this.prosthetics.add(prosthetic);
+			}
+		}
+		
+		public void removeProsthetic (Prosthetic prosthetic) {
+			if(prosthetics.contains(prosthetic)) {
+				this.prosthetics.remove(prosthetic);
+			}
+		}
+		
+	
 }

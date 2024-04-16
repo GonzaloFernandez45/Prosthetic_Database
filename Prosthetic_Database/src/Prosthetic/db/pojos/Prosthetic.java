@@ -13,6 +13,32 @@ public class Prosthetic implements Serializable {
 	private List<Need> needs;
 	private List<Option> options;
 	
+	
+		public void addOption (Option option) {
+			if(!options.contains(option)) {
+				this.options.add(option);
+			}
+		}
+		
+		public void removeOption (Option option) {
+			if(options.contains(option)) {
+				this.options.remove(option);
+			}
+		}
+	
+	
+		public void addNeed (Need need) {
+			if(!needs.contains(need)) {
+				this.needs.add(need);
+			}
+		}
+		
+		public void removeNeed (Need need) {
+			if(needs.contains(need)) {
+				this.needs.remove(need);
+			}
+		}
+	
 	public Prosthetic() {
 		super();
 		this.needs = new ArrayList<Need>();
