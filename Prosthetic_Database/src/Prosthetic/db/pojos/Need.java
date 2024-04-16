@@ -1,23 +1,25 @@
 package Prosthetic.db.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Need implements Serializable {
 	private Integer id;
 	private String type;
-	private Prosthetic prosthetic;
+	private List<Prosthetic> prosthetics;
 	
 	public Need() {
 		super();
 		
 	}
 	
-	public Need(Integer id, String type, Prosthetic prosthetic) {
+	public Need(Integer id, String type, List<Prosthetic> prosthetic) {
 		super();
 		this.id = id;
 		this.type = type;
-		this.prosthetic = prosthetic;
+		this.prosthetics = new ArrayList<Prosthetic> ();
 		
 	}
 	
@@ -69,6 +71,6 @@ public class Need implements Serializable {
 		return "Need [id = " + id + ", type= " +type+ "]";
 	}
 	
-	//Quizas esta bien poner metodos para añadir y quitar needs de la lista de needs que se usa luego
+	//TODO metodos para remover y añadir a la lista de protesis
 
 }
