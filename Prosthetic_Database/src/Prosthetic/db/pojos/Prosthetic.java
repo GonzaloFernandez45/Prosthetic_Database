@@ -7,6 +7,10 @@ import java.util.Objects;
 
 public class Prosthetic implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6478906863426691556L;
 	private Integer ID;
 	private Integer Price;
 	private String Size;
