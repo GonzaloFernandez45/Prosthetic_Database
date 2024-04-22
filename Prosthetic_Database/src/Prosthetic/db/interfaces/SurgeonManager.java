@@ -4,11 +4,11 @@ import Prosthetic.db.pojos.*;
 
 public interface SurgeonManager {
 	
-	public void addsurgeon ();
-	public void getsurgeonbysurgery (int id);
-	public void getsurgeon(int id);
-	public void deletesurgeon (Surgeon s);
-	public void schedulesurgery ();
-	public void reportdurgery ();
-	public void registerpatient (Patient p);
+	public void addSurgeon ();
+	public Surgeon getSurgeonbysurgery (Surgery s);
+	public Surgeon getSurgeon(int id);
+	public void deleteSurgeon (Surgeon s);
+	public void scheduleSurgery (Surgery s);
+	public String resultSurgery ();
+	public void registerPatient (Patient p);
 }
