@@ -8,6 +8,10 @@ import java.util.Objects;
 
 public class Surgeon implements Serializable {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3852504384306294006L;
 		private Integer id;
 		private Integer salary;
 		private String name;

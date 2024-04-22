@@ -6,6 +6,7 @@ import java.util.Objects;
 
 
 public class Company implements Serializable {
+	private static final long serialVersionUID = -8993394672311262018L;
 	private Integer id;
 	private String name;
 	private String location;

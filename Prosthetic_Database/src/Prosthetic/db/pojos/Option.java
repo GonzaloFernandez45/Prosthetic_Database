@@ -7,6 +7,10 @@ import java.util.Objects;
 
 public class Option implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1528975214796942946L;
 	private Integer id;
 	private String type;
 	private List<Prosthetic> prosthetics;
