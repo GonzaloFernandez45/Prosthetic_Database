@@ -16,8 +16,29 @@ public class Prosthetic implements Serializable {
 	private String Size;
 	private List<Need> needs;
 	private List<Option> options;
+	private Material material;
 	
 	
+		public Prosthetic() {
+		super();
+		this.needs = new ArrayList<Need>();
+		this.options = new ArrayList<Option>();
+		// TODO Auto-generated constructor stub
+	}
+		
+
+		public Prosthetic(Integer iD, Integer price, String size, List<Need> needs, List<Option> options,
+				Material material) {
+			super();
+			ID = iD;
+			Price = price;
+			Size = size;
+			this.needs = needs;
+			this.options = options;
+			this.material = material;
+		}
+
+
 		public void addOption (Option option) {
 			if(!options.contains(option)) {
 				this.options.add(option);
@@ -43,12 +64,6 @@ public class Prosthetic implements Serializable {
 			}
 		}
 	
-	public Prosthetic() {
-		super();
-		this.needs = new ArrayList<Need>();
-		this.options = new ArrayList<Option>();
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getID() {
 		return ID;

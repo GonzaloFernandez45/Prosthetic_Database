@@ -27,6 +27,22 @@ public class Surgery implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	public Surgery(String type, String date, String time, String result, Integer room, Integer id, Surgeon surgeon,
+			Need need, Patient patient) {
+		super();
+		this.type = type;
+		this.date = date;
+		this.time = time;
+		this.result = result;
+		this.room = room;
+		this.id = id;
+		this.surgeon = surgeon;
+		this.need = need;
+		this.patient = patient;
+	}
+
+
 	public String getType() {
 		return type;
 	}
