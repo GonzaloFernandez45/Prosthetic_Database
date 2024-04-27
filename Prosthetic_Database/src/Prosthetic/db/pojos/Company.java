@@ -6,10 +6,13 @@ import java.util.Objects;
 
 
 public class Company implements Serializable {
+	
 	private static final long serialVersionUID = -8993394672311262018L;
 	private Integer id;
 	private String name;
 	private String location;
+	
+	//TODO should we consider here to put this or we only put the attribute in the many part?
 	private List <Prosthetic> prosthetics;
 	
 	
@@ -18,6 +21,18 @@ public class Company implements Serializable {
 		this.prosthetics=new ArrayList<Prosthetic> ();
 		
 	}
+	
+	
+
+
+	public Company(Integer id, String name, String location) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.location = location;
+	}
+
+
 
 
 	public Company(Integer id, String name, String location, List<Prosthetic> prosthetics) {

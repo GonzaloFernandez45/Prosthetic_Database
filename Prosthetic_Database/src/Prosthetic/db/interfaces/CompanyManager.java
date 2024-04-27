@@ -8,7 +8,7 @@ public interface CompanyManager {
 	public void addCompany(Company c);
 	public void createProsthetic (Prosthetic p);
 	public void deleteCompany(Company c);
-	public List<Patient> checkDemand();
+	public List<Patient> checkDemandByNeed(String need);
 	public List<Need> checkNeeds(Patient p);
 	
 }
