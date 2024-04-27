@@ -41,6 +41,12 @@ public class Patient implements Serializable{
 
 
 
+	public Patient(int id2, String name2, int age, String address, double salary) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
