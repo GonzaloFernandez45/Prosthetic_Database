@@ -13,6 +13,15 @@ import Prosthetic.db.pojos.Surgery;
 public class JDBCSurgeryManager implements SurgeryManager {
 	
 	private Connection c;
+    private ConnectionManager conMan;
+	
+	
+	public JDBCSurgeryManager(Connection c, ConnectionManager conMan) {
+		super();
+		this.c = c;
+		this.conMan = conMan;
+	}
+	
 	//TODO como hacemos para el surgeon need y patient en todos los metodos
 
 	@Override

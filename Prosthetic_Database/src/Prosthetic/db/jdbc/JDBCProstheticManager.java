@@ -14,6 +14,19 @@ public class JDBCProstheticManager implements ProstheticManager {
 
 	
 	private Connection c;
+    private ConnectionManager conMan;
+	
+	
+	public JDBCProstheticManager(Connection c, ConnectionManager conMan) {
+		super();
+		this.c = c;
+		this.conMan = conMan;
+	}
+	
+	
+	
+	
+	
 	// TODO como ponemos need options material en todos los metodos
 	@Override
 	public void addProsthetic(Prosthetic p) {
