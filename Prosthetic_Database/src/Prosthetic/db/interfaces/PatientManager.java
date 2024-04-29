@@ -9,7 +9,7 @@ public interface PatientManager {
 	public void addPatient(Patient p);
 	public Patient getPatientByID(int id);
 	public List<Patient> getPatientByName(String name);
-	public String reportDelivery();
+	public String reportDelivery(int id);
 	public void inputNeeds(List<Need> needs);
 
 

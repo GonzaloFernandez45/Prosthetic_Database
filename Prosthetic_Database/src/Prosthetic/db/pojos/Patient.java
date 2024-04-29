@@ -2,6 +2,7 @@ package Prosthetic.db.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,8 @@ public class Patient implements Serializable{
 	private String surname;
 	private String sex;
 	private Date dob;
-	private String condition;
+	//private String condition;
+	private Integer dni;
 	private String report;
 	private List<Prosthetic> prosthetics;
 	
@@ -23,29 +25,29 @@ public class Patient implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
-	public Patient(Integer id, String name, String surname, String sex, Date dob, String condition, String report,
-			List<Prosthetic> prosthetics) {
+	public Patient(Integer id, String name, String surname, String sex, Date dob, Integer dni, String report) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
 		this.dob = dob;
-		this.condition = condition;
+		this.dni = dni;
 		this.report = report;
-		this.prosthetics = prosthetics;
+		this.prosthetics = new ArrayList<Prosthetic>();
 	}
 
 
 
-	public Patient(int id2, String name2, int age, String address, double salary) {
-		// TODO Auto-generated constructor stub
+
+	public Integer getDni() {
+		return dni;
 	}
 
-
+	public void setDni(Integer dni) {
+		this.dni = dni;
+	}
 
 	public Integer getId() {
 		return id;

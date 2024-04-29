@@ -113,7 +113,7 @@ public class ConnectionManager {
 					+ "Surgeon_ID INTEGER REFERENCES surgeon(ID) ON DELETE SET NULL"
 					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT"
 					+ "Result TEXT NOT NULL DEFAULT 'Not completed')";
-			createTables7.executeUpdate(create6);
+			createTables7.executeUpdate(create7);
 			createTables7.close();
 			
 			Statement createTables8 = c.createStatement();
@@ -121,7 +121,8 @@ public class ConnectionManager {
 					+ "Option_ID INTEGER REFERENCES option(ID) ON DELETE SET NULL"
 					+ "Prosthetic_ID INTEGER REFERENCES prosthetic(ID) ON DELETE CASCADE"
 					+ "PRIMARY KEY(Option_ID,Prosthetic_ID))";
-					
+			createTables8.executeUpdate(create8);
+			createTables8.close();		
 			
 		} catch (SQLException sqlE) {
 			if (sqlE.getMessage().contains("already exist")){

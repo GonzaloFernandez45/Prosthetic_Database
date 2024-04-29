@@ -20,6 +20,7 @@ public class JDBCCompanyManager implements CompanyManager {
 	}
 	
 	
+	
 	@Override
 	public void addCompany(Company com) {
 		try {
