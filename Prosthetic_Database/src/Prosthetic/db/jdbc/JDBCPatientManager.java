@@ -24,7 +24,11 @@ public class JDBCPatientManager implements PatientManager {
 		this.c = c;
 		this.conMan = conMan;
 	}
-	
+	public List<Patient> getPatientByIDandName(){
+		//TODO metodo que muestre unan lista de los pacientes para saber el id de cada uno
+		//Y luego poder llamar a otros metodos como checkneeds pasandole el id del paciente que quieras
+		return null;
+	}
 	@Override
 	public void addPatient(Patient p) {
 		
@@ -113,9 +117,9 @@ public class JDBCPatientManager implements PatientManager {
 
 	//Terminar de hacer, muy complicado meter todas las needs de golpe?
 	@Override
-	public void inputNeeds(List<Need> needs) {
+	public void inputNeeds(Need need) {
 		//TODO this method
-
+		// JUST ONE NEED NOT LIST 
 	}
 
 }
