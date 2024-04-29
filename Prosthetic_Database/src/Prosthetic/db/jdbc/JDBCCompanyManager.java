@@ -46,7 +46,6 @@ public class JDBCCompanyManager implements CompanyManager {
 	}
 	@Override
 	public void deleteCompany(Company com) {
-		//TODO cambiar metodo para pasarle el id no un objeto company
 		try {
 			String template = "DELETE FROM company WHERE name LIKE ?";
 			PreparedStatement pstmt;
