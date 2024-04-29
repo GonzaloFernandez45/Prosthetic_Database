@@ -89,13 +89,13 @@ public class Patient implements Serializable{
 		this.dob = dob;
 	}
 
-	public String getCondition() {
-		return condition;
-	}
+	//public String getCondition() {
+	//	return condition;
+	//}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
+	//public void setCondition(String condition) {
+	//	this.condition = condition;
+	//}
 
 	public String getReport() {
 		return report;
@@ -141,7 +141,7 @@ public class Patient implements Serializable{
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", name=" + name + ", surname=" + surname + ", sex=" + sex + ", dob=" + dob
-				+ ", condition=" + condition + ", report=" + report + ", prosthetics=" + prosthetics + "]";
+				+ ", report=" + report + ", prosthetics=" + prosthetics + "]";
 	}
 
 	

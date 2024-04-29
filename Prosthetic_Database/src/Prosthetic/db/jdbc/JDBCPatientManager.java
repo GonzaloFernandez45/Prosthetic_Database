@@ -114,22 +114,7 @@ public class JDBCPatientManager implements PatientManager {
 	//Terminar de hacer, muy complicado meter todas las needs de golpe?
 	@Override
 	public void inputNeeds(List<Need> needs) {
-		try {
-			String template = "INSERT INTO patient (name, surname, sex, DOB, dni, report) VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstmt;
-			pstmt = c.prepareStatement(template);
-			pstmt.setString(1, p.getName());
-			pstmt.setString(2, p.getSurname());
-			pstmt.setString(3, p.getSex());
-			pstmt.setDate(4, p.getDob());
-			pstmt.setInt(5, p.getDni());
-			pstmt.setString(6, p.getReport());
-			pstmt.executeUpdate();
-			pstmt.close();
-		}catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}
+		//TODO this method
 
 	}
 
