@@ -14,29 +14,48 @@ public class Prosthetic implements Serializable {
 	private Integer ID;
 	private Integer Price;
 	private String Size;
-	private List<Need> needs;
+	private Need need;
 	private List<Option> options;
 	private Material material;
+	private Company company;
+	private Patient patient;
 	
 	
 		public Prosthetic() {
 		super();
-		this.needs = new ArrayList<Need>();
 		this.options = new ArrayList<Option>();
 		// TODO Auto-generated constructor stub
 	}
 		
 
-		public Prosthetic(Integer iD, Integer price, String size, List<Need> needs, List<Option> options,
-				Material material) {
+		public Prosthetic(Integer iD, String size,Company company, Patient patient,Need need,Integer price,Material material) {
 			super();
 			ID = iD;
 			Price = price;
 			Size = size;
-			this.needs = needs;
+			this.need = need;
+			this.material = material;
+			this.company = company;
+			this.patient=patient;
+		}
+
+
+
+
+
+		public Prosthetic(Integer iD, String size, Need need, List<Option> options,Company company,Integer price,Material material) {
+			super();
+			ID = iD;
+			Price = price;
+			Size = size;
+			this.need = need;
 			this.options = options;
 			this.material = material;
+			this.company = company;
 		}
+
+
+
 
 
 		public void addOption (Option option) {
@@ -51,18 +70,7 @@ public class Prosthetic implements Serializable {
 			}
 		}
 	
-	
-		public void addNeed (Need need) {
-			if(!needs.contains(need)) {
-				this.needs.add(need);
-			}
-		}
-		
-		public void removeNeed (Need need) {
-			if(needs.contains(need)) {
-				this.needs.remove(need);
-			}
-		}
+
 	
 
 	public int getID() {
@@ -88,14 +96,55 @@ public class Prosthetic implements Serializable {
 	public void setSize(String size) {
 		Size = size;
 	}
+	
 
-	public List<Need> getNeeds() {
-		return needs;
+	public Need getNeed() {
+		return need;
 	}
 
-	public void setNeeds(List<Need> needs) {
-		this.needs = needs;
+
+
+
+
+	public void setNeed(Need need) {
+		this.need = need;
 	}
+
+
+
+
+
+	public Company getCompany() {
+		return company;
+	}
+
+
+
+
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+
+
+
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+
+
+
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+
+
+
 
 	public List<Option> getOptions() {
 		return options;
@@ -124,7 +173,7 @@ public class Prosthetic implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Prosthetic [ID=" + ID + ", Price=" + Price + ", Size=" + Size + ", needs=" + needs + ", options="
+		return "Prosthetic [ID=" + ID + ", Price=" + Price + ", Size=" + Size + ", needs=" + need + ", options="
 				+ options + "]";
 	}
 	

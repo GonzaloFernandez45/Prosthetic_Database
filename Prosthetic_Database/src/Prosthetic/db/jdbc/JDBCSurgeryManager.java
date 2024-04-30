@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import Prosthetic.db.interfaces.NeedManager;
+import Prosthetic.db.interfaces.PatientManager;
+import Prosthetic.db.interfaces.SurgeonManager;
 import Prosthetic.db.interfaces.SurgeryManager;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
@@ -27,19 +30,18 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	@Override
 	public void addSurgery(Surgery s) {
 		try {
-		String sql= "INSERT INTO surgeries (type,  date,  time,  result,  room,  id,  surgeon,need, patient)"
+		String sql= "INSERT INTO surgery (id,  time, date, room, patient_id, surgeon_id,need_id , result )"
 				+ "VALUES (?,?,?,?,?,?,?,?,?)" ;
 		PreparedStatement prepstm= c.prepareStatement(sql);
-		prepstm.setString(1,s.getType());
-		prepstm.setString(2,s.getDate());
-		prepstm.setString(3,s.getTime());
-		prepstm.setString(4,s.getResult());
-		prepstm.setInt(5,s.getRoom());
-		prepstm.setInt(6,s.getId());
-		prepstm.setString(7,s.getSurgeon().getName());
-		prepstm.setString(8,s.getNeed().getType());
-		prepstm.setString(9,s.getPatient().getName());
-		//TODO como hacemos para  patient surgeon and need, hemos puesto date y time como string no como clase date 
+		prepstm.setInt(1,s.getId());
+		prepstm.setString(2,s.getTime());
+		prepstm.setDate(3,s.getDate());
+		prepstm.setInt(4,s.getRoom());
+		prepstm.setInt(5,s.getPatient().getId());
+		prepstm.setInt(6,s.getSurgeon().getId());
+		prepstm.setInt(7,s.getNeed().getId());
+		prepstm.setString(8,s.getResult());
+		prepstm.setString(9,s.getType());
 		
 		
 		}catch( SQLException sqlE) {
@@ -47,15 +49,13 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			sqlE.printStackTrace();
 			
 		}
-		
-		
 
 	}
 
 	@Override
 	public void deleteSurgery(Surgery s) {
 		try {
-			String sql= "DELETE FROM surgeries WHERE id = ?";
+			String sql= "DELETE FROM surgery WHERE id = ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
 			prepstm.setInt(1,s.getId());
 			prepstm.executeUpdate();
@@ -69,33 +69,36 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	}
 
 	@Override
-	public List<Surgery> searchSurgerybyPatient(Patient p) {
-		List<Surgery>surgeries= new ArrayList<Surgery>();
+	public List<Surgery> searchSurgerybyPatient(int Patient_ID) {
+		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT * FROM surgeries WHERE patient LIKE ?";
+			String sql= "SELECT * FROM surgery WHERE Patient_ID = ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
-			prepstm.setString(1,"%"+p+"%");
-			
+			prepstm.setInt(1,Patient_ID);
 			ResultSet rs=prepstm.executeQuery();
 	
 			while (rs.next()) {
-				String type = rs.getString("type");
-				String date = rs.getString("date");
-				String time = rs.getString("time");
-				String result = rs.getString("result");
-				int room =rs.getInt("room");
 				int id =rs.getInt("id");
-				String surgeon_name = rs.getString("name of surgeon");
-				String need = rs.getString("type of need");
-				String patient_name = rs.getString("name of patient");
+				String time = rs.getString("time");
+				Date date = rs.getDate("date");
+				int room =rs.getInt("room");
+				int patient_id = rs.getInt("Patient_ID");
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(patient_id);
+				int surgeon_id = rs.getInt("Surgeon_ID");
+				SurgeonManager surgeonMan = conMan.getsurgeonMan();
+				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+				int need_id = rs.getInt("Need_ID");
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(need_id);
+				String result = rs.getString("result");
+				String type = rs.getString("type");
 				
-				
-				
-			
-				
+				Surgery s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+				surgery.add(s);
 			}
 			rs.close();
-
+			return surgery;
 			
 		}catch(SQLException sqlE) {
 			System.out.println("Error in the data base");
@@ -106,30 +109,36 @@ public class JDBCSurgeryManager implements SurgeryManager {
 
 	@Override
 	public List<Surgery> searchSurgerybyDate(Surgery s) {
-		List<Surgery>surgeries= new ArrayList<Surgery>();
+		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT * FROM surgeries WHERE date LIKE ?";
+			String sql= "SELECT * FROM surgery WHERE date LIKE ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
-			prepstm.setString(1,s.getDate());
+			prepstm.setDate(1,s.getDate());
 			ResultSet rs=prepstm.executeQuery();
 	
 			while (rs.next()) {
-				String type = rs.getString("type");
-				String date = rs.getString("date");
-				String time = rs.getString("time");
-				String result = rs.getString("result");
-				int room =rs.getInt("room");
 				int id =rs.getInt("id");
-				String surgeon_name = rs.getString("name of surgeon");
-				String need = rs.getString("type of need");
-				String patient_name = rs.getString("name of patient");
+				String time = rs.getString("time");
+				Date date = rs.getDate("date");
+				int room =rs.getInt("room");
+				int patient_id = rs.getInt("Patient_ID");
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(patient_id);
+				int surgeon_id = rs.getInt("Surgeon_ID");
+				SurgeonManager surgeonMan = conMan.getsurgeonMan();
+				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+				int need_id = rs.getInt("Need_ID");
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(need_id);
+				String result = rs.getString("result");
+				String type = rs.getString("type");
 				
-				
-				
-			
-				
+				s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+				surgery.add(s);
+	
 			}
 			rs.close();
+			return surgery;
 
 			
 		}catch(SQLException sqlE) {
@@ -141,30 +150,36 @@ public class JDBCSurgeryManager implements SurgeryManager {
 
 	@Override
 	public List<Surgery> searchSurgerybySurgeon(Surgeon s) {
-		List<Surgery>surgeries= new ArrayList<Surgery>();
+		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT * FROM surgeries WHERE surgeon  LIKE ?";
+			String sql= "SELECT * FROM surgery WHERE surgeon  LIKE ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
 			prepstm.setString(1,"%"+s+"%");
 			ResultSet rs=prepstm.executeQuery();
 	
 			while (rs.next()) {
-				String type = rs.getString("type");
-				String date = rs.getString("date");
-				String time = rs.getString("time");
-				String result = rs.getString("result");
-				int room =rs.getInt("room");
 				int id =rs.getInt("id");
-				String surgeon_name = rs.getString("name of surgeon");
-				String need = rs.getString("type of need");
-				String patient_name = rs.getString("name of patient");
+				String time = rs.getString("time");
+				Date date = rs.getDate("date");
+				int room =rs.getInt("room");
+				int patient_id = rs.getInt("Patient_ID");
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(patient_id);
+				int surgeon_id = rs.getInt("Surgeon_ID");
+				SurgeonManager surgeonMan = conMan.getsurgeonMan();
+				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+				int need_id = rs.getInt("Need_ID");
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(need_id);
+				String result = rs.getString("result");
+				String type = rs.getString("type");
 				
-			
-				
-			
+				Surgery sur= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+				surgery.add(sur);
 				
 			}
 			rs.close();
+			return surgery;
 
 			
 		}catch(SQLException sqlE) {

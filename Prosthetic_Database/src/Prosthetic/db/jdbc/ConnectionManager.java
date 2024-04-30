@@ -88,9 +88,12 @@ public class ConnectionManager {
 					+ "size TEXT NOT NULL"
 					+ "Company_ID INTEGER REFERENCES company(ID) ON DELETE SET NULL"
 					+ "Patient_ID INTEGER REFERENCES patient(ID) ON DELETE RESTRICT"
-					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT )";
+					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT "
+					+ "price INTEGER NOT NULL "
+					+ "Material_ID INTEGER REFERENCES material(ID))";
 			createTables5.executeUpdate(create5);
 			createTables5.close();
+			
 			
 			Statement createTables6 = c.createStatement();
 			String create6 = "CREATE TABLE surgeon ("
@@ -106,13 +109,15 @@ public class ConnectionManager {
 			Statement createTables7 = c.createStatement();
 			String create7 = "CREATE TABLE surgery ("
 					+ "id INTEGER PRIAMRY KEY AUTOINCREMENT"
-					+ "Time DATE"
-					+ "Date DATE"
-					+ "OR INTEGER"
+					+ "time String"
+					+ "date DATE"
+					+ "room INTEGER"
 					+ "Patient_ID INTEGER REFERENCES patient(ID) ON DELETE RESTRICT"
 					+ "Surgeon_ID INTEGER REFERENCES surgeon(ID) ON DELETE SET NULL"
 					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT"
-					+ "Result TEXT NOT NULL DEFAULT 'Not completed')";
+					+ "result TEXT NOT NULL DEFAULT 'Not completed"
+					+ "type TEXT NOT NULL )";
+					
 			createTables7.executeUpdate(create7);
 			createTables7.close();
 			
@@ -139,15 +144,15 @@ public class ConnectionManager {
 		return conMan; 
 	}
 	
-	public OptionManager getopMan() {
+	public OptionManager getoptionMan() {
 		return opMan;
 	}
 	
-	public NeedManager getneMan() {
+	public NeedManager getneedMan() {
 		return neMan;
 	}
 	
-	public PatientManager getpatMan() {
+	public PatientManager getpatientMan() {
 		return patMan;
 	}
 	

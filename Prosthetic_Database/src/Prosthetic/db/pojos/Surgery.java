@@ -13,7 +13,7 @@ public class Surgery implements Serializable {
 	 */
 	private static final long serialVersionUID = 6988768427763823667L;
 	private String type;
-	private String date;	
+	private Date date;	
 	private String time;
 	private String result;
 	private Integer room;
@@ -28,8 +28,7 @@ public class Surgery implements Serializable {
 	}
 
 	
-	public Surgery(String type, String date, String time, String result, Integer room, Integer id, Surgeon surgeon,
-			Need need, Patient patient) {
+	public Surgery(Integer id,String time,Date date,Integer room,Patient patient,Surgeon surgeon,Need need,String result, String type) {
 		super();
 		this.type = type;
 		this.date = date;
@@ -51,11 +50,11 @@ public class Surgery implements Serializable {
 		this.type = type;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

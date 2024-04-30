@@ -23,21 +23,21 @@ public class JDBCProstheticManager implements ProstheticManager {
 		this.conMan = conMan;
 	}
 	
-	
-	
-	
+
 	
 	// TODO como ponemos need options material en todos los metodos
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
-		String sql = "INSERT INTO prosthetic (id, prize, size, needs,options,material) "
+		String sql = "INSERT INTO prosthetic (id, size,company,patient,needs,price,material) "
 				+"VAUES (?,?,?,?,?,?)";
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		prepstm.setInt(1,p.getID());
-		prepstm.setInt(2, p.getPrice());
-		prepstm.setString(3, p.getSize());
-
+		prepstm.setString(2, p.getSize());
+		prepstm.setInt(3, p.getCompany().getId());
+		prepstm.setInt(4, p.getPatient().getId());
+		prepstm.setInt(5, p.getNeed().getId());
+		prepstm.setInt(6, p.getPrice());
 		prepstm.executeUpdate();
 		prepstm.close();
 		

@@ -111,11 +111,13 @@ public class JDBCPatientManager implements PatientManager {
 		return null;
 	}
 
-	//Terminar de hacer, muy complicado meter todas las needs de golpe?
 	@Override
-	public void inputNeeds(List<Need> needs) {
-		//TODO this method
-
+	public void inputNeeds(Need need) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	//Terminar de hacer, muy complicado meter todas las needs de golpe?
+	
 
 }
