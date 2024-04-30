@@ -41,7 +41,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}	
-	}
+	}	
 	
 	@Override
 	public List<Surgeon>SearchSurgeonByName(String name, String surname) {
