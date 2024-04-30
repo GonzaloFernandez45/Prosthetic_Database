@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class Material {
+public class Material implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7934186549735789454L;
 	private Integer id;
 	private String type;
-	private boolean availability;
+	private String availability;
 	private List<Prosthetic> prosthetics;
 	
 	public Material() {
@@ -22,12 +26,12 @@ public class Material {
 		
 	}
 
-	public Material(Integer id, String type, boolean availability, List<Prosthetic> prosthetics) {
+	public Material(Integer id, String type, String availability) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.availability = availability;
-		this.prosthetics = prosthetics;
+		this.prosthetics = new ArrayList<Prosthetic>();
 	}
 
 	public Integer getId() {
@@ -46,11 +50,11 @@ public class Material {
 		this.type = type;
 	}
 
-	public boolean isAvailability() {
+	public String getAvailability() {
 		return availability;
 	}
 
-	public void setAvailability(boolean availability) {
+	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
 

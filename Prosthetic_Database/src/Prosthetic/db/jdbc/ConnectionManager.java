@@ -127,7 +127,24 @@ public class ConnectionManager {
 					+ "Prosthetic_ID INTEGER REFERENCES prosthetic(ID) ON DELETE CASCADE"
 					+ "PRIMARY KEY(Option_ID,Prosthetic_ID))";
 			createTables8.executeUpdate(create8);
-			createTables8.close();		
+			createTables8.close();	
+			
+			Statement createTables9 = c.createStatement();
+			String create9 = "CREATE TABLE material ("
+					+ "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "Type STRING NOT NULL,"
+					+ "Availability STRING NOT NULL)";
+			createTables9.executeUpdate(create9);
+			createTables9.close();
+			
+			Statement createTables10 = c.createStatement();
+			String create10 = "CREATE TABLE patient_need ("
+					+ "Patient_ID INTEGER REFERENCES patient(iID)"
+					+ "Need_ID INTEGER REFERENCES need(ID)"
+					+ "PRIMARY KEY (patient_ID, need_ID))";
+			createTables10.executeUpdate(create10);
+			createTables10.close();
+			
 			
 		} catch (SQLException sqlE) {
 			if (sqlE.getMessage().contains("already exist")){
