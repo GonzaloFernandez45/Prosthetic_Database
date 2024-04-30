@@ -124,24 +124,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			int id =rs.getInt("id");
-			String time = rs.getString("time");
-			Date date = rs.getDate("date");
-			int room =rs.getInt("room");
-			int patient_id = rs.getInt("Patient_ID");
-			PatientManager patientMan = conMan.getpatientMan();
-			Patient patient = patientMan.getPatientByID(patient_id);
-			int surgeon_id = rs.getInt("Surgeon_ID");
-			SurgeonManager surgeonMan = conMan.getsurgeonMan();
-			Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
-			int need_id = rs.getInt("Need_ID");
-			NeedManager needMan = conMan.getneedMan();
-			Need need = needMan.getNeed(need_id);
-			String result = rs.getString("result");
-			String type = rs.getString("type");
-			Surgery s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
-			
-			String Newresult = s.getResult();
+			String Newresult = rs.getString("result");
 			return Newresult;
 			
 		}catch (SQLException e) {

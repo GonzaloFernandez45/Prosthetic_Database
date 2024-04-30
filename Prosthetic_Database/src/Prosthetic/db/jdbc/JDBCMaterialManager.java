@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Prosthetic.db.interfaces.MaterialManager;
-import Prosthetic.db.pojos.Material;
-import Prosthetic.db.pojos.Need;
+import Prosthetic.db.pojos.*;
 
 public class JDBCMaterialManager implements MaterialManager{
 	
@@ -56,9 +55,20 @@ public class JDBCMaterialManager implements MaterialManager{
 	}
 
 	@Override
-	public void checkAvailability(int id) {
-		// TODO Auto-generated method stub
-		
+	public String checkAvailability(int id) {
+		try {
+			String sql = "SELECT availability FROM material WHERE id = " + id;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			String availability = rs.getString("availability");
+			return availability;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;		
 	}
 
 	@Override

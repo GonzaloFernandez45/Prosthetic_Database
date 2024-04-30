@@ -114,7 +114,6 @@ public class JDBCPatientManager implements PatientManager {
 		return patients;
 	}
 
-	//Meter el paciente directamente para sacar su report o meter el id, sacar el paciente y luego el report
 	@Override
 	public String reportDelivery(int id) {
 		try {
@@ -123,8 +122,7 @@ public class JDBCPatientManager implements PatientManager {
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Patient p = new Patient(rs.getInt("name"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"),rs.getString("report"));
-			String report = p.getReport();
+			String report = rs.getString("report");
 			return report;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
