@@ -25,6 +25,19 @@ public class Patient implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	public Patient(Integer id, String name, String surname) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.needs = new ArrayList<Need>();
+	}
+
+
 
 	public Patient(Integer id, String name, String surname, String sex, Date dob, Integer dni, String report) {
 		super();
@@ -36,7 +49,7 @@ public class Patient implements Serializable{
 		this.dni = dni;
 		this.report = report;
 		this.prosthetics = new ArrayList<Prosthetic>();
-		this.setNeeds(new ArrayList<Need>());
+		this.needs = new ArrayList<Need>();
 
 	}
 
