@@ -5,7 +5,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import Prosthetic.db.interfaces.NeedManager;
+import Prosthetic.db.interfaces.PatientManager;
 import Prosthetic.db.interfaces.SurgeonManager;
+import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 import Prosthetic.db.pojos.Surgeon;
 import Prosthetic.db.pojos.Surgery;
@@ -97,29 +100,56 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	}
 
 	@Override
-	public void deleteSurgeon(Surgeon s) {
-
-		
+	public void deleteSurgeon(int surgeon_id) {
+		try {
+			String template = "DELETE FROM company WHERE name LIKE ?";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, surgeon_id);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 	}
+	
 
 	@Override
-	public void scheduleSurgery(Surgery s) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String resultSurgery() {
-		// TODO Auto-generated method stub
+	public String resultSurgery(int surgery_id) {
+		try {
+			String sql = "SELECT report FROM surgery WHERE id = " + surgery_id;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			int id =rs.getInt("id");
+			String time = rs.getString("time");
+			Date date = rs.getDate("date");
+			int room =rs.getInt("room");
+			int patient_id = rs.getInt("Patient_ID");
+			PatientManager patientMan = conMan.getpatientMan();
+			Patient patient = patientMan.getPatientByID(patient_id);
+			int surgeon_id = rs.getInt("Surgeon_ID");
+			SurgeonManager surgeonMan = conMan.getsurgeonMan();
+			Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+			int need_id = rs.getInt("Need_ID");
+			NeedManager needMan = conMan.getneedMan();
+			Need need = needMan.getNeed(need_id);
+			String result = rs.getString("result");
+			String type = rs.getString("type");
+			Surgery s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+			
+			String Newresult = s.getResult();
+			return Newresult;
+			
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 		return null;
 	}
-
-	@Override
-	public void registerPatient(Patient p) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 
 }
