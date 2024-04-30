@@ -102,6 +102,20 @@ public class JDBCCompanyManager implements CompanyManager {
 		}
 		return needs;
 	}
+	@Override
+	public Company getCompany(int id) {
+		try {
+		String sql = "SELECT * FROM company WHERE id = ? ";
+		PreparedStatement pstmt= c.prepareStatement(sql);
+		pstmt.setInt(1,id);
+		ResultSet rs = pstmt.executeQuery();
+			
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}	
+		return null;
+	}
 
 
 	
