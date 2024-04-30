@@ -1,4 +1,4 @@
-package Prosthetic.db.pojos;
+	package Prosthetic.db.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -37,6 +37,17 @@ public class Surgeon implements Serializable {
 			this.specialization = specialization;
 			this.hiredate = hiredate;
 			this.surgeries = surgeries;
+		}
+		
+		public Surgeon(Integer id, Integer salary, String name, String surname, String specialization, Date hiredate) {
+			super();
+			this.id = id;
+			this.salary = salary;
+			this.name = name;
+			this.surname = surname;
+			this.specialization = specialization;
+			this.hiredate = hiredate;
+			this.surgeries = new ArrayList<Surgery>();
 		}
 
 
