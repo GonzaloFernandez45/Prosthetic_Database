@@ -24,10 +24,28 @@ public class JDBCPatientManager implements PatientManager {
 		this.c = c;
 		this.conMan = conMan;
 	}
+	
 	public List<Patient> getPatientByIDandName(){
 		//TODO metodo que muestre unan lista de los pacientes para saber el id de cada uno
 		//Y luego poder llamar a otros metodos como checkneeds pasandole el id del paciente que quieras
-		return null;
+		List<Patient> patients = new ArrayList<Patient>();
+		try {
+			String sql = "SELECT id,name,surname FROM patient GROUP BY id";
+			PreparedStatement search = c.prepareStatement(sql);
+			ResultSet rs = search.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String PatientName = rs.getString("name");
+				String surname = rs.getString("surname");
+				Patient p = new Patient(id,PatientName,surname);
+				patients.add(p);
+			}
+			return patients;
+		}catch (SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
+		}
+		return patients;
 	}
 	@Override
 	public void addPatient(Patient p) {
@@ -114,11 +132,7 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null;
 	}
-	@Override
-	public void inputNeeds(Need need) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	
 }
