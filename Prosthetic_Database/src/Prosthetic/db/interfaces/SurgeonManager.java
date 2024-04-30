@@ -9,9 +9,7 @@ public interface SurgeonManager {
 	public void addSurgeon (Surgeon s);
 	public Surgeon getSurgeonbysurgery (int surgery_ID);
 	public Surgeon getSurgeon(int id);
-	public void deleteSurgeon (Surgeon s);
-	public void scheduleSurgery (Surgery s);
-	public String resultSurgery ();
-	public void registerPatient (Patient p);
+	public void deleteSurgeon (int surgeon_id);
+	public String resultSurgery (int surgery_id);
 	public List<Surgeon>SearchSurgeonByName(String name, String surname);
  }

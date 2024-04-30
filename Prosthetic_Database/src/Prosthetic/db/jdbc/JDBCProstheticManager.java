@@ -4,7 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import Prosthetic.db.interfaces.CompanyManager;
+import Prosthetic.db.interfaces.NeedManager;
+import Prosthetic.db.interfaces.PatientManager;
 import Prosthetic.db.interfaces.ProstheticManager;
+import Prosthetic.db.pojos.Company;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 import Prosthetic.db.pojos.Prosthetic;
@@ -29,7 +33,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
-		String sql = "INSERT INTO prosthetic (id, size,company,patient,needs,price,material) "
+		String sql = "INSERT INTO prosthetic (id, size,company,patient,need,price,material) "
 				+"VAUES (?,?,?,?,?,?)";
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		prepstm.setInt(1,p.getID());
@@ -67,7 +71,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 
 	@Override
 	public List<Prosthetic> getProstheticbyNeed(Need n) {
-		List<Prosthetic>prosthetics= new ArrayList<Prosthetic>();
+		List<Prosthetic>prosthetic= new ArrayList<Prosthetic>();
 		try {
 			String sql = "SELECT * FROM patient WHERE need LIKE ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
@@ -75,10 +79,18 @@ public class JDBCProstheticManager implements ProstheticManager {
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
-				Integer price = rs.getInt("price");
 				String size = rs.getString("size");
-				
-				
+				int company_id = rs.getInt("Company_ID");
+				CompanyManager companyMan=conMan.getconMan();
+				Company company= companyMan.getCompany(company_id);
+				int patient_id=rs.getInt("Patient_ID");
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(patient_id);
+				int need_id = rs.getInt("Need_ID");
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(need_id);
+				int price= rs.getInt("price");
+				//TODO el id de materiales
 				
 				
 			}
@@ -93,7 +105,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 
 	@Override
 	public List<Prosthetic> getProstheticbyPatient(Patient pa) {
-		List<Prosthetic>prosthetics= new ArrayList<Prosthetic>();
+		List<Prosthetic>prosthetic= new ArrayList<Prosthetic>();
 		try {
 			String sql = "SELECT * FROM patient WHERE patient LIKE ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
@@ -101,10 +113,18 @@ public class JDBCProstheticManager implements ProstheticManager {
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
-				Integer price = rs.getInt("price");
 				String size = rs.getString("size");
-				
-				
+				int company_id = rs.getInt("Company_ID");
+				CompanyManager companyMan=conMan.getconMan();
+				Company company= companyMan.getCompany(company_id);
+				int patient_id=rs.getInt("Patient_ID");
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(patient_id);
+				int need_id = rs.getInt("Need_ID");
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(need_id);
+				int price= rs.getInt("price");
+				//TODO el id de materiales
 			}
 			rs.close();
 

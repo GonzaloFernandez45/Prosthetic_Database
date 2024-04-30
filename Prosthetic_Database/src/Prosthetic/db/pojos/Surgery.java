@@ -8,9 +8,7 @@ import java.util.List;
 
 
 public class Surgery implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6988768427763823667L;
 	private String type;
 	private Date date;	
