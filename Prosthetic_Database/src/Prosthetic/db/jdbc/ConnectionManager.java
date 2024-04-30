@@ -18,6 +18,7 @@ public class ConnectionManager {
 	private ProstheticManager prosMan;
 	private SurgeonManager surgeonMan;
 	private SurgeryManager surgeryMan;
+	private MaterialManager materialMan;
 	
 	public Connection getConnection() {
 		return c;
@@ -183,6 +184,9 @@ public class ConnectionManager {
 	
 	public SurgeryManager getsurgeryMan() {
 		return surgeryMan;
+	}
+	public MaterialManager getmaterialMan() {
+		return materialMan;
 	}
 	
 	

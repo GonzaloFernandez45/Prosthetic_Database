@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Prosthetic.db.interfaces.CompanyManager;
+import Prosthetic.db.interfaces.MaterialManager;
 import Prosthetic.db.interfaces.NeedManager;
 import Prosthetic.db.interfaces.PatientManager;
 import Prosthetic.db.interfaces.ProstheticManager;
 import Prosthetic.db.pojos.Company;
+import Prosthetic.db.pojos.Material;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 import Prosthetic.db.pojos.Prosthetic;
@@ -90,11 +92,15 @@ public class JDBCProstheticManager implements ProstheticManager {
 				NeedManager needMan = conMan.getneedMan();
 				Need need = needMan.getNeed(need_id);
 				int price= rs.getInt("price");
-				//TODO el id de materiales
-				
+				int material_id=rs.getInt("Material_ID");
+				MaterialManager materialsMan= conMan.getmaterialMan();
+				Material material=materialsMan.getMaterial(material_id);
+				Prosthetic p = new Prosthetic( id,size,company,patient,need,price,material);
+				prosthetic.add(p);
 				
 			}
-			
+			rs.close();
+			return prosthetic;
 		}catch (SQLException sqlE) {
 			System.out.println("Error in the database");
 			sqlE.printStackTrace();
@@ -124,9 +130,15 @@ public class JDBCProstheticManager implements ProstheticManager {
 				NeedManager needMan = conMan.getneedMan();
 				Need need = needMan.getNeed(need_id);
 				int price= rs.getInt("price");
-				//TODO el id de materiales
+				int material_id=rs.getInt("Material_ID");
+				MaterialManager materialsMan= conMan.getmaterialMan();
+				Material material=materialsMan.getMaterial(material_id);
+				
+				Prosthetic p = new Prosthetic( id,size,company,patient,need,price,material);
+				prosthetic.add(p);
 			}
 			rs.close();
+			return prosthetic;
 
 			
 		}catch(SQLException sqlE) {
