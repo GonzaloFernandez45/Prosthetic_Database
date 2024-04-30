@@ -19,7 +19,6 @@ public class JDBCOptionManager implements OptionManager {
 	
 	@Override
 	public void addOption(Option o) {
-		//Meter en el insert lista de protesis
 		try {
 			String template = "INSERT INTO option (type) VALUES (?)";
 			PreparedStatement pstmt;
@@ -35,21 +34,31 @@ public class JDBCOptionManager implements OptionManager {
 
 	@Override
 	public Option getOptionByType(String type) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT * FROM option WHERE type LIKE ?";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Option o = new Option (rs.getInt("id"), rs.getString("type"));
+			return o;
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public Option getOption(int id) {
-		//Poner en el new Option la lista de protesis
 		try {
 			String sql = "SELECT * FROM option WHERE id = " + id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			//Option o = new Option (rs.getInt("id"), rs.getString("type"));
-			//return o;
+			Option o = new Option (rs.getInt("id"), rs.getString("type"));
+			return o;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();

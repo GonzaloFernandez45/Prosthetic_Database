@@ -13,6 +13,7 @@ public class Need implements Serializable {
 	private Integer id;
 	private String type;
 	private List<Prosthetic> prosthetics;
+	private List<Patient> patients;
 	
 	public Need() {
 		super();
@@ -27,6 +28,13 @@ public class Need implements Serializable {
 		
 	}
 	
+	
+	public Need(Integer id, String type) {
+		super();
+		this.id = id;
+		this.type = type;
+	}
+
 	public Integer getId() {
 		return id;
 		
@@ -45,6 +53,14 @@ public class Need implements Serializable {
 	}
 	
 	
+	public List<Patient> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -72,8 +88,9 @@ public class Need implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Need [id = " + id + ", type= " +type+ "]";
+		return "Need [id=" + id + ", type=" + type + ", prosthetics=" + prosthetics + ", patients=" + patients + "]";
 	}
+	
 	
 	
 		public void addProsthetic (Prosthetic prosthetic) {

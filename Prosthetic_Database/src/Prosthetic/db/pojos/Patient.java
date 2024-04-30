@@ -14,10 +14,10 @@ public class Patient implements Serializable{
 	private String surname;
 	private String sex;
 	private Date dob;
-	//private String condition;
 	private Integer dni;
 	private String report;
 	private List<Prosthetic> prosthetics;
+	private List<Need> needs;
 	
 	
 
@@ -36,6 +36,8 @@ public class Patient implements Serializable{
 		this.dni = dni;
 		this.report = report;
 		this.prosthetics = new ArrayList<Prosthetic>();
+		this.setNeeds(new ArrayList<Need>());
+
 	}
 
 
@@ -89,14 +91,7 @@ public class Patient implements Serializable{
 		this.dob = dob;
 	}
 
-	//public String getCondition() {
-	//	return condition;
-	//}
-
-	//public void setCondition(String condition) {
-	//	this.condition = condition;
-	//}
-
+	
 	public String getReport() {
 		return report;
 	}
@@ -141,7 +136,7 @@ public class Patient implements Serializable{
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", name=" + name + ", surname=" + surname + ", sex=" + sex + ", dob=" + dob
-				+ ", report=" + report + ", prosthetics=" + prosthetics + "]";
+				+ ", report=" + report + ", prosthetics=" + prosthetics + ", list of needs: "+ needs+ "]";
 	}
 
 	
@@ -156,6 +151,14 @@ public class Patient implements Serializable{
 			if(prosthetics.contains(prosthetic)) {
 				this.prosthetics.remove(prosthetic);
 			}
+		}
+
+		public List<Need> getNeeds() {
+			return needs;
+		}
+
+		public void setNeeds(List<Need> needs) {
+			this.needs = needs;
 		}
 	
 

@@ -6,9 +6,8 @@ import Prosthetic.db.pojos.*;
 
 public interface CompanyManager {
 	public void addCompany(Company c);
-	public void createProsthetic (Prosthetic p);
-	public void deleteCompany(Company c);
-	public List<Patient> checkDemandByNeed(String need);
-	public List<Need> checkNeeds(Patient p);
+	public void deleteCompany(String com_name);
+	public List<Patient> checkDemandByNeed(int need_id);
+	public List<Need> checkNeeds(int patient_id);
 	
 }
