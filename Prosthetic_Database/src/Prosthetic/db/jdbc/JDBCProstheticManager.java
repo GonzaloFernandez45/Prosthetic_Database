@@ -83,7 +83,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 				Integer id = rs.getInt("id");
 				String size = rs.getString("size");
 				int company_id = rs.getInt("Company_ID");
-				CompanyManager companyMan=conMan.getconMan();
+				CompanyManager companyMan=conMan.getcomMan();
 				Company company= companyMan.getCompany(company_id);
 				int patient_id=rs.getInt("Patient_ID");
 				PatientManager patientMan = conMan.getpatientMan();
@@ -121,7 +121,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 				Integer id = rs.getInt("id");
 				String size = rs.getString("size");
 				int company_id = rs.getInt("Company_ID");
-				CompanyManager companyMan=conMan.getconMan();
+				CompanyManager companyMan=conMan.getcomMan();
 				Company company= companyMan.getCompany(company_id);
 				int patient_id=rs.getInt("Patient_ID");
 				PatientManager patientMan = conMan.getpatientMan();

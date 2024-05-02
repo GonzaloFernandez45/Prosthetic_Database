@@ -158,7 +158,7 @@ public class ConnectionManager {
 		}
 	}
 	
-	public CompanyManager getconMan() {
+	public CompanyManager getcomMan() {
 		return conMan; 
 	}
 	

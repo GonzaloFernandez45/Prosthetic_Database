@@ -17,14 +17,27 @@ public class Need implements Serializable {
 	
 	public Need() {
 		super();
-		
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.patients = new ArrayList<Patient>();
 	}
 	
 	
+	public Need(String type) {
+		super();
+		this.type = type;
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.patients = new ArrayList<Patient>();
+
+	}
+
+
 	public Need(Integer id, String type) {
 		super();
 		this.id = id;
 		this.type = type;
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.patients = new ArrayList<Patient>();
+
 	}
 
 	public Integer getId() {
