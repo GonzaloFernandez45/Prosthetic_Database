@@ -71,7 +71,7 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public Patient getPatientByID(int id) {
 		try {
-			String sql = "SELECT * FROM patients WHERE id = " + id;
+			String sql = "SELECT * FROM patient WHERE id = " + id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);

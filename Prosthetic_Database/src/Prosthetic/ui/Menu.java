@@ -97,7 +97,9 @@ public class Menu {
 		}
 		case 3: {
 			addPatient();
+			break;
 		}
+		
 		case 0: conMan.close();
 			return;
 		}
@@ -139,6 +141,18 @@ public class Menu {
 		String report = r.readLine();
 		Patient patient = new Patient(id,name,surname,sex,dob,dni,report);
 		patMan.addPatient(patient);
+	}
+	
+	private static void addMaterial() throws NumberFormatException, IOException{
+		System.out.println("Please add the material info: ");
+		System.out.println("ID: ");
+		Integer id = Integer.parseInt(r.readLine());
+		System.out.println("TYPE: ");
+		String type = r.readLine();
+		System.out.println("AVAILABILITY: ");
+		String availability = r.readLine();
+		Material material = new Material(id,type,availability);
+		matMan.addMaterial(material);
 	}
 	
 	
