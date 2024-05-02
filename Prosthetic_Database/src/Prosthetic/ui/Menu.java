@@ -3,6 +3,8 @@ package Prosthetic.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import Prosthetic.db.interfaces.*;
@@ -78,6 +80,7 @@ public class Menu {
 		System.out.println("Welcome Patient, choose what do you want to do");
 		System.out.println("1. Get information: ");
 		System.out.println("2. Input need");
+		System.out.println("3. Add patient");
 		System.out.println("0. Exit");
 		
 		int option = Integer.parseInt(r.readLine());
@@ -90,6 +93,9 @@ public class Menu {
 		case 2: {
 			addNeed();
 			break;
+		}
+		case 3: {
+			addPatient();
 		}
 		case 0: {
 			return;
@@ -112,6 +118,27 @@ public class Menu {
 		Need need = new Need(type);
 		needMan.addNeed(need);
 		
+	}
+	
+	private static void addPatient() throws NumberFormatException, IOException{
+		System.out.println("Please add the patient info: ");
+		System.out.println("ID: ");
+		Integer id = Integer.parseInt(r.readLine());
+		System.out.println("NAME: ");
+		String name = r.readLine();
+		System.out.println("SURNAME: ");
+		String surname = r.readLine();
+		System.out.println("SEX (ENTER MAN OR WOMEN): ");
+		String sex = r.readLine();
+		System.out.println("Date of Birth (DD-MM-YYYY format):");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date dob = Date.valueOf(localDate);
+		System.out.println("DNI: ");
+		Integer dni = Integer.parseInt(r.readLine());
+		System.out.println("REPORT (Will be filled by the patient: ");
+		String report = r.readLine();
+		Patient patient = new Patient(id,name,surname,sex,dob,dni,report);
+		patientMan.addPatient(patient);
 	}
 	
 	
