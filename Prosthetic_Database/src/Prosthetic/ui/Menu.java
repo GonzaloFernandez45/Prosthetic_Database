@@ -22,7 +22,7 @@ public class Menu {
 	private static MaterialManager matMan;
 	private static NeedManager needMan;
 	private static OptionManager optMan;
-	private static PatientManager patientMan;
+	private static PatientManager patMan;
 	private static ProstheticManager prosthMan;
 	private static SurgeonManager surgeonMan;
 	private static SurgeryManager surgeryMan;
@@ -38,6 +38,7 @@ public class Menu {
 		prosthMan = conMan.getprosMan();
 		surgeonMan = conMan.getsurgeonMan();
 		surgeryMan = conMan.getsurgeryMan();
+		patMan = conMan.getpatientMan();
 		
 		prostheticMenu();
 		
@@ -97,17 +98,16 @@ public class Menu {
 		case 3: {
 			addPatient();
 		}
-		case 0: {
+		case 0: conMan.close();
 			return;
 		}
 	
-		}	
-	}
+	}	
 	
 	private static void getPatientByID() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
 		int id = Integer.parseInt(r.readLine());
-		Patient patient = patientMan.getPatientByID(id);
+		Patient patient = patMan.getPatientByID(id);
 		System.out.println(patient);
 	}
 	
@@ -138,7 +138,7 @@ public class Menu {
 		System.out.println("REPORT (Will be filled by the patient: ");
 		String report = r.readLine();
 		Patient patient = new Patient(id,name,surname,sex,dob,dni,report);
-		patientMan.addPatient(patient);
+		patMan.addPatient(patient);
 	}
 	
 	

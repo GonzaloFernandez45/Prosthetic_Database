@@ -23,10 +23,9 @@ public class JDBCProstheticManager implements ProstheticManager {
     private ConnectionManager conMan;
 	
 	
-	public JDBCProstheticManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCProstheticManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 	
 

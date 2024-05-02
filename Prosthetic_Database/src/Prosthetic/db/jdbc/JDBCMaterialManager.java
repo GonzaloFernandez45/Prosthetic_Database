@@ -14,10 +14,9 @@ public class JDBCMaterialManager implements MaterialManager{
 	private static Connection c;
 	private ConnectionManager conMan;
 	
-	public JDBCMaterialManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCMaterialManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 
 	@Override

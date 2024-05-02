@@ -13,10 +13,9 @@ public class JDBCCompanyManager implements CompanyManager {
 	private ConnectionManager conMan;
 	
 	
-	public JDBCCompanyManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCCompanyManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 	
 	

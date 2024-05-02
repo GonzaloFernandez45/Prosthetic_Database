@@ -15,10 +15,9 @@ public class JDBCNeedManager implements NeedManager {
 	private static Connection c;
 	private ConnectionManager conMan;
 	
-	public JDBCNeedManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCNeedManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 
 	@Override

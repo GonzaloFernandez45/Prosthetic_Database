@@ -19,10 +19,9 @@ public class JDBCSurgeryManager implements SurgeryManager {
     private ConnectionManager conMan;
 	
 	
-	public JDBCSurgeryManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCSurgeryManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 	
 	//TODO como hacemos para el surgeon need y patient en todos los metodos

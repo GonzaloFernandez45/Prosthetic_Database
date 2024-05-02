@@ -11,10 +11,9 @@ public class JDBCOptionManager implements OptionManager {
 	private Connection c;
 	private ConnectionManager conMan;
 	
-	public JDBCOptionManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCOptionManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 	
 	@Override

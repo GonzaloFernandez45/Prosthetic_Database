@@ -23,6 +23,20 @@ public class ConnectionManager {
 	public Connection getConnection() {
 		return c;
 	}
+	public ConnectionManager() {
+		this.connect();
+		this.conMan = new JDBCCompanyManager(this);
+		this.opMan = new JDBCOptionManager(this);
+		this.neMan = new JDBCNeedManager(this);
+		this.patMan = new JDBCPatientManager(this);
+		this.prosMan = new JDBCProstheticManager(this);
+		this.surgeonMan = new JDBCSurgeonManager(this);
+		this.surgeryMan = new JDBCSurgeryManager(this);
+		this.materialMan = new JDBCMaterialManager(this);
+		this.createTables();
+		
+		
+	}
 	
 	private void connect() {
 		try {

@@ -19,10 +19,9 @@ public class JDBCPatientManager implements PatientManager {
 	private static Connection c;
 	private ConnectionManager conMan;
 	
-	public JDBCPatientManager(Connection c, ConnectionManager conMan) {
-		super();
-		this.c = c;
+	public JDBCPatientManager(ConnectionManager conMan) {
 		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 	
 	public List<Patient> getPatientByIDandName(){
