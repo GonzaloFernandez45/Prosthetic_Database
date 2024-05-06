@@ -34,6 +34,7 @@ public class ConnectionManager {
 		this.surgeryMan = new JDBCSurgeryManager(this);
 		this.materialMan = new JDBCMaterialManager(this);
 		this.createTables();
+		this.insertNeeds();
 		
 		
 	}
@@ -163,6 +164,49 @@ public class ConnectionManager {
 		} catch (SQLException sqlE) {
 			if (sqlE.getMessage().contains("already exist")){
 				System.out.println("No need to create the tables; already there");
+			}
+			else {
+				System.out.println("Error in query");
+				sqlE.printStackTrace();
+			}
+		}
+	}
+	
+	private void insertNeeds() {
+		try {
+			Statement insertNeed1 = c.createStatement();
+			String need1 = "INSERT INTO need VALUES (1, bellow elbow)";
+			insertNeed1.executeUpdate(need1);
+			insertNeed1.close();
+			
+			Statement insertNeed2 = c.createStatement();
+			String need2 = "INSERT INTO need VALUES (2, Bellow Wrist)";
+			insertNeed2.executeUpdate(need2);
+			insertNeed2.close();
+			
+			Statement insertNeed3 = c.createStatement();
+			String need3 = "INSERT INTO need VALUES (3, Bellow Shoulder)";
+			insertNeed3.executeUpdate(need3);
+			insertNeed3.close();
+			
+			Statement insertNeed4 = c.createStatement();
+			String need4 = "INSERT INTO need VALUES (4, Bellow Ankle)";
+			insertNeed4.executeUpdate(need4);
+			insertNeed4.close();
+			
+			Statement insertNeed5 = c.createStatement();
+			String need5 = "INSERT INTO need VALUES (5, Bellow Knee)";
+			insertNeed5.executeUpdate(need5);
+			insertNeed5.close();
+			
+			Statement insertNeed6 = c.createStatement();
+			String need6 = "INSERT INTO need VALUES (6, Bellow Pelvis)";
+			insertNeed6.executeUpdate(need6);
+			insertNeed6.close();
+			
+		}catch(SQLException sqlE) {
+			if (sqlE.getMessage().contains("already exist")){
+				System.out.println("No need to insert the needs; already there");
 			}
 			else {
 				System.out.println("Error in query");
