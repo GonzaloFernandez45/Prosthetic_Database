@@ -3,17 +3,11 @@ package Prosthetic.db.jdbc;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
-import Prosthetic.db.interfaces.NeedManager;
-import Prosthetic.db.interfaces.PatientManager;
-import Prosthetic.db.interfaces.ProstheticManager;
-import Prosthetic.db.interfaces.SurgeonManager;
-import Prosthetic.db.interfaces.SurgeryManager;
-import Prosthetic.db.pojos.Need;
-import Prosthetic.db.pojos.Patient;
-import Prosthetic.db.pojos.Prosthetic;
-import Prosthetic.db.pojos.Surgeon;
-import Prosthetic.db.pojos.Surgery;
+import Prosthetic.db.interfaces.*;
+import Prosthetic.db.pojos.*;
+
 
 public class JDBCSurgeryManager implements SurgeryManager {
 	
@@ -71,7 +65,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	public List<Surgery> searchSurgerybyPatient(int Patient_ID) {
 		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT * FROM surgery WHERE Patient_ID = ?";
+			String sql= "SELECT s.id,s.time,s.date,s.room,s.Prosthetic_ID,s.Surgeon_ID,s.result FROM surgery AS s JOIN prosthetic ON s.Prosthetic_ID = prosthetic.id WHERE prosthetic.Patient_ID = ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
 			prepstm.setInt(1,Patient_ID);
 			ResultSet rs=prepstm.executeQuery();
@@ -81,15 +75,11 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				String time = rs.getString("time");
 				Date date = rs.getDate("date");
 				int room =rs.getInt("room");
-				int patient_id = rs.getInt("Prosthetic_ID");
 				ProstheticManager prostheticMan = conMan.getprosMan();
-				Prosthetic prosthetic = prostheticMan.getProstheticByID();
+				Prosthetic prosthetic = prostheticMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
 				int surgeon_id = rs.getInt("Surgeon_ID");
 				SurgeonManager surgeonMan = conMan.getsurgeonMan();
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
-				int need_id = rs.getInt("Need_ID");
-				NeedManager needMan = conMan.getneedMan();
-				Need need = needMan.getNeed(need_id);
 				String result = rs.getString("result");
 				String type = rs.getString("type");
 				
@@ -107,37 +97,32 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	}
 
 	@Override
-	public List<Surgery> searchSurgerybyDate(Surgery s) {
-		List<Surgery>surgery= new ArrayList<Surgery>();
+	public List<Surgery> searchSurgerybyDate(Date date) {
+		List<Surgery>surgeries= new ArrayList<Surgery>();
 		try {
 			String sql= "SELECT * FROM surgery WHERE date LIKE ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
-			prepstm.setDate(1,s.getDate());
+			prepstm.setDate(1,date);
 			ResultSet rs=prepstm.executeQuery();
 	
 			while (rs.next()) {
 				int id =rs.getInt("id");
 				String time = rs.getString("time");
-				Date date = rs.getDate("date");
+				Date dateSurgery = rs.getDate("date");
 				int room =rs.getInt("room");
-				int patient_id = rs.getInt("Patient_ID");
-				PatientManager patientMan = conMan.getpatientMan();
-				Patient patient = patientMan.getPatientByID(patient_id);
+				ProstheticManager prostheticMan = conMan.getprosMan();
+				Prosthetic prosthetic = prostheticMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
 				int surgeon_id = rs.getInt("Surgeon_ID");
 				SurgeonManager surgeonMan = conMan.getsurgeonMan();
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
-				int need_id = rs.getInt("Need_ID");
-				NeedManager needMan = conMan.getneedMan();
-				Need need = needMan.getNeed(need_id);
 				String result = rs.getString("result");
-				String type = rs.getString("type");
 				
-				s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
-				surgery.add(s);
+				Surgery s = new Surgery(id,time,dateSurgery,room,prosthetic,surgeon,result);
+				surgeries.add(s);
 	
 			}
 			rs.close();
-			return surgery;
+			return surgeries;
 
 			
 		}catch(SQLException sqlE) {
@@ -161,19 +146,14 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				String time = rs.getString("time");
 				Date date = rs.getDate("date");
 				int room =rs.getInt("room");
-				int patient_id = rs.getInt("Patient_ID");
-				PatientManager patientMan = conMan.getpatientMan();
-				Patient patient = patientMan.getPatientByID(patient_id);
+				ProstheticManager prostheticMan = conMan.getprosMan();
+				Prosthetic prosthetic = prostheticMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
 				int surgeon_id = rs.getInt("Surgeon_ID");
 				SurgeonManager surgeonMan = conMan.getsurgeonMan();
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
-				int need_id = rs.getInt("Need_ID");
-				NeedManager needMan = conMan.getneedMan();
-				Need need = needMan.getNeed(need_id);
 				String result = rs.getString("result");
-				String type = rs.getString("type");
 				
-				Surgery sur= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+				Surgery sur= new Surgery(id,time,date,room,prosthetic,surgeon,result);
 				surgery.add(sur);
 				
 			}

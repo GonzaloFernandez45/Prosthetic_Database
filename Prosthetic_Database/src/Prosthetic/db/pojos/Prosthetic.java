@@ -26,8 +26,8 @@ public class Prosthetic implements Serializable {
 		this.options = new ArrayList<Option>();		
 	}
 
-		public Prosthetic(Integer ID, Integer price, String size, Need need, Material material,
-				Company company, Patient patient) {
+		public Prosthetic(Integer ID, String size, Company company, Patient patient, 
+				Need need, Integer price, Material material ) {
 			super();
 			this.ID = ID;
 			this.price = price;

@@ -94,7 +94,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 				int material_id=rs.getInt("Material_ID");
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
-				Prosthetic p = new Prosthetic(id,price,size,need,material,company,patient);
+				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material);
 				prosthetic.add(p);
 				
 			}
@@ -133,7 +133,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
 				
-				Prosthetic p = new Prosthetic(id,price,size,need,material,company,patient);
+				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material);
 				prosthetic.add(p);
 			}
 			rs.close();
@@ -152,14 +152,25 @@ public class JDBCProstheticManager implements ProstheticManager {
 
 
 	@Override
-	public void getProstheticByID(int id) {
+	public Prosthetic getProstheticByID(int id) {
 		try {
 			String sql = "SELECT * FROM prosthetic WHERE id = " + id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Prosthetic p = new Prosthetic(rs.getInt("ID"),rs.getInt("Price"),rs.getString("Size"),rs.)
+			Integer idProsthetic = rs.getInt("id");
+			String size = rs.getString("size");
+			CompanyManager comMan = conMan.getcomMan();
+			Company company = comMan.getCompany(rs.getInt("Company_ID"));
+			PatientManager patientMan = conMan.getpatientMan();
+			Patient patient = patientMan.getPatientByID(rs.getInt("Patient_ID"));
+			NeedManager needMan = conMan.getneedMan();
+			Need need = needMan.getNeed(rs.getInt("Need_ID"));
+			MaterialManager materialsMan= conMan.getmaterialMan();
+			Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
+			
+			Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material);
 			return p;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

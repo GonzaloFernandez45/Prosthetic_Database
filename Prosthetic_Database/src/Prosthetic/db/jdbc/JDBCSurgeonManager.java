@@ -68,7 +68,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 }
 
 	@Override
-	public Surgeon getSurgeonbysurgery(int surgery_id) {
+	public Surgeon getSurgeonbySurgery(int surgery_id) {
 		try {
 		String sql = "SELECT s.id,s.name,s.surname,s.salary,s.hiredate,s.specialization "
 				+ "FROM surgeon AS s JOIN surgery  ON s.id = surgery.Surgeon_ID WHERE surgery_ID = ?";
@@ -84,6 +84,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		return null;
 		}
 
+	//TODO Revisar
 	@Override
 	public Surgeon getSurgeon(int id) {
 		try {
