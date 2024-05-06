@@ -80,6 +80,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
+				Integer price = rs.getInt("price");
 				String size = rs.getString("size");
 				int company_id = rs.getInt("Company_ID");
 				CompanyManager companyMan=conMan.getcomMan();
@@ -90,11 +91,10 @@ public class JDBCProstheticManager implements ProstheticManager {
 				int need_id = rs.getInt("Need_ID");
 				NeedManager needMan = conMan.getneedMan();
 				Need need = needMan.getNeed(need_id);
-				int price= rs.getInt("price");
 				int material_id=rs.getInt("Material_ID");
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
-				Prosthetic p = new Prosthetic( id,size,company,patient,need,price,material);
+				Prosthetic p = new Prosthetic(id,price,size,need,material,company,patient);
 				prosthetic.add(p);
 				
 			}
@@ -133,7 +133,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
 				
-				Prosthetic p = new Prosthetic( id,size,company,patient,need,price,material);
+				Prosthetic p = new Prosthetic(id,price,size,need,material,company,patient);
 				prosthetic.add(p);
 			}
 			rs.close();
@@ -148,6 +148,24 @@ public class JDBCProstheticManager implements ProstheticManager {
 		
 		
 		return null;
+	}
+
+
+	@Override
+	public void getProstheticByID(int id) {
+		try {
+			String sql = "SELECT * FROM prosthetic WHERE id = " + id;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Prosthetic p = new Prosthetic(rs.getInt("ID"),rs.getInt("Price"),rs.getString("Size"),rs.)
+			return p;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;		
 	}
 
 }

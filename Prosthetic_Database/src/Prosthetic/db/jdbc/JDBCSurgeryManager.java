@@ -6,10 +6,12 @@ import java.util.List;
 
 import Prosthetic.db.interfaces.NeedManager;
 import Prosthetic.db.interfaces.PatientManager;
+import Prosthetic.db.interfaces.ProstheticManager;
 import Prosthetic.db.interfaces.SurgeonManager;
 import Prosthetic.db.interfaces.SurgeryManager;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
+import Prosthetic.db.pojos.Prosthetic;
 import Prosthetic.db.pojos.Surgeon;
 import Prosthetic.db.pojos.Surgery;
 
@@ -29,18 +31,16 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	@Override
 	public void addSurgery(Surgery s) {
 		try {
-		String sql= "INSERT INTO surgery (id,  time, date, room, patient_id, surgeon_id,need_id , result )"
+		String sql= "INSERT INTO surgery (id,  time, date, room, prosthetic_id, surgeon_id,result )"
 				+ "VALUES (?,?,?,?,?,?,?,?,?)" ;
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		prepstm.setInt(1,s.getId());
 		prepstm.setString(2,s.getTime());
 		prepstm.setDate(3,s.getDate());
 		prepstm.setInt(4,s.getRoom());
-		prepstm.setInt(5,s.getPatient().getId());
+		prepstm.setInt(5,s.getProsthetic().getID());
 		prepstm.setInt(6,s.getSurgeon().getId());
-		prepstm.setInt(7,s.getNeed().getId());
 		prepstm.setString(8,s.getResult());
-		prepstm.setString(9,s.getType());
 		
 		
 		}catch( SQLException sqlE) {
@@ -81,9 +81,9 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				String time = rs.getString("time");
 				Date date = rs.getDate("date");
 				int room =rs.getInt("room");
-				int patient_id = rs.getInt("Patient_ID");
-				PatientManager patientMan = conMan.getpatientMan();
-				Patient patient = patientMan.getPatientByID(patient_id);
+				int patient_id = rs.getInt("Prosthetic_ID");
+				ProstheticManager prostheticMan = conMan.getprosMan();
+				Prosthetic prosthetic = prostheticMan.getProstheticByID();
 				int surgeon_id = rs.getInt("Surgeon_ID");
 				SurgeonManager surgeonMan = conMan.getsurgeonMan();
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
@@ -93,7 +93,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				String result = rs.getString("result");
 				String type = rs.getString("type");
 				
-				Surgery s= new Surgery(id,time,date,room,patient,surgeon,need,result,type);
+				Surgery s= new Surgery(id,time,date,room,prosthetic,surgeon,result);
 				surgery.add(s);
 			}
 			rs.close();

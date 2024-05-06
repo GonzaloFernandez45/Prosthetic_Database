@@ -11,9 +11,8 @@ public class Company implements Serializable {
 	private Integer id;
 	private String name;
 	private String location;
-	
-	//TODO should we consider here to put this or we only put the attribute in the many part?
 	private List <Prosthetic> prosthetics;
+	
 	
 	
 	public Company () {

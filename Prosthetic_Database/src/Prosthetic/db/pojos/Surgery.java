@@ -10,15 +10,13 @@ import java.util.List;
 public class Surgery implements Serializable {
 	
 	private static final long serialVersionUID = 6988768427763823667L;
-	private String type;
-	private Date date;	
 	private String time;
+	private Date date;	
 	private String result;
 	private Integer room;
 	private Integer id;
 	private Surgeon surgeon;
-	private Need need;
-	private Patient patient;
+	private Prosthetic prosthetic;
 	
 	public Surgery() {
 		super();
@@ -26,27 +24,30 @@ public class Surgery implements Serializable {
 	}
 
 	
-	public Surgery(Integer id,String time,Date date,Integer room,Patient patient,Surgeon surgeon,Need need,String result, String type) {
+	public Surgery(Integer id,String time,Date date,Integer room,Prosthetic prosthetic,Surgeon surgeon,String result) {
 		super();
-		this.type = type;
+
 		this.date = date;
 		this.time = time;
 		this.result = result;
 		this.room = room;
 		this.id = id;
 		this.surgeon = surgeon;
-		this.need = need;
-		this.patient = patient;
+		this.prosthetic = prosthetic;
 	}
 
 
-	public String getType() {
-		return type;
+	
+
+	public Prosthetic getProsthetic() {
+		return prosthetic;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+
+	public void setProsthetic(Prosthetic prosthetic) {
+		this.prosthetic = prosthetic;
 	}
+
 
 	public Date getDate() {
 		return date;
@@ -96,21 +97,6 @@ public class Surgery implements Serializable {
 		this.surgeon = surgeon;
 	}
 
-	public Need getNeed() {
-		return need;
-	}
-
-	public void setNeed(Need need) {
-		this.need = need;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
 
 	@Override
 	public int hashCode() {
@@ -129,11 +115,13 @@ public class Surgery implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+
 	@Override
 	public String toString() {
-		return "Surgery [type=" + type + ", date=" + date + ", time=" + time + ", result=" + result + ", room=" + room
-				+ ", id=" + id + ", surgeon=" + surgeon + ", need=" + need + ", patient=" + patient + "]";
+		return "Surgery [time=" + time + ", date=" + date + ", result=" + result + ", room=" + room + ", id=" + id
+				+ ", surgeon=" + surgeon + ", prosthetic=" + prosthetic + "]";
 	}
+
 	
 	
 	

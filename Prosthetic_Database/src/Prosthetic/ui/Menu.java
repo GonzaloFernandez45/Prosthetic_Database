@@ -80,8 +80,8 @@ public class Menu {
 	private static void patientMenu() throws NumberFormatException, IOException{
 		System.out.println("Welcome Patient, choose what do you want to do");
 		System.out.println("1. Get information: ");
-		System.out.println("2. Input need");
-		System.out.println("3. Add patient");
+		System.out.println("2. Report delivery: ");
+		System.out.println("3. Input option: ");
 		System.out.println("0. Exit");
 		
 		int option = Integer.parseInt(r.readLine());
@@ -92,19 +92,25 @@ public class Menu {
 			break;
 		}
 		case 2: {
-			addNeed();
+			
 			break;
 		}
 		case 3: {
-			addPatient();
+			
 			break;
 		}
-		
-		case 0: conMan.close();
+		case 0: 
+			conMan.close();
 			return;
 		}
 	
 	}	
+	
+	private static void reportDelivery() throws NumberFormatException, IOException {
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
+		
+	}
 	
 	private static void getPatientByID() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
