@@ -39,6 +39,14 @@ public class Prosthetic implements Serializable {
 			this.patient = patient;
 		}
 		
+		
+
+		public Prosthetic(Integer ID, Integer price, String size) {
+			super();
+			this.ID = ID;
+			this.price = price;
+			this.size = size;
+		}
 
 		public Integer getID() {
 			return ID;

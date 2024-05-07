@@ -29,8 +29,28 @@ public class JDBCProstheticManager implements ProstheticManager {
 	}
 	
 
+
+	public List<Prosthetic> getProstheticByIDandPriceandSize(){
 	
-	// TODO como ponemos need options material en todos los metodos
+		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
+		try {
+			String sql = "SELECT id,size,price FROM prosthetic GROUP BY id";
+			PreparedStatement search = c.prepareStatement(sql);
+			ResultSet rs = search.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				Integer price = rs.getInt("price");
+				String size = rs.getString("size");
+				Prosthetic p = new Prosthetic(id,price,size);
+				prosthetics.add(p);
+			}
+			return prosthetics;
+		}catch (SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
+		}
+		return prosthetics;
+	}
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
