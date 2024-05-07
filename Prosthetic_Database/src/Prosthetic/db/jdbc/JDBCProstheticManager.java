@@ -42,7 +42,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 		prepstm.setInt(3, p.getCompany().getId());
 		prepstm.setInt(4, p.getPatient().getId());
 		prepstm.setInt(5, p.getNeed().getId());
-		prepstm.setInt(6, p.getPrice());
+		prepstm.setInt(6, p.getMaterial().getId());
+		prepstm.setInt(7, p.getPrice());
 		prepstm.executeUpdate();
 		prepstm.close();
 		

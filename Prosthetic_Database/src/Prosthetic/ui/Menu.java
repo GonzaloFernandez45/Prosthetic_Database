@@ -158,6 +158,32 @@ public class Menu {
 		
 	}
 	
+	private static void companyMenu() throws NumberFormatException, IOException{
+		System.out.println("Welcome Company, choose what do you want to do");
+		System.out.println("1. Create prosthetic");
+		System.out.println("2. Check demand");
+		System.out.println("3. Check the needs of a patient");
+		System.out.println("0. Exit");
+		int option = Integer.parseInt(r.readLine());
+		switch(option) {
+		case 1: {
+			addSurgeon();
+			break;
+		}
+		case 2: {
+			addCompany();
+			break;
+		}
+		case 3: {
+			deleteSurgeon();
+			break;
+		}
+		
+		case 0: conMan.close();
+			return;
+		}
+	}
+	
 	private static void reportDelivery() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
 		int id = Integer.parseInt(r.readLine());
@@ -257,6 +283,16 @@ public class Menu {
 	
 	private static void getReport() {
 		//TODO method
+	}
+	
+	private static void  addProsthetic() throws NumberFormatException, IOException {
+		System.out.println("Add prosthetic information");
+		System.out.println("Size:");
+		String size = r.readLine();
+		System.out.println("Select the company´s ID");
+		
+		
+		
 	}
 	
 	
