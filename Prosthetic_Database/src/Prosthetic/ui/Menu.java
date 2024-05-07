@@ -255,6 +255,10 @@ public class Menu {
 		matMan.addMaterial(material);
 	}
 	
+	private static void getReport() {
+		//TODO method
+	}
+	
 	
 	
 }
