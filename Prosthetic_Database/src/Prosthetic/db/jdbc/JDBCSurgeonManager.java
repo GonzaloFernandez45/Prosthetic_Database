@@ -9,6 +9,7 @@ import java.util.List;
 import Prosthetic.db.interfaces.NeedManager;
 import Prosthetic.db.interfaces.PatientManager;
 import Prosthetic.db.interfaces.SurgeonManager;
+import Prosthetic.db.pojos.Company;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 import Prosthetic.db.pojos.Surgeon;
@@ -45,7 +46,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	}	
 	
 	@Override
-	public List<Surgeon>SearchSurgeonByName(String name, String surname) {
+	public List<Surgeon> SearchSurgeonByName(String name, String surname) {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			String sql = "SELECT * FROM surgeon WHERE name LIKE ? AND surname LIKE ?";
@@ -137,20 +138,43 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	}
 	
 	@Override
-	public Surgeon listSurgeons(){
+	public List<Surgeon> listSurgeons(){
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			String sql = "SELECT * FROM surgeon";
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
-			return s;
+			while (rs.next()) {
+				
+				Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
+				surgeons.add(s);
+			}
+			rs.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
-		return null;
+		return surgeons;
+	}
+	
+	public List<Surgeon> listSurgeonIDandName() {
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+			String sql = "SELECT id,name,surname FROM surgeon";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				Surgeon s = new Surgeon (rs.getInt("id"), rs.getString("name"), rs.getString("surname"));
+				surgeons.add(s);
+				}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return surgeons;
 	}
 	
 

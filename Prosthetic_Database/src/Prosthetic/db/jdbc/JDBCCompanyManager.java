@@ -108,7 +108,10 @@ public class JDBCCompanyManager implements CompanyManager {
 		PreparedStatement pstmt= c.prepareStatement(sql);
 		pstmt.setInt(1,id);
 		ResultSet rs = pstmt.executeQuery();
-			
+		rs.next();
+		Company company = new Company(rs.getString("name"), rs.getString("location"));
+		return company;
+		
 		}catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -117,23 +120,44 @@ public class JDBCCompanyManager implements CompanyManager {
 	}
 	
 	@Override
-	public Company listCompanies() {
+	public List<Company> listCompanies() {
+		List<Company> companies = new ArrayList<Company>();
 		try {
 			String sql = "SELECT * FROM company";
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			Company company = new Company(rs.getString("name"), rs.getString("location"));
-			return company;
+			while(rs.next()) {
+				Company company = new Company(rs.getString("name"), rs.getString("location"));
+				companies.add(company);
+				}
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
-		return null;
+		return companies;
 	}
-
-
+	
+	@Override
+	public List<Company> listCompaniesIDandName() {
+		List<Company> companies = new ArrayList<Company>();
+		try {
+			String sql = "SELECT id,name FROM company";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				Company company = new Company(rs.getInt("id"), rs.getString("name"));
+				companies.add(company);
+				}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return companies;
+	}
+	
+	
 	
 
 }

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Prosthetic.db.interfaces.NeedManager;
 import Prosthetic.db.pojos.*;
@@ -72,6 +74,25 @@ public class JDBCNeedManager implements NeedManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public List<Need> listNeeds() {
+		List<Need> needs = new ArrayList<Need>();
+		try {
+			String sql = "SELECT * FROM need";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				Need need = new Need(rs.getInt("id"),rs.getString("type"));
+				needs.add(need);
+				}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return needs;
 	}
 
 }

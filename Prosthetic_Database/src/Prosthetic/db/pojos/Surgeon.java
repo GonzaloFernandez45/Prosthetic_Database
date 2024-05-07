@@ -59,6 +59,17 @@ public class Surgeon implements Serializable {
 			this.hiredate = hiredate;
 			this.surgeries = new ArrayList<Surgery>();
 		}
+		
+		
+
+		public Surgeon(Integer id, String name, String surname) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.surname = surname;
+			this.surgeries = new ArrayList<Surgery>();
+		}
+
 
 		public Integer getId() {
 			return id;

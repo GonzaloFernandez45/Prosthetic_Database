@@ -35,7 +35,20 @@ public class Company implements Serializable {
 		super();
 		this.name = name;
 		this.location = location;
+		this.prosthetics = new ArrayList<Prosthetic>();
+
 	}
+
+
+
+	public Company(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.prosthetics = new ArrayList<Prosthetic>();
+
+	}
+
 
 
 
@@ -44,7 +57,7 @@ public class Company implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.location = location;
-		this.prosthetics = new ArrayList<Prosthetic> ();
+		this.prosthetics = new ArrayList<Prosthetic>();
 	}
 
 

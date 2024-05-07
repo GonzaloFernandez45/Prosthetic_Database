@@ -86,8 +86,6 @@ public class Menu {
 		System.out.println("1. Get information: ");
 		System.out.println("2. Input option");
 		System.out.println("3. Report delivery of prosthetic");
-		System.out.println("2. Report delivery: ");
-		System.out.println("3. Input option: ");
 		System.out.println("0. Exit");
 		
 		int option = Integer.parseInt(r.readLine());
@@ -232,12 +230,14 @@ public class Menu {
 
 	private static void deleteSurgeon() throws NumberFormatException, IOException{
 		System.out.println("Please enter the id of the surgeon you want to delete: ");
+		surgeonMan.listSurgeonIDandName();
 		int id = Integer.parseInt(r.readLine());
 		surgeonMan.deleteSurgeon(id);
 	}
 	
 	private static void deleteCompany() throws NumberFormatException, IOException{
 		System.out.println("Please enter the name of the company you want to delete: ");
+		comMan.listCompaniesIDandName();
 		String name = r.readLine();
 		comMan.deleteCompany(name);
 	}
