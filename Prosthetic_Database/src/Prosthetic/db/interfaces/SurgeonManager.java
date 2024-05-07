@@ -12,4 +12,5 @@ public interface SurgeonManager {
 	public void deleteSurgeon (int surgeon_id);
 	public String resultSurgery (int surgery_id);
 	public List<Surgeon>SearchSurgeonByName(String name, String surname);
+	public Surgeon listSurgeons();
  }

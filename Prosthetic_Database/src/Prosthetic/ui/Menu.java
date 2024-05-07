@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -57,6 +60,7 @@ public class Menu {
 		
 		switch(option) {
 		case 1: {
+			managerMenu();
 			break;
 		}
 		case 2: {
@@ -80,8 +84,8 @@ public class Menu {
 	private static void patientMenu() throws NumberFormatException, IOException{
 		System.out.println("Welcome Patient, choose what do you want to do");
 		System.out.println("1. Get information: ");
-		System.out.println("2. Input need");
-		System.out.println("3. Add patient");
+		System.out.println("2. Input option");
+		System.out.println("3. Report delivery of prosthetic");
 		System.out.println("0. Exit");
 		
 		int option = Integer.parseInt(r.readLine());
@@ -92,7 +96,7 @@ public class Menu {
 			break;
 		}
 		case 2: {
-			addNeed();
+			//addNeed(); ESTE METODO CORRESPONDE A SURGEON CON LA NUEVA MODIFICACIÓN
 			break;
 		}
 		case 3: {
@@ -104,7 +108,55 @@ public class Menu {
 			return;
 		}
 	
-	}	
+	}
+	
+	private static void managerMenu() throws NumberFormatException, IOException{
+		System.out.println("Welcome Manager, choose what do you want to do");
+		System.out.println("1. Add surgeon");
+		System.out.println("2. Add company");
+		System.out.println("3. Delete surgeon");
+		System.out.println("4. Delete company");
+		System.out.println("5. See all patients");
+		System.out.println("6. See all surgeons");
+		System.out.println("7. See all companies");
+		System.out.println("0. Exit");
+		int option = Integer.parseInt(r.readLine());
+		switch(option) {
+		case 1: {
+			addSurgeon();
+			break;
+		}
+		case 2: {
+			addCompany();
+			break;
+		}
+		case 3: {
+			deleteSurgeon();
+			break;
+		}
+		case 4: {
+			deleteCompany();
+			break;
+		}
+		case 5: {
+			patMan.listPatients();
+			break;
+		}
+		case 6: {
+			surgeonMan.listSurgeons();
+			break;
+		}
+		case 7: {
+			comMan.listCompanies();
+			break;
+		}
+		
+		case 0: conMan.close();
+			return;
+		}
+		
+		
+	}
 	
 	private static void getPatientByID() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
@@ -124,8 +176,6 @@ public class Menu {
 	
 	private static void addPatient() throws NumberFormatException, IOException{
 		System.out.println("Please add the patient info: ");
-		System.out.println("ID: ");
-		Integer id = Integer.parseInt(r.readLine());
 		System.out.println("NAME: ");
 		String name = r.readLine();
 		System.out.println("SURNAME: ");
@@ -139,9 +189,51 @@ public class Menu {
 		Integer dni = Integer.parseInt(r.readLine());
 		System.out.println("REPORT (Will be filled by the patient: ");
 		String report = r.readLine();
-		Patient patient = new Patient(id,name,surname,sex,dob,dni,report);
+		Patient patient = new Patient(name,surname,sex,dob,dni,report);
 		patMan.addPatient(patient);
 	}
+	
+	private static void addSurgeon() throws NumberFormatException, IOException{
+		System.out.println("Please add the surgeon info: ");
+		System.out.println("NAME: ");
+		String name = r.readLine();
+		System.out.println("SURNAME: ");
+		String surname = r.readLine();
+		System.out.println("SALARY: ");
+		Integer salary = Integer.parseInt(r.readLine());
+		System.out.println("HIREDATE (DD-MM-YYYY format): ");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date hiredate = Date.valueOf(localDate);
+		System.out.println("SPECIALIZATION: ");
+		String specialization = r.readLine();
+		Surgeon surgeon = new Surgeon(name,surname,salary,hiredate,specialization);
+		surgeonMan.addSurgeon(surgeon);
+		
+	}
+	
+	private static void addCompany() throws NumberFormatException, IOException{
+		System.out.println("Please add the company info: ");
+		System.out.println("NAME: ");
+		String name = r.readLine();
+		System.out.println("LOCATION: ");
+		String localization = r.readLine();
+		Company company = new Company(name,localization);
+		comMan.addCompany(company);
+		
+	}
+
+	private static void deleteSurgeon() throws NumberFormatException, IOException{
+		System.out.println("Please enter the id of the surgeon you want to delete: ");
+		int id = Integer.parseInt(r.readLine());
+		surgeonMan.deleteSurgeon(id);
+	}
+	
+	private static void deleteCompany() throws NumberFormatException, IOException{
+		System.out.println("Please enter the name of the company you want to delete: ");
+		String name = r.readLine();
+		comMan.deleteCompany(name);
+	}
+
 	
 	private static void addMaterial() throws NumberFormatException, IOException{
 		System.out.println("Please add the material info: ");

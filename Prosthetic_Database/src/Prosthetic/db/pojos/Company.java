@@ -30,6 +30,11 @@ public class Company implements Serializable {
 		this.location = location;
 	}
 
+	public Company(String name, String location) {
+		super();
+		this.name = name;
+		this.location = location;
+	}
 
 
 

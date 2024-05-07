@@ -1,5 +1,6 @@
 package Prosthetic.db.jdbc;
 
+import java.io.IOException;
 import java.security.AlgorithmParametersSpi;
 import java.sql.*;
 import java.util.ArrayList;
@@ -128,6 +129,23 @@ public class JDBCSurgeonManager implements SurgeonManager {
 			return Newresult;
 			
 		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public Surgeon listSurgeons(){
+		try {
+			String sql = "SELECT * FROM surgeon";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
+			return s;
+		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}

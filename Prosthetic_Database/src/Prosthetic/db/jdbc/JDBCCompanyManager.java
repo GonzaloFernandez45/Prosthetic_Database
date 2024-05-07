@@ -115,6 +115,23 @@ public class JDBCCompanyManager implements CompanyManager {
 		}	
 		return null;
 	}
+	
+	@Override
+	public Company listCompanies() {
+		try {
+			String sql = "SELECT * FROM company";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Company company = new Company(rs.getString("name"), rs.getString("location"));
+			return company;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 
 	

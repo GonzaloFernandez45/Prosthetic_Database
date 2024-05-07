@@ -1,5 +1,6 @@
 package Prosthetic.db.jdbc;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -84,6 +85,23 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null;
 		
+	}
+	
+	@Override
+	public Patient listPatients(){
+		try {
+			String sql = "SELECT * FROM patient";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Patient p = new Patient (rs.getInt("name"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"),rs.getString("report"));
+			return p;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

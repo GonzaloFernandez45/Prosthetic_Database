@@ -53,6 +53,19 @@ public class Patient implements Serializable{
 
 	}
 
+	public Patient(String name, String surname, String sex, Date dob, Integer dni, String report) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.sex = sex;
+		this.dob = dob;
+		this.dni = dni;
+		this.report = report;
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.needs = new ArrayList<Need>();
+
+	}
+
 
 
 

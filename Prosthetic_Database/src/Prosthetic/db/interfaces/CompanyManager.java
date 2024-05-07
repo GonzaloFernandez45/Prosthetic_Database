@@ -10,6 +10,7 @@ public interface CompanyManager {
 	public List<Patient> checkDemandByNeed(int need_id);
 	public List<Need> checkNeeds(int patient_id);
 	public Company getCompany(int id);
+	public Company listCompanies();
 
 	
 }

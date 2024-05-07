@@ -191,7 +191,7 @@ public class ConnectionManager {
 			insertNeed3.close();
 			
 			Statement insertNeed4 = c.createStatement();
-			String need4 = "INSERT INTO need VALUES (4, Bellow Ankle)";
+			String need4 = "INSERT INTO need VALUES (2, Bellow Ankle)";
 			insertNeed4.executeUpdate(need4);
 			insertNeed4.close();
 			
