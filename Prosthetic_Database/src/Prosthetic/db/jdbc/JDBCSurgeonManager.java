@@ -46,7 +46,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	}	
 	
 	@Override
-	public List<Surgeon> SearchSurgeonByName(String name, String surname) {
+	public List<Surgeon>SearchSurgeonByName(String name, String surname) {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			String sql = "SELECT * FROM surgeon WHERE name LIKE ? AND surname LIKE ?";
@@ -68,6 +68,26 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	}
 	return surgeons;
 }
+	public List<Surgeon> getSurgeonByIDandName(){
+		List<Surgeon> surgeons = new ArrayList<Surgeon>();
+		try {
+			String sql = "SELECT id,name,surname FROM surgeon GROUP BY id";
+			PreparedStatement search = c.prepareStatement(sql);
+			ResultSet rs = search.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String PatientName = rs.getString("name");
+				String surname = rs.getString("surname");
+				Surgeon s = new Surgeon(id,PatientName,surname);
+				surgeons.add(s);
+			}
+			return surgeons;
+		}catch (SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
+		}
+		return surgeons;
+	}
 
 	@Override
 	public Surgeon getSurgeonbySurgery(int surgery_id) {
