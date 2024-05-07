@@ -23,6 +23,8 @@ public class Patient implements Serializable{
 
 	public Patient() {
 		super();
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.needs = new ArrayList<Need>();
 		// TODO Auto-generated constructor stub
 	}
 	

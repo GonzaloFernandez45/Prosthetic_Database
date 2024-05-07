@@ -128,9 +128,8 @@ public class ConnectionManager {
 					+ "time String,"
 					+ "date DATE,"
 					+ "room INTEGER,"
-					+ "Patient_ID INTEGER REFERENCES patient(ID) ON DELETE RESTRICT,"
 					+ "Surgeon_ID INTEGER REFERENCES surgeon(ID) ON DELETE SET NULL,"
-					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT,"
+					+ "Prosthetic_ID INTEGER REFERENCES prosthetic(ID) ON DELETE SET NULL,"
 					+ "result TEXT NOT NULL DEFAULT 'Not completed',"
 					+ "type TEXT NOT NULL)";
 					

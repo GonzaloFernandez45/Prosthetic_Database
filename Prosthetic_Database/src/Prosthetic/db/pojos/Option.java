@@ -20,12 +20,6 @@ public class Option implements Serializable {
 		this.prosthetics = new ArrayList<Prosthetic>();
 	}
 
-	public Option(Integer id, String type, List<Prosthetic> prosthetics) {
-		super();
-		this.id = id;
-		this.type = type;
-		this.prosthetics = prosthetics;
-	}
 	
 
 	public Option(Integer id, String type) {

@@ -14,6 +14,7 @@ public class Company implements Serializable {
 	private List <Prosthetic> prosthetics;
 	
 	
+	
 	public Company () {
 		super();
 		this.prosthetics=new ArrayList<Prosthetic> ();

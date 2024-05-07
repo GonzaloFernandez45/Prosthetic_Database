@@ -86,6 +86,8 @@ public class Menu {
 		System.out.println("1. Get information: ");
 		System.out.println("2. Input option");
 		System.out.println("3. Report delivery of prosthetic");
+		System.out.println("2. Report delivery: ");
+		System.out.println("3. Input option: ");
 		System.out.println("0. Exit");
 		
 		int option = Integer.parseInt(r.readLine());
@@ -100,11 +102,11 @@ public class Menu {
 			break;
 		}
 		case 3: {
-			addPatient();
+			
 			break;
 		}
-		
-		case 0: conMan.close();
+		case 0: 
+			conMan.close();
 			return;
 		}
 	
@@ -155,6 +157,12 @@ public class Menu {
 			return;
 		}
 		
+		
+	}
+	
+	private static void reportDelivery() throws NumberFormatException, IOException {
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
 		
 	}
 	

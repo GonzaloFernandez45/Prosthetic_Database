@@ -7,7 +7,7 @@ import Prosthetic.db.pojos.*;
 public interface SurgeonManager {
 	
 	public void addSurgeon (Surgeon s);
-	public Surgeon getSurgeonbysurgery (int surgery_ID);
+	public Surgeon getSurgeonbySurgery (int surgery_ID);
 	public Surgeon getSurgeon(int id);
 	public void deleteSurgeon (int surgeon_id);
 	public String resultSurgery (int surgery_id);

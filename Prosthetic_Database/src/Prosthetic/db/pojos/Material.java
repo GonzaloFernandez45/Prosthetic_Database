@@ -18,10 +18,7 @@ public class Material implements Serializable{
 	
 	public Material() {
 		super();
-		this.prosthetics = new ArrayList<Prosthetic>();
-		
-		// TODO Auto-generated constructor stub
-		
+		this.prosthetics = new ArrayList<Prosthetic>();		
 		
 		
 	}
