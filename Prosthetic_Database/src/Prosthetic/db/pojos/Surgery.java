@@ -35,9 +35,20 @@ public class Surgery implements Serializable {
 		this.surgeon = surgeon;
 		this.prosthetic = prosthetic;
 	}
+	
 
 
 	
+
+	public Surgery(String time, Date date, Integer room, Surgeon surgeon,String result) {
+		super();
+		this.time = time;
+		this.date = date;
+		this.result = result;
+		this.room = room;
+		this.surgeon = surgeon;
+	}
+
 
 	public Prosthetic getProsthetic() {
 		return prosthetic;

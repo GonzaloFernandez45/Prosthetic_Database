@@ -53,7 +53,7 @@ public class Menu {
 		System.out.println("Choose your role");
 		System.out.println("1. Manager");
 		System.out.println("2. Patient");
-		System.out.println("2. Surgeon");
+		System.out.println("3. Surgeon");
 		System.out.println("4. Company/Engineer");
 		System.out.println("0. Exit");
 
@@ -69,6 +69,7 @@ public class Menu {
 			break;
 		}
 		case 3:{
+			surgeonMenu();
 			break;
 		}
 		case 4: {
@@ -184,6 +185,52 @@ public class Menu {
 			return;
 		}
 	}
+	private static void surgeonMenu() throws NumberFormatException, IOException{
+		System.out.println("Welcome Surgeon, choose what do you want to do");
+		System.out.println("1. Add a new patient: ");
+		System.out.println("2. Login to an existing patient");
+		System.out.println("0. Exit");
+		
+	
+		int option = Integer.parseInt(r.readLine());
+		switch(option) {
+		case 1:
+			addPatient();
+			break;
+		case 2:
+			loginToAnExistingPatinet();
+			
+			break;
+		case 0:
+			conMan.close();
+			break;
+		}
+	}
+	private static void loginToAnExistingPatinet() throws NumberFormatException, IOException{
+		System.out.println("Welcome,choose an option");
+		System.out.println("1. Schedule surgery: ");
+		System.out.println("2. Surgery result");
+		System.out.println("3. Input needs");
+		System.out.println("0. Exit");
+		
+	
+		int option = Integer.parseInt(r.readLine());
+		switch(option) {
+		case 1:
+			scheduleSurgery();
+			break;
+		case 2:
+			surgeryResult();
+			break;
+		case 3:
+			inputNeed();
+			break;
+			
+		case 0:
+			conMan.close();
+			break;
+		}
+	}
 	
 	private static void reportDelivery() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
@@ -222,7 +269,7 @@ public class Menu {
 		Date dob = Date.valueOf(localDate);
 		System.out.println("DNI: ");
 		Integer dni = Integer.parseInt(r.readLine());
-		System.out.println("REPORT (Will be filled by the patient: ");
+		System.out.println("REPORT : ");
 		String report = r.readLine();
 		Patient patient = new Patient(name,surname,sex,dob,dni,report);
 		patMan.addPatient(patient);
@@ -336,8 +383,120 @@ public class Menu {
 				}
 			}
 		}
+	private static void scheduleSurgery() throws NumberFormatException, IOException{
+		
+		System.out.println("Choose the id of your patient:");
+	    patMan.getPatientByIDandName();
+		int patient_id= Integer.parseInt(r.readLine());
+		PatientManager patient_manager=conMan.getpatientMan();
+		Patient patient =patient_manager.getPatientByID(patient_id);
+		List<Prosthetic>prosthetics= prosthMan.getProstheticbyPatient(patient);
+		
+		if(!prosthetics.isEmpty()) {
+		Prosthetic p= prosthetics.get(0);
+		System.out.println("Please add the surgery info: ");
+		System.out.println("Time: ");
+		String time = r.readLine();
+		System.out.println("Date (DD-MM-YYYY format): ");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date date = Date.valueOf(localDate);
+		System.out.println("Room: ");
+		int room = Integer.parseInt(r.readLine());
+		System.out.println("Choose the ID of the surgeon: ");
+		System.out.println(surgeonMan.listSurgeonIDandName());
+		int surgeon_id = Integer.parseInt(r.readLine());
+		SurgeonManager surgeonMan = conMan.getsurgeonMan();
+		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+		System.out.println("Result (Completed/Not completed): ");
+		String result  = r.readLine();
+		Surgery surgery = new Surgery(time,date,room,surgeon,result);
+		surgery.setProsthetic(p);
+		surgeryMan.addSurgery(surgery);
+		
+		System.out.println("Surgery scheduled correctly");
+		System.out.println("Prosthetic id: "+p.getID());//para comprobar
+		
+		
+		}else {
+			System.out.println("Patient doesn't have a prosthetic. Can't schedule the surgery");
+		}
+		
+	}
+	private static void surgeryResult () throws NumberFormatException, IOException{
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
+		String result = surgeonMan.resultSurgery(id);
+		System.out.println(result);
+		
+	}
+	
+	private static void inputNeed() throws NumberFormatException, IOException{
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
+
+			System.out.println("Insert the need: ");
+			System.out.println("Select already created needs (Press 0): ");
+			System.out.println(optMan.listOptions());
+			System.out.println("Add a new need (Press 1): ");
+			int option = Integer.parseInt(r.readLine());
+			switch(option) {
+				case 0: {
+					System.out.println("Please select the wanted need by its ID: ");
+					int need_id = Integer.parseInt(r.readLine());
+					Patient patient = patMan.getPatientByID(id);
+					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					 if(prosthetics.isEmpty()) {
+						 System.out.println("No prosthetics found for the patient");
+						 break;
+					 }else {
+						 System.out.println("Choose the id of one of the patient's prosthetic");
+						 prosthMan.getProstheticbyPatient(patient);
+						 int prosthetic_id=Integer.parseInt(r.readLine());
+						 for(Prosthetic prosthetic:prosthetics) {
+							 if(prosthetic.getID()==prosthetic_id) {
+								 NeedManager needManager= conMan.getneedMan();
+								 Need need = needManager.getNeed(need_id);
+								 prosthetic.setNeed(need);
+							 }
+						 }
+						 System.out.println("Need added correctly");
+						 break;
+						 
+					 }
+			
+				}
+				case 1: {
+					System.out.println("Please add the new need info: ");
+					System.out.println("Type:");
+					String type = r.readLine();
+					Need need = new Need(type);
+					needMan.addNeed(need);
+					Patient patient = patMan.getPatientByID(id);
+					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					 if(prosthetics.isEmpty()) {
+						 System.out.println("No prosthetics found for the patient");
+						 break;
+					 }else {
+						 System.out.println("Choose the id of one of the patient's prosthetic");
+						 prosthMan.getProstheticbyPatient(patient);
+						 int prosthetic_id=Integer.parseInt(r.readLine());
+						 for(Prosthetic prosthetic:prosthetics) {
+							 if(prosthetic.getID()==prosthetic_id) {
+								 prosthetic.setNeed(need);
+							 }
+					 }
+						 System.out.println("Need added correctly");
+						 break;	 
+					
+				}
+			}
+		
+	}
+	
+	
 			
 	}
+}
 	
 
 	

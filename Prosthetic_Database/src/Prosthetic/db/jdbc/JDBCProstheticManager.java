@@ -29,7 +29,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 	}
 	
 
-
+    @Override
 	public List<Prosthetic> getProstheticByIDandPriceandSize(){
 	
 		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
@@ -39,9 +39,9 @@ public class JDBCProstheticManager implements ProstheticManager {
 			ResultSet rs = search.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
-				Integer price = rs.getInt("price");
 				String size = rs.getString("size");
-				Prosthetic p = new Prosthetic(id,price,size);
+				Integer price = rs.getInt("price");
+				Prosthetic p = new Prosthetic(id,size,price);
 				prosthetics.add(p);
 			}
 			return prosthetics;

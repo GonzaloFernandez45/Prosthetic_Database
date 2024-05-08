@@ -25,25 +25,6 @@ public class JDBCPatientManager implements PatientManager {
 		this.c = conMan.getConnection();
 	}
 	
-	public List<Patient> getPatientByIDandName(){
-		List<Patient> patients = new ArrayList<Patient>();
-		try {
-			String sql = "SELECT id,name,surname FROM patient GROUP BY id";
-			PreparedStatement search = c.prepareStatement(sql);
-			ResultSet rs = search.executeQuery();
-			while(rs.next()) {
-				Integer id = rs.getInt("id");
-				String PatientName = rs.getString("name");
-				String surname = rs.getString("surname");
-				Patient p = new Patient(id,PatientName,surname);
-				patients.add(p);
-			}
-		}catch (SQLException e) {
-			System.out.println("Error looking for a book");
-			e.printStackTrace();
-		}
-		return patients;
-	}
 	@Override
 	public void addPatient(Patient p) {
 		
@@ -152,6 +133,26 @@ public class JDBCPatientManager implements PatientManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@Override
+	public List<Patient> getPatientByIDandName(){
+		List<Patient> patients = new ArrayList<Patient>();
+		try {
+			String sql = "SELECT id,name,surname FROM patient GROUP BY id";
+			PreparedStatement search = c.prepareStatement(sql);
+			ResultSet rs = search.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String PatientName = rs.getString("name");
+				String surname = rs.getString("surname");
+				Patient p = new Patient(id,PatientName,surname);
+				patients.add(p);
+			}
+		}catch (SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
+		}
+		return patients;
 	}
 
 	

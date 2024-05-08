@@ -41,7 +41,7 @@ public class Prosthetic implements Serializable {
 		
 		
 
-		public Prosthetic(Integer ID, Integer price, String size) {
+		public Prosthetic(Integer ID, String size,Integer price) {
 			super();
 			this.ID = ID;
 			this.price = price;
