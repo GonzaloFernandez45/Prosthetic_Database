@@ -11,6 +11,7 @@ public interface PatientManager {
 	public List<Patient> getPatientByName(String name);
 	public String reportDelivery(int id);
 	public List<Patient> listPatients();
+	
 
 
 }

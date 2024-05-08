@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import Prosthetic.db.interfaces.*;
 import Prosthetic.db.jdbc.*;
@@ -96,11 +97,11 @@ public class Menu {
 			break;
 		}
 		case 2: {
-			//addNeed(); ESTE METODO CORRESPONDE A SURGEON CON LA NUEVA MODIFICACIÓN
+			inputOption();
 			break;
 		}
 		case 3: {
-			
+			reportDelivery();
 			break;
 		}
 		case 0: 
@@ -187,6 +188,8 @@ public class Menu {
 	private static void reportDelivery() throws NumberFormatException, IOException {
 		System.out.println("Please enter the patient's ID: ");
 		int id = Integer.parseInt(r.readLine());
+		String report = patMan.reportDelivery(id);
+		System.out.println(report);
 		
 	}
 	
@@ -281,10 +284,6 @@ public class Menu {
 		matMan.addMaterial(material);
 	}
 	
-	private static void getReport() {
-		//TODO method
-	}
-	
 	private static void  addProsthetic() throws NumberFormatException, IOException {
 		System.out.println("Add prosthetic information");
 		System.out.println("Size:");
@@ -295,6 +294,51 @@ public class Menu {
 		
 	}
 	
+	private static void inputOption() throws NumberFormatException, IOException{
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
+
+			System.out.println("INSERT THE OPTION: ");
+			System.out.println("SELECT ALREADY CREATED OPTIONS (Press 0): ");
+			System.out.println(optMan.listOptions());
+			System.out.println("ADD A NEW ONE (Press 1): ");
+			int option = Integer.parseInt(r.readLine());
+			switch(option) {
+				case 0: {
+					System.out.println("Please select the wanted option by its ID: ");
+					int finalOption = Integer.parseInt(r.readLine());
+					Patient patient = patMan.getPatientByID(id);
+					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					System.out.println("Select the prosthetic where you want to add the option");
+					System.out.println(prosthetics);
+					int prostheticOption = Integer.parseInt(r.readLine());
+					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
+					prosthetic.getOptions().add(optMan.getOption(finalOption));
+					System.out.println("Option added correctly");
+					break;
+				}
+				case 1: {
+					System.out.println("Please add the new option info: ");
+					System.out.println("Type:");
+					String type = r.readLine();
+					Option newOption = new Option(type);
+					optMan.addOption(newOption);
+					
+					Patient patient = patMan.getPatientByID(id);
+					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					System.out.println("Select the prosthetic where you want to add the option");
+					System.out.println(prosthetics);
+					int prostheticOption = Integer.parseInt(r.readLine());
+					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
+					prosthetic.getOptions().add(optMan.getOption(newOption.getId()));
+					System.out.println("Option added correctly");
+					break;
+				}
+			}
+		}
+			
+	}
 	
+
 	
-}
+

@@ -53,7 +53,7 @@ public class Prosthetic implements Serializable {
 		}
 
 		public void setID(Integer iD) {
-			ID = iD;
+			this.ID = iD;
 		}
 
 		public Integer getPrice() {

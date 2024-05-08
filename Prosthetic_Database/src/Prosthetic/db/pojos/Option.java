@@ -22,6 +22,14 @@ public class Option implements Serializable {
 
 	
 
+	public Option(String type) {
+		super();
+		this.type = type;
+		this.prosthetics = new ArrayList<Prosthetic>();
+	}
+
+
+
 	public Option(Integer id, String type) {
 		super();
 		this.id = id;
