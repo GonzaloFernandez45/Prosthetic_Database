@@ -385,7 +385,7 @@ public class Menu {
 		if(availability.equalsIgnoreCase("yes")) {
 		}
 		else if (availability.equalsIgnoreCase("no")) {
-			System.out.println("The prosthetic couldnt be created as there are nomaterials available");
+			System.out.println("The prosthetic couldnt be created as there are no materials available");
 			
 		return;
 		}
@@ -407,13 +407,15 @@ public class Menu {
 		
 		for (Patient patient : patMan.listPatients()){
 			
-			if (patient.getReport().equalsIgnoreCase("yes")) {
+			if (patient.getReport().equalsIgnoreCase("no")) {
                 patients.add(patient);
                 
 			}
+			
 		}
-		
-       System.out.println(patients);
+		for (Patient p: patients) {
+		System.out.println(p);
+		}
 		
 		
 	}
@@ -426,7 +428,12 @@ public class Menu {
 		Patient patient = patMan.getPatientNameSurname(patient_id);
 		List<Need> patientNeeds = patient.getNeeds();
 		
-		System.out.println(""+ patient + patientNeeds + "");
+		System.out.println(patient);
+		for (Need need: patientNeeds) {
+			System.out.println(need);
+			}
+			
+		
 		
 	}
 	
