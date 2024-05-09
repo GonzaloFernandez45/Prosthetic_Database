@@ -69,6 +69,13 @@ public class Patient implements Serializable{
 	}
 
 
+	public Patient(String name, String surname) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.prosthetics = new ArrayList<Prosthetic>();
+		this.needs = new ArrayList<Need>();
+	}
 
 
 	public Integer getDni() {

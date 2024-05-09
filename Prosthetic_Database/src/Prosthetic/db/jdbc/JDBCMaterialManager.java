@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Prosthetic.db.interfaces.MaterialManager;
 import Prosthetic.db.pojos.*;
@@ -86,6 +88,25 @@ public class JDBCMaterialManager implements MaterialManager{
 		}
 		
 	}
+	
+	public List<Material> listMaterials() {
+		List<Material> materials = new ArrayList<Material>();
+		try {
+			String sql = "SELECT * FROM material";
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				Material material = new Material(rs.getInt("id"),rs.getString("type"),rs.getString("availability"));
+				materials.add(material);
+				}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return materials;
+	}
+
 	
 
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import Prosthetic.db.interfaces.*;
@@ -169,15 +170,15 @@ public class Menu {
 		int option = Integer.parseInt(r.readLine());
 		switch(option) {
 		case 1: {
-			addSurgeon();
+			addProsthetic();
 			break;
 		}
 		case 2: {
-			addCompany();
+			Checkdemand();
 			break;
 		}
 		case 3: {
-			deleteSurgeon();
+			CheckPatientNeeds();
 			break;
 		}
 		
@@ -335,9 +336,72 @@ public class Menu {
 		System.out.println("Add prosthetic information");
 		System.out.println("Size:");
 		String size = r.readLine();
+		
 		System.out.println("Select the company´s ID");
+		System.out.println(comMan.listCompaniesIDandName());
+		int company_id = Integer.parseInt(r.readLine());
+		Company company = comMan.getCompany(company_id);
+		
+		System.out.println("Select the patient´s ID");
+		System.out.println(patMan.getPatientByIDandName());
+		int patient_id = Integer.parseInt(r.readLine());
+		Patient patient = patMan.getPatientByID(patient_id);
+		
+		System.out.println("Select the need´s ID");
+		System.out.println(needMan.listNeeds());
+		int need_id = Integer.parseInt(r.readLine());
+		Need need = needMan.getNeed(need_id);
+		
+		System.out.println("Select the material´s ID");
+		System.out.println(matMan.listMaterials());
+		int material_id = Integer.parseInt(r.readLine());
+		System.out.println("Checking if the materials are available for this prosthetic...");
+		String availability = matMan.checkAvailability(material_id);
+		if(availability.equalsIgnoreCase("yes")) {
+		}
+		else if (availability.equalsIgnoreCase("no")) {
+			System.out.println("The prosthetic couldnt be created as there are nomaterials available");
+			
+		return;
+		}
+		Material material = matMan.getMaterial(material_id);
+		
+		System.out.println("prize:");
+		int price = Integer.parseInt(r.readLine());
+		
+		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,material,price);
+		prosthMan.addProsthetic(prosthetic);
+		
+		System.out.println("A new prosthetic has been succesfully created");
+	}
+	
+	
+	private static void Checkdemand() throws NumberFormatException, IOException {
+		
+		List<Patient> patients = new ArrayList<>();
+		
+		for (Patient patient : patMan.listPatients()){
+			
+			if (patient.getReport().equalsIgnoreCase("yes")) {
+                patients.add(patient);
+                
+			}
+		}
+		
+       System.out.println(patients);
 		
 		
+	}
+	
+	private static void CheckPatientNeeds() throws NumberFormatException, IOException {
+		
+		System.out.println("Select the patient´s ID");
+		System.out.println(patMan.getPatientByIDandName());
+		int patient_id = Integer.parseInt(r.readLine());
+		Patient patient = patMan.getPatientNameSurname(patient_id);
+		List<Need> patientNeeds = patient.getNeeds();
+		
+		System.out.println(""+ patient + patientNeeds + "");
 		
 	}
 	

@@ -154,6 +154,24 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return patients;
 	}
+	
+	public Patient getPatientNameSurname(int id) {
+		try {
+			String sql = "SELECT name,surname FROM patient WHERE id = " + id;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Patient p = new Patient (rs.getString("name"),rs.getString("surname"));
+			return p;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
 
 	
 	

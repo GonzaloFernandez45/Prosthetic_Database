@@ -1,5 +1,7 @@
 package Prosthetic.db.interfaces;
 
+import java.util.List;
+
 import Prosthetic.db.pojos.*;
 
 public interface MaterialManager {
@@ -7,6 +9,7 @@ public interface MaterialManager {
 	public void deleteMaterial(int id);
 	public String checkAvailability(int id);
 	public void addMaterial(Material m);
+	public List<Material> listMaterials();
 	
 	
 
