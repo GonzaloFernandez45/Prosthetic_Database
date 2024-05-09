@@ -44,7 +44,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 				Prosthetic p = new Prosthetic(id,size,price);
 				prosthetics.add(p);
 			}
-			return prosthetics;
+			rs.close();
+			search.close();
 		}catch (SQLException e) {
 			System.out.println("Error looking for a book");
 			e.printStackTrace();
@@ -120,12 +121,13 @@ public class JDBCProstheticManager implements ProstheticManager {
 				
 			}
 			rs.close();
-			return prosthetic;
+			prepstm.close();
+			
 		}catch (SQLException sqlE) {
 			System.out.println("Error in the database");
 			sqlE.printStackTrace();
 		}
-		return null;
+		return prosthetic;
 	}
 		
 
@@ -158,7 +160,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 				prosthetic.add(p);
 			}
 			rs.close();
-			return prosthetic;
+			prepstm.close();
+			
 
 			
 		}catch(SQLException sqlE) {
@@ -168,7 +171,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 		
 		
 		
-		return null;
+		return prosthetic;
 	}
 
 

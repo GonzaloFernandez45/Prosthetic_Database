@@ -35,7 +35,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		prepstm.setInt(5,s.getProsthetic().getID());
 		prepstm.setInt(6,s.getSurgeon().getId());
 		prepstm.setString(8,s.getResult());
-		
+		prepstm.executeUpdate();
+		prepstm.close();
 		
 		}catch( SQLException sqlE) {
 			System.out.println("Error in the data base");
@@ -87,13 +88,14 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				surgery.add(s);
 			}
 			rs.close();
-			return surgery;
+			prepstm.close();
+			
 			
 		}catch(SQLException sqlE) {
 			System.out.println("Error in the data base");
 			sqlE.printStackTrace();
 		}
-		return null;
+		return surgery;
 	}
 
 	@Override
@@ -122,14 +124,15 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	
 			}
 			rs.close();
-			return surgeries;
+			prepstm.close();
+			
 
 			
 		}catch(SQLException sqlE) {
 			System.out.println("Error in the data base");
 			sqlE.printStackTrace();
 		}
-		return null;
+		return surgeries;
 	}
 
 	@Override
@@ -158,14 +161,14 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				
 			}
 			rs.close();
-			return surgery;
+			prepstm.close();
 
 			
 		}catch(SQLException sqlE) {
 			System.out.println("Error in the data base");
 			sqlE.printStackTrace();
 		}
-		return null;
+		return surgery;
 	}
 
 }

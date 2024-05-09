@@ -75,6 +75,8 @@ public class JDBCCompanyManager implements CompanyManager {
 				Patient p = new Patient(id,name,surname,sex,DOB,dni,report);
 				patients.add(p);			
 				}
+				rs.close();
+				search.close();
 			}catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -95,6 +97,8 @@ public class JDBCCompanyManager implements CompanyManager {
 				Need n = new Need(id,type);
 				needs.add(n);
 			}
+			rs.close();
+			search.close();
 		}catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -124,13 +128,14 @@ public class JDBCCompanyManager implements CompanyManager {
 		List<Company> companies = new ArrayList<Company>();
 		try {
 			String sql = "SELECT * FROM company";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Company company = new Company(rs.getString("name"), rs.getString("location"));
 				companies.add(company);
 				}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -143,13 +148,14 @@ public class JDBCCompanyManager implements CompanyManager {
 		List<Company> companies = new ArrayList<Company>();
 		try {
 			String sql = "SELECT id,name FROM company";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Company company = new Company(rs.getInt("id"), rs.getString("name"));
 				companies.add(company);
 				}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();

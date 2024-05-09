@@ -74,13 +74,14 @@ public class JDBCOptionManager implements OptionManager {
 			List<Option> options = new ArrayList<Option>();
 			try {
 				String sql = "SELECT * FROM option";
-				Statement st;
-				st = c.createStatement();
-				ResultSet rs = st.executeQuery(sql);
+				PreparedStatement pstmt = c.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
 					Option option = new Option(rs.getInt("id"),rs.getString("type"));
 					options.add(option);
 					}
+				rs.close();
+				pstmt.close();
 			} catch (SQLException e) {
 				System.out.println("Error in the database");
 				e.printStackTrace();

@@ -51,6 +51,8 @@ public class Menu {
 	
 	private static void prostheticMenu() throws NumberFormatException, IOException{
 		//TODO method
+		int option = -1;
+		while(option!=0) {
 		System.out.println("Choose your role");
 		System.out.println("1. Manager");
 		System.out.println("2. Patient");
@@ -58,7 +60,8 @@ public class Menu {
 		System.out.println("4. Company/Engineer");
 		System.out.println("0. Exit");
 
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
+		
 		
 		switch(option) {
 		case 1: {
@@ -74,24 +77,30 @@ public class Menu {
 			break;
 		}
 		case 4: {
+			companyMenu();
 			break;
 		}
 		case 0: {
 			conMan.close();
 			return;
 		}
-		
-		}
+						}
+	}		
 	}
 	
 	private static void patientMenu() throws NumberFormatException, IOException{
+		
+		int option = -1;
+		while(option!=0) {
+			
 		System.out.println("Welcome Patient, choose what do you want to do");
 		System.out.println("1. Get information: ");
 		System.out.println("2. Input option");
 		System.out.println("3. Report delivery of prosthetic");
 		System.out.println("0. Exit");
 		
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
+		
 		
 		switch(option) {
 		case 1: {
@@ -110,10 +119,15 @@ public class Menu {
 			conMan.close();
 			return;
 		}
-	
+		}
 	}
 	
 	private static void managerMenu() throws NumberFormatException, IOException{
+		
+		int option = -1;
+		while(option!=0) {
+		
+		
 		System.out.println("Welcome Manager, choose what do you want to do");
 		System.out.println("1. Add surgeon");
 		System.out.println("2. Add company");
@@ -123,7 +137,9 @@ public class Menu {
 		System.out.println("6. See all surgeons");
 		System.out.println("7. See all companies");
 		System.out.println("0. Exit");
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
+		
+		
 		switch(option) {
 		case 1: {
 			addSurgeon();
@@ -157,55 +173,63 @@ public class Menu {
 		case 0: conMan.close();
 			return;
 		}
-		
+		}	
 		
 	}
 	
 	private static void companyMenu() throws NumberFormatException, IOException{
+		
+		int option = -1;
+		while(option!=0) {
 		System.out.println("Welcome Company, choose what do you want to do");
 		System.out.println("1. Create prosthetic");
 		System.out.println("2. Check demand");
 		System.out.println("3. Check the needs of a patient");
 		System.out.println("0. Exit");
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
+		
+		
 		switch(option) {
 		case 1: {
 			addProsthetic();
 			break;
 		}
 		case 2: {
-			Checkdemand();
+			checkDemand();
 			break;
 		}
 		case 3: {
-			CheckPatientNeeds();
+			checkPatientNeeds();
 			break;
 		}
-		
 		case 0: conMan.close();
 			return;
 		}
+		}
 	}
 	private static void surgeonMenu() throws NumberFormatException, IOException{
+		int option = -1;
+		while(option!=0) {
 		System.out.println("Welcome Surgeon, choose what do you want to do");
 		System.out.println("1. Add a new patient: ");
 		System.out.println("2. Login to an existing patient");
 		System.out.println("0. Exit");
 		
-	
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
+		
+		
 		switch(option) {
 		case 1:
 			addPatient();
 			break;
 		case 2:
 			loginToAnExistingPatinet();
-			
 			break;
 		case 0:
 			conMan.close();
 			break;
 		}
+	}
 	}
 	private static void loginToAnExistingPatinet() throws NumberFormatException, IOException{
 		System.out.println("Welcome,choose an option");
@@ -214,8 +238,9 @@ public class Menu {
 		System.out.println("3. Input needs");
 		System.out.println("0. Exit");
 		
-	
 		int option = Integer.parseInt(r.readLine());
+		
+		while(option!=0) {
 		switch(option) {
 		case 1:
 			scheduleSurgery();
@@ -226,10 +251,10 @@ public class Menu {
 		case 3:
 			inputNeed();
 			break;
-			
 		case 0:
 			conMan.close();
 			break;
+		}
 		}
 	}
 	
@@ -376,7 +401,7 @@ public class Menu {
 	}
 	
 	
-	private static void Checkdemand() throws NumberFormatException, IOException {
+	private static void checkDemand() throws NumberFormatException, IOException {
 		
 		List<Patient> patients = new ArrayList<>();
 		
@@ -393,7 +418,7 @@ public class Menu {
 		
 	}
 	
-	private static void CheckPatientNeeds() throws NumberFormatException, IOException {
+	private static void checkPatientNeeds() throws NumberFormatException, IOException {
 		
 		System.out.println("Select the patient´s ID");
 		System.out.println(patMan.getPatientByIDandName());

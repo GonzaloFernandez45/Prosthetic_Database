@@ -70,9 +70,8 @@ public class JDBCPatientManager implements PatientManager {
 		List<Patient> patients = new ArrayList<Patient>();
 		try {
 			String sql = "SELECT * FROM patient";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
@@ -85,6 +84,8 @@ public class JDBCPatientManager implements PatientManager {
 				Patient p = new Patient(id,PatientName,surname,sex,DOB,dni,report);
 				patients.add(p);
 			}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -111,6 +112,8 @@ public class JDBCPatientManager implements PatientManager {
 				Patient p = new Patient(id,PatientName,surname,sex,DOB,dni,report);
 				patients.add(p);
 			}
+			rs.close();
+			search.close();
 		}catch (SQLException e) {
 			System.out.println("Error looking for a book");
 			e.printStackTrace();
@@ -121,7 +124,7 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public String reportDelivery(int id) {
 		try {
-			String sql = "SELECT report FROM patients WHERE id = " + id;
+			String sql = "SELECT report FROM patient WHERE id = " + id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
@@ -148,6 +151,8 @@ public class JDBCPatientManager implements PatientManager {
 				Patient p = new Patient(id,PatientName,surname);
 				patients.add(p);
 			}
+			rs.close();
+			search.close();
 		}catch (SQLException e) {
 			System.out.println("Error looking for a book");
 			e.printStackTrace();

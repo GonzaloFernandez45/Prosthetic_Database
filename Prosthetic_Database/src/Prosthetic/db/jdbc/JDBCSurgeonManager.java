@@ -81,7 +81,8 @@ public class JDBCSurgeonManager implements SurgeonManager {
 				Surgeon s = new Surgeon(id,PatientName,surname);
 				surgeons.add(s);
 			}
-			return surgeons;
+			rs.close();
+			search.close();
 		}catch (SQLException e) {
 			System.out.println("Error looking for a book");
 			e.printStackTrace();
@@ -94,8 +95,9 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		try {
 		String sql = "SELECT s.id,s.name,s.surname,s.salary,s.hiredate,s.specialization "
 				+ "FROM surgeon AS s JOIN surgery  ON s.id = surgery.Surgeon_ID WHERE surgery_ID = ?";
-		PreparedStatement pstmt= c.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery(sql);
+		Statement st;
+		st = c.createStatement();
+		ResultSet rs = st.executeQuery(sql);
 		rs.next();
 		Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
 		return s;
@@ -114,7 +116,9 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		PreparedStatement pstmt= c.prepareStatement(sql);
 		pstmt.setInt(1,id);
 		ResultSet rs = pstmt.executeQuery();
-			
+		rs.next();
+		Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
+		return s;
 		}catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -162,9 +166,8 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			String sql = "SELECT * FROM surgeon";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			while (rs.next()) {
 				
@@ -172,6 +175,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 				surgeons.add(s);
 			}
 			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -183,13 +187,14 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		List<Surgeon> surgeons = new ArrayList<Surgeon>();
 		try {
 			String sql = "SELECT id,name,surname FROM surgeon";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Surgeon s = new Surgeon (rs.getInt("id"), rs.getString("name"), rs.getString("surname"));
 				surgeons.add(s);
 				}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();

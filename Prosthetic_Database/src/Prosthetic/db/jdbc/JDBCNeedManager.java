@@ -47,12 +47,11 @@ public class JDBCNeedManager implements NeedManager {
 			PreparedStatement search = c.prepareStatement(sql);
 			search.setString(1, "%" + type + "%");
 			ResultSet rs = search.executeQuery();
-			while(rs.next()) {
+			rs.next();
 				Integer id = rs.getInt("id");
 				String NeedType = rs.getString("type");
 				Need need = new Need(id,NeedType);
 				return need;
-			}
 		}catch (SQLException e) {
 			System.out.println("Error looking for a book");
 			e.printStackTrace();
@@ -81,13 +80,14 @@ public class JDBCNeedManager implements NeedManager {
 		List<Need> needs = new ArrayList<Need>();
 		try {
 			String sql = "SELECT * FROM need";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Need need = new Need(rs.getInt("id"),rs.getString("type"));
 				needs.add(need);
 				}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();

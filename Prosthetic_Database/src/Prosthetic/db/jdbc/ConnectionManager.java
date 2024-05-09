@@ -176,37 +176,37 @@ public class ConnectionManager {
 	private void insertNeeds() {
 		try {
 			Statement insertNeed1 = c.createStatement();
-			String need1 = "INSERT INTO need VALUES (1, bellow elbow)";
+			String need1 = "INSERT INTO need VALUES (1, 'Bellow Elbow')";
 			insertNeed1.executeUpdate(need1);
 			insertNeed1.close();
 			
 			Statement insertNeed2 = c.createStatement();
-			String need2 = "INSERT INTO need VALUES (2, Bellow Wrist)";
+			String need2 = "INSERT INTO need VALUES (2, 'Bellow Wrist')";
 			insertNeed2.executeUpdate(need2);
 			insertNeed2.close();
 			
 			Statement insertNeed3 = c.createStatement();
-			String need3 = "INSERT INTO need VALUES (3, Bellow Shoulder)";
+			String need3 = "INSERT INTO need VALUES (3, 'Bellow Shoulder')";
 			insertNeed3.executeUpdate(need3);
 			insertNeed3.close();
 			
 			Statement insertNeed4 = c.createStatement();
-			String need4 = "INSERT INTO need VALUES (4, Bellow Ankle)";
+			String need4 = "INSERT INTO need VALUES (4, 'Bellow Ankle')";
 			insertNeed4.executeUpdate(need4);
 			insertNeed4.close();
 			
 			Statement insertNeed5 = c.createStatement();
-			String need5 = "INSERT INTO need VALUES (5, Bellow Knee)";
+			String need5 = "INSERT INTO need VALUES (5, 'Bellow Knee')";
 			insertNeed5.executeUpdate(need5);
 			insertNeed5.close();
 			
 			Statement insertNeed6 = c.createStatement();
-			String need6 = "INSERT INTO need VALUES (6, Bellow Pelvis)";
+			String need6 = "INSERT INTO need VALUES (6, 'Bellow Pelvis')";
 			insertNeed6.executeUpdate(need6);
 			insertNeed6.close();
 			
 		}catch(SQLException sqlE) {
-			if (sqlE.getMessage().contains("already exist")){
+			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
 				System.out.println("No need to insert the needs; already there");
 			}
 			else {
@@ -219,32 +219,32 @@ public class ConnectionManager {
 	private void insertOption() {
 		try {
 			Statement insertOption1 = c.createStatement();
-			String option1 = "INSERT INTO option VALUES (1, sport)";
+			String option1 = "INSERT INTO option VALUES (1, 'sport')";
 			insertOption1.executeUpdate(option1);
 			insertOption1.close();
 			
 			Statement insertOption2 = c.createStatement();
-			String option2 = "INSERT INTO option VALUES (2, realistic)";
+			String option2 = "INSERT INTO option VALUES (2, 'realistic')";
 			insertOption2.executeUpdate(option2);
 			insertOption2.close();
 			
 			Statement insertOption3 = c.createStatement();
-			String option3 = "INSERT INTO option VALUES (3, carbon fiber)";
+			String option3 = "INSERT INTO option VALUES (3, 'carbon fiber')";
 			insertOption3.executeUpdate(option3);
 			insertOption3.close();
 			
 			Statement insertOption4 = c.createStatement();
-			String option4 = "INSERT INTO option VALUES (4, blue)";
+			String option4 = "INSERT INTO option VALUES (4, 'blue')";
 			insertOption4.executeUpdate(option4);
 			insertOption4.close();
 			
 			Statement insertOption5 = c.createStatement();
-			String option5 = "INSERT INTO option VALUES (5, camouflage)";
+			String option5 = "INSERT INTO option VALUES (5, 'camouflage')";
 			insertOption5.executeUpdate(option5);
 			insertOption5.close();
 			
 		}catch(SQLException sqlE) {
-			if (sqlE.getMessage().contains("already exist")){
+			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
 				System.out.println("No need to insert the needs; already there");
 			}
 			else {

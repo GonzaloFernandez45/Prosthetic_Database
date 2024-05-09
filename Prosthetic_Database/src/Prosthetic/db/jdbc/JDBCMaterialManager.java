@@ -93,13 +93,14 @@ public class JDBCMaterialManager implements MaterialManager{
 		List<Material> materials = new ArrayList<Material>();
 		try {
 			String sql = "SELECT * FROM material";
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Material material = new Material(rs.getInt("id"),rs.getString("type"),rs.getString("availability"));
 				materials.add(material);
 				}
+			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
