@@ -96,7 +96,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 	public List<Prosthetic> getProstheticbyNeed(Need n) {
 		List<Prosthetic>prosthetic= new ArrayList<Prosthetic>();
 		try {
-			String sql = "SELECT * FROM patient WHERE need LIKE ?";
+			String sql = "SELECT * FROM prosthetic WHERE Need_ID = ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
 			prepstm.setString(1, "%" + n + "%");
 			ResultSet rs = prepstm.executeQuery();
@@ -135,7 +135,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 	public List<Prosthetic> getProstheticbyPatient(Patient pa) {
 		List<Prosthetic>prosthetic= new ArrayList<Prosthetic>();
 		try {
-			String sql = "SELECT * FROM patient WHERE patient LIKE ?";
+			String sql = "SELECT * FROM prosthetic WHERE Patient_ID = ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
 			prepstm.setString(1, "%" + pa + "%");
 			ResultSet rs = prepstm.executeQuery();
