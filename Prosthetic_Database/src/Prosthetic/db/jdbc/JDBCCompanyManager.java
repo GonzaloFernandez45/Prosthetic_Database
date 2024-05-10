@@ -23,7 +23,7 @@ public class JDBCCompanyManager implements CompanyManager {
 	@Override
 	public void addCompany(Company com) {
 		try {
-			String template = "INSERT INTO company (name, location) VALUES (?, ?)";
+			String template = "INSERT INTO company (name, location) VALUES (?,?)";
 			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setString(1, com.getName());

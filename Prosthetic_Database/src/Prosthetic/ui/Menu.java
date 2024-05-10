@@ -81,6 +81,7 @@ public class Menu {
 			break;
 		}
 		case 0: {
+			System.out.println("Thank you for using the databse!");
 			conMan.close();
 			return;
 		}
@@ -170,7 +171,8 @@ public class Menu {
 			break;
 		}
 		
-		case 0: conMan.close();
+		case 0: 
+			conMan.close();
 			return;
 		}
 		}	
@@ -202,7 +204,8 @@ public class Menu {
 			checkPatientNeeds();
 			break;
 		}
-		case 0: conMan.close();
+		case 0: 
+			conMan.close();
 			return;
 		}
 		}
@@ -232,15 +235,17 @@ public class Menu {
 	}
 	}
 	private static void loginToAnExistingPatinet() throws NumberFormatException, IOException{
+		int option = -1;
+		while(option!=0) {
 		System.out.println("Welcome,choose an option");
 		System.out.println("1. Schedule surgery: ");
 		System.out.println("2. Surgery result");
 		System.out.println("3. Input needs");
 		System.out.println("0. Exit");
 		
-		int option = Integer.parseInt(r.readLine());
+		option = Integer.parseInt(r.readLine());
 		
-		while(option!=0) {
+		
 		switch(option) {
 		case 1:
 			scheduleSurgery();
@@ -324,8 +329,8 @@ public class Menu {
 		System.out.println("NAME: ");
 		String name = r.readLine();
 		System.out.println("LOCATION: ");
-		String localization = r.readLine();
-		Company company = new Company(name,localization);
+		String location = r.readLine();
+		Company company = new Company(name,location);
 		comMan.addCompany(company);
 		
 	}
@@ -453,7 +458,9 @@ public class Menu {
 					Patient patient = patMan.getPatientByID(id);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					System.out.println("Select the prosthetic where you want to add the option");
-					System.out.println(prosthetics);
+					for (Prosthetic prosth: prosthetics) {
+						System.out.println(prosth);
+						}
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
 					prosthetic.getOptions().add(optMan.getOption(finalOption));
@@ -470,7 +477,9 @@ public class Menu {
 					Patient patient = patMan.getPatientByID(id);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					System.out.println("Select the prosthetic where you want to add the option");
-					System.out.println(prosthetics);
+					for (Prosthetic prosth: prosthetics) {
+						System.out.println(prosth);
+						}
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
 					prosthetic.getOptions().add(optMan.getOption(newOption.getId()));
@@ -532,7 +541,7 @@ public class Menu {
 
 			System.out.println("Insert the need: ");
 			System.out.println("Select already created needs (Press 0): ");
-			System.out.println(optMan.listOptions());
+			System.out.println(needMan.listNeeds());
 			System.out.println("Add a new need (Press 1): ");
 			int option = Integer.parseInt(r.readLine());
 			switch(option) {

@@ -98,7 +98,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 		try {
 			String sql = "SELECT * FROM prosthetic WHERE Need_ID = ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
-			prepstm.setString(1, "%" + n + "%");
+			prepstm.setInt(1, n.getId());
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
@@ -137,7 +137,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 		try {
 			String sql = "SELECT * FROM prosthetic WHERE Patient_ID = ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
-			prepstm.setString(1, "%" + pa + "%");
+			prepstm.setInt(1, pa.getId());
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");
