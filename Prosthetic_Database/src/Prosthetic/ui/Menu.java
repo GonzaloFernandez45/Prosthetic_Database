@@ -159,15 +159,15 @@ public class Menu {
 			break;
 		}
 		case 5: {
-			patMan.listPatients();
+			printPatients();
 			break;
 		}
 		case 6: {
-			surgeonMan.listSurgeons();
+			printSurgeons();
 			break;
 		}
 		case 7: {
-			comMan.listCompanies();
+			printCompanies();
 			break;
 		}
 		
@@ -423,6 +423,36 @@ public class Menu {
 		}
 		
 		
+	}
+	
+	private static void printSurgeons() throws NumberFormatException, IOException{
+		List<Surgeon> surgeons = new ArrayList<>();
+		for(Surgeon surgeon : surgeonMan.listSurgeons()) {
+			surgeons.add(surgeon);
+		}
+		for(Surgeon s : surgeons) {
+			System.out.println(s);
+		}
+	}
+	
+	private static void printPatients() throws NumberFormatException, IOException{
+		List<Patient> patients = new ArrayList<>();
+		for(Patient patient : patMan.listPatients()) {
+			patients.add(patient);
+		}
+		for(Patient p : patients) {
+			System.out.println(p);
+		}
+	}
+	
+	private static void printCompanies() throws NumberFormatException, IOException{
+		List<Company> companies = new ArrayList<>();
+		for(Company company : comMan.listCompanies()) {
+			companies.add(company);
+		}
+		for(Company c : companies) {
+			System.out.println(c);
+		}
 	}
 	
 	private static void checkPatientNeeds() throws NumberFormatException, IOException {

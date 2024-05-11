@@ -138,6 +138,16 @@ public class Surgeon implements Serializable {
 				
 				}
 			}
+
+
+		@Override
+		public String toString() {
+			return "Surgeon [id=" + id + ", name=" + name + ", surname=" + surname
+					+ ", salary= " + salary+ ", specialization= " + specialization + ", hiredate=" + hiredate + ", surgeries=" + surgeries
+					+ "]";
+		}
+		
+		
 		
 		
 }

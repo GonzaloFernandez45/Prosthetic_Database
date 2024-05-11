@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Prosthetic.db.interfaces.PatientManager;
+import Prosthetic.db.pojos.Company;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 
@@ -72,18 +73,10 @@ public class JDBCPatientManager implements PatientManager {
 			String sql = "SELECT * FROM patient";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
 			while(rs.next()) {
-				Integer id = rs.getInt("id");
-				String PatientName = rs.getString("name");
-				String surname = rs.getString("surname");
-				String sex = rs.getString("sex"); //TODO cambiar a tipo SEX si hacemos un enumerado
-				Date DOB = rs.getDate("DOB");
-				Integer dni = rs.getInt("dni");
-				String report = rs.getString("report");
-				Patient p = new Patient(id,PatientName,surname,sex,DOB,dni,report);
-				patients.add(p);
-			}
+				Patient patient = new Patient(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("sex"), rs.getDate("dob"), rs.getInt("dni"), rs.getString("report"));
+				patients.add(patient);
+				}
 			rs.close();
 			pstmt.close();
 		} catch (SQLException e) {

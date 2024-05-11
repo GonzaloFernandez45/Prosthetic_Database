@@ -131,7 +131,7 @@ public class JDBCCompanyManager implements CompanyManager {
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Company company = new Company(rs.getString("name"), rs.getString("location"));
+				Company company = new Company(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
 				companies.add(company);
 				}
 			rs.close();

@@ -29,14 +29,14 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	@Override
 	public void addSurgeon(Surgeon s) {
 		try {
-		String sql= "INSERT INTO surgeon(name,surname,salary,hiredate,specialization)"
-				+ "Values (?,?,?,?,?,?)";
+		String sql= "INSERT INTO surgeon(name,surname,salary,specialization,hiredate)"
+				+ "Values (?,?,?,?,?)";
 		PreparedStatement pstmt= c.prepareStatement(sql);
 		pstmt.setString(1, s.getName());
 		pstmt.setString(2, s.getSurname());
 		pstmt.setInt(3, s.getSalary());
-		pstmt.setDate(4, s.getHiredate());
-		pstmt.setString(5, s.getSpecialization());
+		pstmt.setString(4, s.getSpecialization());
+		pstmt.setDate(5, s.getHiredate());
 		pstmt.executeUpdate();
 		pstmt.close();
 		}catch (SQLException e) {
@@ -168,12 +168,10 @@ public class JDBCSurgeonManager implements SurgeonManager {
 			String sql = "SELECT * FROM surgeon";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			while (rs.next()) {
-				
+			while(rs.next()) {
 				Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
 				surgeons.add(s);
-			}
+				}
 			rs.close();
 			pstmt.close();
 		} catch (SQLException e) {
