@@ -478,7 +478,9 @@ public class Menu {
 
 			System.out.println("INSERT THE OPTION: ");
 			System.out.println("SELECT ALREADY CREATED OPTIONS (Press 0): ");
-			System.out.println(optMan.listOptions());
+			for (Option options: optMan.listOptions()) {
+				System.out.println(options);
+				}
 			System.out.println("ADD A NEW ONE (Press 1): ");
 			int option = Integer.parseInt(r.readLine());
 			switch(option) {
@@ -487,6 +489,7 @@ public class Menu {
 					int finalOption = Integer.parseInt(r.readLine());
 					Patient patient = patMan.getPatientByID(id);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					if(!prosthetics.isEmpty()) {
 					System.out.println("Select the prosthetic where you want to add the option");
 					for (Prosthetic prosth: prosthetics) {
 						System.out.println(prosth);
@@ -496,6 +499,10 @@ public class Menu {
 					prosthetic.getOptions().add(optMan.getOption(finalOption));
 					System.out.println("Option added correctly");
 					break;
+					}else {
+						System.out.println("There are no prosthetics");
+						break;
+					}
 				}
 				case 1: {
 					System.out.println("Please add the new option info: ");
@@ -513,6 +520,7 @@ public class Menu {
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
 					prosthetic.getOptions().add(optMan.getOption(newOption.getId()));
+					//Metodo update options del prosthetic
 					System.out.println("Option added correctly");
 					break;
 				}

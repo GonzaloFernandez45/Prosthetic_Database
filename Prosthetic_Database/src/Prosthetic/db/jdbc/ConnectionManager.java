@@ -36,7 +36,7 @@ public class ConnectionManager {
 		this.createTables();
 		this.insertNeeds();
 		this.insertOption();
-		
+		this.insertMaterial();
 		
 	}
 	
@@ -245,7 +245,34 @@ public class ConnectionManager {
 			
 		}catch(SQLException sqlE) {
 			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
-				System.out.println("No need to insert the needs; already there");
+				System.out.println("No need to insert the options; already there");
+			}
+			else {
+				System.out.println("Error in query");
+				sqlE.printStackTrace();
+			}
+		}
+	}
+	
+	private void insertMaterial() {
+		try {
+			Statement insertMaterial1 = c.createStatement();
+			String material1 = "INSERT INTO material VALUES (1, 'Iron','YES')";
+			insertMaterial1.executeUpdate(material1);
+			insertMaterial1.close();
+			
+			Statement insertMaterial2 = c.createStatement();
+			String material2 = "INSERT INTO material VALUES (2, 'Carbon Fiber','YES')";
+			insertMaterial2.executeUpdate(material2);
+			insertMaterial2.close();
+			
+			Statement insertMaterial3 = c.createStatement();
+			String material3 = "INSERT INTO material VALUES (3, 'Aluminium','YES')";
+			insertMaterial3.executeUpdate(material3);
+			insertMaterial3.close();
+		}catch(SQLException sqlE) {
+			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
+				System.out.println("No need to insert the materials; already there");
 			}
 			else {
 				System.out.println("Error in query");

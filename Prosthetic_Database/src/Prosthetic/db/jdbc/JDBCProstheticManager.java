@@ -55,8 +55,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
-		String sql = "INSERT INTO prosthetic (id, size,company,patient,need,price,material) "
-				+"VAUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO prosthetic (id,size,Company_ID,Patient_ID,Need_ID,price,Material_ID) "
+				+"VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		prepstm.setInt(1,p.getID());
 		prepstm.setString(2, p.getSize());
