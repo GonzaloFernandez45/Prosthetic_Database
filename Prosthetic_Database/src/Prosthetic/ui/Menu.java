@@ -214,7 +214,7 @@ public class Menu {
 		int option = -1;
 		while(option!=0) {
 		System.out.println("Welcome Surgeon, choose what do you want to do");
-		System.out.println("1. Add a new patient: ");
+		System.out.println("1. Add a new patient ");
 		System.out.println("2. Login to an existing patient");
 		System.out.println("0. Exit");
 		
@@ -238,7 +238,7 @@ public class Menu {
 		int option = -1;
 		while(option!=0) {
 		System.out.println("Welcome,choose an option");
-		System.out.println("1. Schedule surgery: ");
+		System.out.println("1. Schedule surgery ");
 		System.out.println("2. Surgery result");
 		System.out.println("3. Input needs");
 		System.out.println("0. Exit");
@@ -529,7 +529,7 @@ public class Menu {
 	private static void scheduleSurgery() throws NumberFormatException, IOException{
 		
 		System.out.println("Choose the id of your patient:");
-	    patMan.getPatientByIDandName();
+	    System.out.println(patMan.getPatientByIDandName());
 		int patient_id= Integer.parseInt(r.readLine());
 		PatientManager patient_manager=conMan.getpatientMan();
 		Patient patient =patient_manager.getPatientByID(patient_id);
@@ -557,7 +557,7 @@ public class Menu {
 		surgeryMan.addSurgery(surgery);
 		
 		System.out.println("Surgery scheduled correctly");
-		System.out.println("Prosthetic id: "+p.getID());//para comprobar
+		System.out.println("Prosthetic id: "+p.getID());
 		
 		
 		}else {
@@ -567,6 +567,7 @@ public class Menu {
 	}
 	private static void surgeryResult () throws NumberFormatException, IOException{
 		System.out.println("Please enter the patient's ID: ");
+		System.out.println(patMan.getPatientByIDandName());
 		int id = Integer.parseInt(r.readLine());
 		String result = surgeonMan.resultSurgery(id);
 		System.out.println(result);
@@ -575,6 +576,7 @@ public class Menu {
 	
 	private static void inputNeed() throws NumberFormatException, IOException{
 		System.out.println("Please enter the patient's ID: ");
+		System.out.println(patMan.getPatientByIDandName());
 		int id = Integer.parseInt(r.readLine());
 
 			System.out.println("Insert the need: ");

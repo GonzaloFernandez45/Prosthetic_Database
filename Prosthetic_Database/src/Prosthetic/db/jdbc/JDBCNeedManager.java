@@ -63,7 +63,7 @@ public class JDBCNeedManager implements NeedManager {
 	@Override
 	public void addNeed(Need need) {
 		try {
-			String template = "INSERT INTO needs (type) VALUES (?)";
+			String template = "INSERT INTO need (type) VALUES (?)";
 			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setString(1, need.getType());
