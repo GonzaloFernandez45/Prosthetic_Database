@@ -114,6 +114,7 @@ public class JDBCCompanyManager implements CompanyManager {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		Company company = new Company(rs.getString("name"), rs.getString("location"));
+		company.setId(id);
 		return company;
 		
 		}catch (SQLException e) {

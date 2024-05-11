@@ -11,5 +11,5 @@ public interface ProstheticManager {
 	public List<Prosthetic> getProstheticbyNeed (Need n);
 	public List<Prosthetic> getProstheticbyPatient(Patient pa);
 	public List<Prosthetic> getProstheticByIDandPriceandSize();
-	
+	public List<Prosthetic> listProsthetics();
 }

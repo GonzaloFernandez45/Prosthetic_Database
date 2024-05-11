@@ -372,6 +372,7 @@ public class Menu {
 		int company_id = Integer.parseInt(r.readLine());
 		Company company = comMan.getCompany(company_id);
 		
+		
 		System.out.println("Select the patient´s ID");
 		System.out.println(patMan.getPatientByIDandName());
 		int patient_id = Integer.parseInt(r.readLine());
@@ -399,7 +400,8 @@ public class Menu {
 		System.out.println("prize:");
 		int price = Integer.parseInt(r.readLine());
 		
-		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,material,price);
+		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,price,material);
+		prosthetic.setID(conMan.getPKofLastInsertedRow());
 		prosthMan.addProsthetic(prosthetic);
 		
 		System.out.println("A new prosthetic has been succesfully created");
@@ -491,9 +493,7 @@ public class Menu {
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					if(!prosthetics.isEmpty()) {
 					System.out.println("Select the prosthetic where you want to add the option");
-					for (Prosthetic prosth: prosthetics) {
-						System.out.println(prosth);
-						}
+					printProsthetics();
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
 					prosthetic.getOptions().add(optMan.getOption(finalOption));
@@ -636,10 +636,17 @@ public class Menu {
 				}
 			}
 		
+	}		
 	}
 	
-	
-			
+	private static void printProsthetics() throws NumberFormatException, IOException{
+		List<Prosthetic> prosthetics = new ArrayList<>();
+		for(Prosthetic prosthetic : prosthMan.listProsthetics()) {
+			prosthetics.add(prosthetic);
+		}
+		for(Prosthetic p : prosthetics) {
+			System.out.println(p);
+		}
 	}
 }
 	

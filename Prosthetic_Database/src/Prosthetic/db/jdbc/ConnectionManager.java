@@ -2,6 +2,8 @@ package Prosthetic.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -279,6 +281,21 @@ public class ConnectionManager {
 				sqlE.printStackTrace();
 			}
 		}
+	}
+	
+	public int getPKofLastInsertedRow() {
+		try {
+			String query = "SELECT last_insert_rowid() AS lastId";
+			PreparedStatement p;
+			p = c.prepareStatement(query);
+			ResultSet rs = p.executeQuery();
+			Integer lastId = rs.getInt("lastId");
+			return lastId;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	public CompanyManager getcomMan() {
