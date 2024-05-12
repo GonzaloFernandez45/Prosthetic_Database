@@ -128,13 +128,12 @@ public class ConnectionManager {
 			Statement createTables7 = c.createStatement();
 			String create7 = "CREATE TABLE surgery ("
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "time String,"
-					+ "date DATE,"
-					+ "room INTEGER,"
+					+ "time TEXT NOT NULL,"
+					+ "date DATE NOT NULL,"
+					+ "room INTEGER NOT NULL,"
 					+ "Surgeon_ID INTEGER REFERENCES surgeon(ID) ON DELETE SET NULL,"
 					+ "Prosthetic_ID INTEGER REFERENCES prosthetic(ID) ON DELETE SET NULL,"
-					+ "result TEXT NOT NULL DEFAULT 'Not completed',"
-					+ "type TEXT NOT NULL)";
+					+ "result TEXT NOT NULL DEFAULT 'Not completed')";
 					
 			createTables7.executeUpdate(create7);
 			createTables7.close();

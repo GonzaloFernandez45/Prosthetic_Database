@@ -533,10 +533,8 @@ public class Menu {
 		int patient_id= Integer.parseInt(r.readLine());
 		PatientManager patient_manager=conMan.getpatientMan();
 		Patient patient =patient_manager.getPatientByID(patient_id);
-		List<Prosthetic>prosthetics= prosthMan.getProstheticbyPatient(patient);
 		
-		if(!prosthetics.isEmpty()) {
-		Prosthetic p= prosthetics.get(0);
+		
 		System.out.println("Please add the surgery info: ");
 		System.out.println("Time: ");
 		String time = r.readLine();
@@ -545,19 +543,28 @@ public class Menu {
 		Date date = Date.valueOf(localDate);
 		System.out.println("Room: ");
 		int room = Integer.parseInt(r.readLine());
+		
+		System.out.println("Choose the ID of the prosthetic: ");
+		List<Prosthetic>prosthetics= prosthMan.getProstheticbyPatient(patient);
+		System.out.println(prosthMan.getProstheticbyPatient(patient));
+		int prosthetic_id = Integer.parseInt(r.readLine());
+		ProstheticManager pm= conMan.getprosMan();
+		Prosthetic prosthetic= pm.getProstheticByID(prosthetic_id);
+
+		if(!prosthetics.isEmpty()) {
 		System.out.println("Choose the ID of the surgeon: ");
 		System.out.println(surgeonMan.listSurgeonIDandName());
 		int surgeon_id = Integer.parseInt(r.readLine());
 		SurgeonManager surgeonMan = conMan.getsurgeonMan();
 		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+		
 		System.out.println("Result (Completed/Not completed): ");
 		String result  = r.readLine();
-		Surgery surgery = new Surgery(time,date,room,surgeon,result);
-		surgery.setProsthetic(p);
+		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
 		surgeryMan.addSurgery(surgery);
 		
 		System.out.println("Surgery scheduled correctly");
-		System.out.println("Prosthetic id: "+p.getID());
+		System.out.println("Prosthetic id: "+prosthetic.getID());
 		
 		
 		}else {
@@ -595,7 +602,7 @@ public class Menu {
 						 break;
 					 }else {
 						 System.out.println("Choose the id of one of the patient's prosthetic");
-						 prosthMan.getProstheticbyPatient(patient);
+						 System.out.println(prosthMan.getProstheticbyPatient(patient));
 						 int prosthetic_id=Integer.parseInt(r.readLine());
 						 for(Prosthetic prosthetic:prosthetics) {
 							 if(prosthetic.getID()==prosthetic_id) {
@@ -623,7 +630,7 @@ public class Menu {
 						 break;
 					 }else {
 						 System.out.println("Choose the id of one of the patient's prosthetic");
-						 prosthMan.getProstheticbyPatient(patient);
+						 System.out.println(prosthMan.getProstheticbyPatient(patient));//
 						 int prosthetic_id=Integer.parseInt(r.readLine());
 						 for(Prosthetic prosthetic:prosthetics) {
 							 if(prosthetic.getID()==prosthetic_id) {
