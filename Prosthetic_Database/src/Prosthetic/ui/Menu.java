@@ -389,6 +389,7 @@ public class Menu {
 		System.out.println("Checking if the materials are available for this prosthetic...");
 		String availability = matMan.checkAvailability(material_id);
 		if(availability.equalsIgnoreCase("yes")) {
+			System.out.println("...they are available!");
 		}
 		else if (availability.equalsIgnoreCase("no")) {
 			System.out.println("The prosthetic couldnt be created as there are no materials available");
@@ -465,11 +466,11 @@ public class Menu {
 		Patient patient = patMan.getPatientNameSurname(patient_id);
 		List<Need> patientNeeds = patient.getNeeds();
 		
+		
 		System.out.println(patient);
 		for (Need need: patientNeeds) {
 			System.out.println(need);
 			}
-			
 		
 		
 	}
