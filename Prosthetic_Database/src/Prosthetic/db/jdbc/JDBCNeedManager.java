@@ -25,7 +25,7 @@ public class JDBCNeedManager implements NeedManager {
 	@Override
 	public Need getNeed(int id) {
 		try {
-			String sql = "SELECT * FROM needs WHERE id = " + id;
+			String sql = "SELECT * FROM need WHERE id = " + id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
@@ -63,7 +63,7 @@ public class JDBCNeedManager implements NeedManager {
 	@Override
 	public void addNeed(Need need) {
 		try {
-			String template = "INSERT INTO needs (type) VALUES (?)";
+			String template = "INSERT INTO need (type) VALUES (?)";
 			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setString(1, need.getType());

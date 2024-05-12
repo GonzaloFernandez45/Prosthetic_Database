@@ -24,7 +24,7 @@ public class Surgery implements Serializable {
 	}
 
 	
-	public Surgery(Integer id,String time,Date date,Integer room,Prosthetic prosthetic,Surgeon surgeon,String result) {
+	public Surgery(Integer id,String time,Date date,Integer room,Surgeon surgeon,Prosthetic prosthetic,String result) {
 		super();
 
 		this.date = date;
@@ -40,13 +40,14 @@ public class Surgery implements Serializable {
 
 	
 
-	public Surgery(String time, Date date, Integer room, Surgeon surgeon,String result) {
+	public Surgery(String time, Date date, Integer room, Surgeon surgeon,Prosthetic prosthetic,String result) {
 		super();
 		this.time = time;
 		this.date = date;
 		this.result = result;
 		this.room = room;
 		this.surgeon = surgeon;
+		this.prosthetic=prosthetic;
 	}
 
 
@@ -129,7 +130,7 @@ public class Surgery implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Surgery [time=" + time + ", date=" + date + ", result=" + result + ", room=" + room + ", id=" + id
+		return "Surgery [ id" + id+",time=" + time + ", date=" + date + ", result=" + result + ", room=" + room
 				+ ", surgeon=" + surgeon + ", prosthetic=" + prosthetic + "]";
 	}
 

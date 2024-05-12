@@ -20,21 +20,21 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		this.c = conMan.getConnection();
 	}
 	
-	//TODO como hacemos para el surgeon need y patient en todos los metodos
+
 
 	@Override
 	public void addSurgery(Surgery s) {
 		try {
-		String sql= "INSERT INTO surgery (id,  time, date, room, prosthetic_id, surgeon_id,result )"
+		String sql= "INSERT INTO surgery (id,  time, date, room, Surgeon_ID,Prosthetic_ID,result )"
 				+ "VALUES (?,?,?,?,?,?,?,?,?)" ;
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		prepstm.setInt(1,s.getId());
 		prepstm.setString(2,s.getTime());
 		prepstm.setDate(3,s.getDate());
 		prepstm.setInt(4,s.getRoom());
-		prepstm.setInt(5,s.getProsthetic().getID());
-		prepstm.setInt(6,s.getSurgeon().getId());
-		prepstm.setString(8,s.getResult());
+		prepstm.setInt(5,s.getSurgeon().getId());
+		prepstm.setInt(6,s.getProsthetic().getID());
+		prepstm.setString(7,s.getResult());
 		prepstm.executeUpdate();
 		prepstm.close();
 		
@@ -66,7 +66,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	public List<Surgery> searchSurgerybyPatient(int Patient_ID) {
 		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT s.id,s.time,s.date,s.room,s.Prosthetic_ID,s.Surgeon_ID,s.result FROM surgery AS s JOIN prosthetic ON s.Prosthetic_ID = prosthetic.id WHERE prosthetic.Patient_ID = ?";
+			String sql= "SELECT s.id,s.time,s.date,s.room,s.Surgeon_ID,s.Prosthetic_ID,s.result FROM surgery AS s JOIN prosthetic ON s.Prosthetic_ID = prosthetic.id WHERE prosthetic.Patient_ID = ?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
 			prepstm.setInt(1,Patient_ID);
 			ResultSet rs=prepstm.executeQuery();
@@ -82,9 +82,8 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				SurgeonManager surgeonMan = conMan.getsurgeonMan();
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 				String result = rs.getString("result");
-				String type = rs.getString("type");
 				
-				Surgery s= new Surgery(id,time,date,room,prosthetic,surgeon,result);
+				Surgery s= new Surgery(id,time,date,room,surgeon,prosthetic,result);
 				surgery.add(s);
 			}
 			rs.close();
@@ -119,7 +118,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 				String result = rs.getString("result");
 				
-				Surgery s = new Surgery(id,time,dateSurgery,room,prosthetic,surgeon,result);
+				Surgery s = new Surgery(id,time,dateSurgery,room,surgeon,prosthetic,result);
 				surgeries.add(s);
 	
 			}
@@ -139,9 +138,9 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	public List<Surgery> searchSurgerybySurgeon(Surgeon s) {
 		List<Surgery>surgery= new ArrayList<Surgery>();
 		try {
-			String sql= "SELECT * FROM surgery WHERE surgeon  LIKE ?";
+			String sql= "SELECT * FROM surgery WHERE Surgeon_ID =?";
 			PreparedStatement prepstm= c.prepareStatement(sql);
-			prepstm.setString(1,"%"+s+"%");
+			prepstm.setInt(1,s.getId());
 			ResultSet rs=prepstm.executeQuery();
 	
 			while (rs.next()) {
@@ -156,7 +155,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 				Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 				String result = rs.getString("result");
 				
-				Surgery sur= new Surgery(id,time,date,room,prosthetic,surgeon,result);
+				Surgery sur= new Surgery(id,time,date,room,surgeon,prosthetic,result);
 				surgery.add(sur);
 				
 			}

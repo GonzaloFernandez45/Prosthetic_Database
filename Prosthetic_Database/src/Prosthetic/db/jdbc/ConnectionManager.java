@@ -2,6 +2,8 @@ package Prosthetic.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -36,7 +38,7 @@ public class ConnectionManager {
 		this.createTables();
 		this.insertNeeds();
 		this.insertOption();
-		
+		this.insertMaterial();
 		
 	}
 	
@@ -126,13 +128,12 @@ public class ConnectionManager {
 			Statement createTables7 = c.createStatement();
 			String create7 = "CREATE TABLE surgery ("
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "time String,"
-					+ "date DATE,"
-					+ "room INTEGER,"
+					+ "time TEXT NOT NULL,"
+					+ "date DATE NOT NULL,"
+					+ "room INTEGER NOT NULL,"
 					+ "Surgeon_ID INTEGER REFERENCES surgeon(ID) ON DELETE SET NULL,"
 					+ "Prosthetic_ID INTEGER REFERENCES prosthetic(ID) ON DELETE SET NULL,"
-					+ "result TEXT NOT NULL DEFAULT 'Not completed',"
-					+ "type TEXT NOT NULL)";
+					+ "result TEXT NOT NULL DEFAULT 'Not completed')";
 					
 			createTables7.executeUpdate(create7);
 			createTables7.close();
@@ -245,13 +246,55 @@ public class ConnectionManager {
 			
 		}catch(SQLException sqlE) {
 			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
-				System.out.println("No need to insert the needs; already there");
+				System.out.println("No need to insert the options; already there");
 			}
 			else {
 				System.out.println("Error in query");
 				sqlE.printStackTrace();
 			}
 		}
+	}
+	
+	private void insertMaterial() {
+		try {
+			Statement insertMaterial1 = c.createStatement();
+			String material1 = "INSERT INTO material VALUES (1, 'Iron','YES')";
+			insertMaterial1.executeUpdate(material1);
+			insertMaterial1.close();
+			
+			Statement insertMaterial2 = c.createStatement();
+			String material2 = "INSERT INTO material VALUES (2, 'Carbon Fiber','YES')";
+			insertMaterial2.executeUpdate(material2);
+			insertMaterial2.close();
+			
+			Statement insertMaterial3 = c.createStatement();
+			String material3 = "INSERT INTO material VALUES (3, 'Aluminium','YES')";
+			insertMaterial3.executeUpdate(material3);
+			insertMaterial3.close();
+		}catch(SQLException sqlE) {
+			if (sqlE.getMessage().contains("UNIQUE constraint failed")){
+				System.out.println("No need to insert the materials; already there");
+			}
+			else {
+				System.out.println("Error in query");
+				sqlE.printStackTrace();
+			}
+		}
+	}
+	
+	public int getPKofLastInsertedRow() {
+		try {
+			String query = "SELECT last_insert_rowid() AS lastId";
+			PreparedStatement p;
+			p = c.prepareStatement(query);
+			ResultSet rs = p.executeQuery();
+			Integer lastId = rs.getInt("lastId");
+			return lastId;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	public CompanyManager getcomMan() {

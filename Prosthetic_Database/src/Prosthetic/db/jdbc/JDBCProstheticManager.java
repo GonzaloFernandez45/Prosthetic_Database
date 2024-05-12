@@ -55,16 +55,16 @@ public class JDBCProstheticManager implements ProstheticManager {
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
-		String sql = "INSERT INTO prosthetic (id, size,company,patient,need,price,material) "
-				+"VAUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO prosthetic (size,Company_ID,Patient_ID,Need_ID,price,Material_ID) "
+				+"VALUES (?,?,?,?,?,?)";
 		PreparedStatement prepstm= c.prepareStatement(sql);
-		prepstm.setInt(1,p.getID());
-		prepstm.setString(2, p.getSize());
-		prepstm.setInt(3, p.getCompany().getId());
-		prepstm.setInt(4, p.getPatient().getId());
-		prepstm.setInt(5, p.getNeed().getId());
+		
+		prepstm.setString(1, p.getSize());
+		prepstm.setInt(2, p.getCompany().getId());
+		prepstm.setInt(3, p.getPatient().getId());
+		prepstm.setInt(4, p.getNeed().getId());
+		prepstm.setInt(5, p.getPrice());
 		prepstm.setInt(6, p.getMaterial().getId());
-		prepstm.setInt(7, p.getPrice());
 		prepstm.executeUpdate();
 		prepstm.close();
 		
@@ -201,6 +201,36 @@ public class JDBCProstheticManager implements ProstheticManager {
 			e.printStackTrace();
 		}
 		return null;		
+	}
+	
+	@Override
+	public List<Prosthetic> listProsthetics() {
+		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
+		try {
+			String sql = "SELECT * FROM prosthetic";
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Integer idProsthetic = rs.getInt("id");
+				String size = rs.getString("size");
+				CompanyManager comMan = conMan.getcomMan();
+				Company company = comMan.getCompany(rs.getInt("Company_ID"));
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(rs.getInt("Patient_ID"));
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(rs.getInt("Need_ID"));
+				MaterialManager materialsMan= conMan.getmaterialMan();
+				Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
+				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material);
+				prosthetics.add(p);
+				}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return prosthetics;
 	}
 
 }
