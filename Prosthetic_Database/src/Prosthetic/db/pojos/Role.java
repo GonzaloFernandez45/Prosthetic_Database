@@ -3,11 +3,22 @@ package Prosthetic.db.pojos;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="roles")
 public class Role implements Serializable{
 
 	private static final long serialVersionUID = 1341513996811571664L;
+	
+	@Id
+	@GeneratedValue(generator = "roles")
+	@TableGenerator(name = "roles", table = "sqlite_sequence",
+	         pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "roles")
 	private Integer id;
 	private String name;
+	@OneToMany(mappedBy="role",fetch=FetchType.LAZY)
+	@JoinColumn
 	private List<User> users;
 	
 	public Role() {
@@ -51,7 +62,14 @@ public class Role implements Serializable{
 	public String toString() {
 		return "Role [id=" + id + ", name=" + name + ", users=" + users + "]";
 	}
-	
+	public void addUser (User u) {
+		if(!users.contains(u))
+			users.add(u);
+	}
+	public void removeUser (User u) {
+		if(users.contains(u))
+			users.remove(u);
+	}
 	
 
 }

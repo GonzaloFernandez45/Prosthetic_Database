@@ -10,8 +10,13 @@ import javax.persistence.*;
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = -1903665991251142241L;
+	@Id
+	@GeneratedValue(generator = "users")
+	@TableGenerator(name = "users", table = "sqlite_sequence",
+	         pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users")
 	private Integer id; 
 	private String username;
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Role role;
 	
 	public User() {
