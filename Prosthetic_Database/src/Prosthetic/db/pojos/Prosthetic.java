@@ -150,7 +150,7 @@ public class Prosthetic implements Serializable {
 		@Override
 		public String toString() {
 			return "Prosthetic [ID=" + ID + ", price=" + price + ", size=" + size + ", options=" + options + ", need="
-					+ need + ", material=" + material + ", company=" + company + ", patient=" + patient + "]";
+					+ need + ", material=" + material + ", company=" + company + "]";
 		}
 
 		public void addOption (Option option) {

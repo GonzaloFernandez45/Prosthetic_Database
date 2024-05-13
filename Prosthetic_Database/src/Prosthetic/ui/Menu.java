@@ -117,7 +117,6 @@ public class Menu {
 			break;
 		}
 		case 0: 
-			conMan.close();
 			return;
 		}
 		}
@@ -172,7 +171,7 @@ public class Menu {
 		}
 		
 		case 0: 
-			conMan.close();
+			
 			return;
 		}
 		}	
@@ -204,8 +203,12 @@ public class Menu {
 			checkPatientNeeds();
 			break;
 		}
+		case 4: {
+			printProsthetics();
+			break;
+		}
 		case 0: 
-			conMan.close();
+			
 			return;
 		}
 		}
@@ -229,7 +232,7 @@ public class Menu {
 			loginToAnExistingPatinet();
 			break;
 		case 0:
-			conMan.close();
+			
 			break;
 		}
 	}
@@ -257,7 +260,7 @@ public class Menu {
 			inputNeed();
 			break;
 		case 0:
-			conMan.close();
+			
 			break;
 		}
 		}
@@ -275,6 +278,8 @@ public class Menu {
 		System.out.println("Please enter the patient's ID: ");
 		int id = Integer.parseInt(r.readLine());
 		Patient patient = patMan.getPatientByID(id);
+		List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+		patient.setProsthetics(prosthetics);
 		System.out.println(patient);
 	}
 	
@@ -404,7 +409,6 @@ public class Menu {
 		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,price,material);
 		prosthetic.setID(conMan.getPKofLastInsertedRow());
 		prosthMan.addProsthetic(prosthetic);
-		
 		System.out.println("A new prosthetic has been succesfully created");
 	}
 	
@@ -412,7 +416,7 @@ public class Menu {
 	private static void checkDemand() throws NumberFormatException, IOException {
 		
 		List<Patient> patients = new ArrayList<>();
-		
+
 		for (Patient patient : patMan.listPatients()){
 			
 			if (patient.getReport().equalsIgnoreCase("no")) {
@@ -421,9 +425,18 @@ public class Menu {
 			}
 			
 		}
-		for (Patient p: patients) {
-		System.out.println(p);
+		if (patients.isEmpty()){
+			System.out.println("Currently there is no demand");
 		}
+		else {
+			System.out.println("This is the demand");
+			for (Patient p: patients) {
+				System.out.println(p);
+			}
+		}
+		
+		
+		
 		
 		
 	}
@@ -463,11 +476,11 @@ public class Menu {
 		System.out.println("Select the patient´s ID");
 		System.out.println(patMan.getPatientByIDandName());
 		int patient_id = Integer.parseInt(r.readLine());
-		Patient patient = patMan.getPatientNameSurname(patient_id);
+		Patient patient = patMan.getPatientByID(patient_id);
 		List<Need> patientNeeds = patient.getNeeds();
 		
 		
-		System.out.println(patient);
+		System.out.println("Name: "+patient.getName()+", Surname: "+patient.getSurname());
 		for (Need need: patientNeeds) {
 			System.out.println(need);
 			}
@@ -656,6 +669,8 @@ public class Menu {
 			System.out.println(p);
 		}
 	}
+	
+	
 }
 	
 
