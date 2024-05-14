@@ -575,10 +575,12 @@ public class Menu {
 		System.out.println("Result (Completed/Not completed): ");
 		String result  = r.readLine();
 		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
+		surgery.setId(conMan.getPKofLastInsertedRow());
 		surgeryMan.addSurgery(surgery);
 		
+		
 		System.out.println("Surgery scheduled correctly");
-		System.out.println("Prosthetic id: "+prosthetic.getID());
+		System.out.println("Surgery id: "+surgery.getId());
 		
 		
 		}else {
@@ -590,7 +592,16 @@ public class Menu {
 		System.out.println("Please enter the patient's ID: ");
 		System.out.println(patMan.getPatientByIDandName());
 		int id = Integer.parseInt(r.readLine());
-		String result = surgeonMan.resultSurgery(id);
+		Patient p = patMan.getPatientByID(id);
+		List<Prosthetic> patientProsthetics = prosthMan.getProstheticbyPatient(p);
+		System.out.println("Select the prosthetic where you want the surgery's date");
+		for (Prosthetic prosth: patientProsthetics) {
+			System.out.println(prosth);
+			}
+		int prostheticID = Integer.parseInt(r.readLine());
+		Prosthetic prosth = prosthMan.getProstheticByID(prostheticID);
+		int surgery_id = prosth.getSurgery().getId();
+		String result = surgeonMan.resultSurgery(surgery_id);
 		System.out.println(result);
 		
 	}

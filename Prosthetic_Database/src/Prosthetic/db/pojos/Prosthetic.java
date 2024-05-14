@@ -7,9 +7,7 @@ import java.util.Objects;
 
 public class Prosthetic implements Serializable {
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -6478906863426691556L;
 	private Integer ID;
 	private Integer price;
@@ -19,6 +17,7 @@ public class Prosthetic implements Serializable {
 	private Material material;
 	private Company company;
 	private Patient patient;
+	private Surgery surgery;
 	
 	
 		public Prosthetic() {
@@ -163,6 +162,14 @@ public class Prosthetic implements Serializable {
 			if(options.contains(option)) {
 				this.options.remove(option);
 			}
+		}
+
+		public Surgery getSurgery() {
+			return surgery;
+		}
+
+		public void setSurgery(Surgery surgery) {
+			this.surgery = surgery;
 		}
 	
 
