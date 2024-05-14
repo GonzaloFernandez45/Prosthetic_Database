@@ -146,7 +146,7 @@ public class JDBCSurgeonManager implements SurgeonManager {
 	@Override
 	public String resultSurgery(int surgery_id) {
 		try {
-			String sql = "SELECT report FROM surgery WHERE id = " + surgery_id;
+			String sql = "SELECT result FROM surgery WHERE id = " + surgery_id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);

@@ -3,7 +3,6 @@ package Prosthetic.db.jdbc;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 import Prosthetic.db.interfaces.*;
 import Prosthetic.db.pojos.*;
@@ -169,5 +168,36 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 		return surgery;
 	}
+	
+	@Override
+	public Surgery getSurgeryByProsthetic(int Prosthetic_ID) {
+		try {
+			String sql = "SELECT * FROM surgery WHERE Prosthetic_ID = ?";
+			PreparedStatement prepstmt = c.prepareStatement(sql);
+			prepstmt.setInt(1, Prosthetic_ID);
+			ResultSet rs=prepstmt.executeQuery();
+			rs.next();
+			int idSurgery =rs.getInt("id");
+			String time = rs.getString("time");
+			Date date = rs.getDate("date");
+			int room =rs.getInt("room");
+			ProstheticManager prostheticMan = conMan.getprosMan();
+			Prosthetic prosthetic = prostheticMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
+			int surgeon_id = rs.getInt("Surgeon_ID");
+			SurgeonManager surgeonMan = conMan.getsurgeonMan();
+			Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+			String result = rs.getString("result");
+			Surgery surgery = new Surgery(idSurgery,time,date,room,surgeon,prosthetic,result);
+			return surgery;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+	
 
 }

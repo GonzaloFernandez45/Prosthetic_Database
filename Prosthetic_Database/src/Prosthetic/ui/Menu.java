@@ -477,9 +477,9 @@ public class Menu {
 		System.out.println(patMan.getPatientByIDandName());
 		int patient_id = Integer.parseInt(r.readLine());
 		Patient patient = patMan.getPatientByID(patient_id);
-		List<Need> patientNeeds = patient.getNeeds();
-		
-		
+		List<Need> patientNeeds = needMan.getNeedByPatient(patient_id);
+		patient.setNeeds(patientNeeds);
+		System.out.println(patientNeeds);
 		System.out.println("Name: "+patient.getName()+", Surname: "+patient.getSurname());
 		for (Need need: patientNeeds) {
 			System.out.println(need);
@@ -575,8 +575,9 @@ public class Menu {
 		System.out.println("Result (Completed/Not completed): ");
 		String result  = r.readLine();
 		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
-		surgery.setId(conMan.getPKofLastInsertedRow());
+		surgery.setProsthetic(prosthetic);
 		surgeryMan.addSurgery(surgery);
+		prosthetic.setSurgery(surgery);
 		
 		
 		System.out.println("Surgery scheduled correctly");
@@ -599,8 +600,8 @@ public class Menu {
 			System.out.println(prosth);
 			}
 		int prostheticID = Integer.parseInt(r.readLine());
-		Prosthetic prosth = prosthMan.getProstheticByID(prostheticID);
-		int surgery_id = prosth.getSurgery().getId();
+		Surgery surgery = surgeryMan.getSurgeryByProsthetic(prostheticID);
+		int surgery_id = surgery.getId();
 		String result = surgeonMan.resultSurgery(surgery_id);
 		System.out.println(result);
 		
@@ -621,6 +622,9 @@ public class Menu {
 					System.out.println("Please select the wanted need by its ID: ");
 					int need_id = Integer.parseInt(r.readLine());
 					Patient patient = patMan.getPatientByID(id);
+					List<Need> patientNeeds = patient.getNeeds();
+					patientNeeds.add(needMan.getNeed(need_id));
+					patient.setNeeds(patientNeeds);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					 if(prosthetics.isEmpty()) {
 						 System.out.println("No prosthetics found for the patient");

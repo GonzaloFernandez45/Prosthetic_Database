@@ -11,6 +11,6 @@ public interface SurgeryManager {
 	public List<Surgery> searchSurgerybyPatient(int patient_id);
 	public List<Surgery> searchSurgerybyDate(Date date);
 	public List<Surgery> searchSurgerybySurgeon (Surgeon s);
-	 
+	public Surgery getSurgeryByProsthetic(int id);
 
 }

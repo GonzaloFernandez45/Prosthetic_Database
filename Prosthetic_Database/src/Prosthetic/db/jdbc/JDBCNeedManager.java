@@ -94,5 +94,25 @@ public class JDBCNeedManager implements NeedManager {
 		}
 		return needs;
 	}
+	
+	@Override
+	public List<Need> getNeedByPatient(int Patient_ID) {
+		List<Need> needs = new ArrayList<>();
+		try {
+			String sql = "SELECT Need_ID FROM patient_need WHERE Patient_ID LIKE ?";
+			PreparedStatement search = c.prepareStatement(sql);
+			search.setInt(1, Patient_ID);
+			ResultSet rs = search.executeQuery(); 
+			while(rs.next()) {
+				Integer id = rs.getInt("Need_ID");
+				Need need = getNeed(id);
+				needs.add(need);
+			}
+		}catch (SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
+		}
+		return needs;
+	}
 
 }
