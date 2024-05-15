@@ -5,19 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "prosthetics")
+@XmlType(propOrder = {"size", "price", "report", "company_id", "need_id", "material_id", "patient", "options"})
 public class Prosthetic implements Serializable {
 	
 	
 	private static final long serialVersionUID = -6478906863426691556L;
+	@XmlTransient
 	private Integer ID;
+	@XmlAttribute
 	private Integer price;
+	@XmlAttribute
 	private String size;
+	@XmlElement(name = "Option")
+	@XmlElementWrapper(name = "Options")
 	private List<Option> options;
+	@XmlAttribute
 	private Need need;
+	@XmlAttribute
 	private Material material;
+	@XmlAttribute
 	private Company company;
+	@XmlElement
 	private Patient patient;
+	
 	private Surgery surgery;
+	@XmlAttribute
 	private String report;
 
 	
