@@ -56,33 +56,33 @@ public class JDBCCompanyManager implements CompanyManager {
 	}
 	
 	
-	@Override
-	public List<Patient> checkDemandByNeed(int need_id) {
-		List<Patient> patients = new ArrayList<Patient>();
-		try {
-			String sql = "SELECT p.id,p.name,p.surname,p.sex,p.DOB,p.dni,p.report FROM patient AS p JOIN patient_need AS pn ON p.id = pn.patient_id WHERE need = ?";
-			PreparedStatement search = c.prepareStatement(sql);
-			search.setInt(1,need_id);
-			ResultSet rs = search.executeQuery();
-			while(rs.next()) {
-				Integer id = rs.getInt("id");
-				String name = rs.getString("name");
-				String surname = rs.getString("surname");
-				String sex = rs.getString("sex"); //TODO cambiar a tipo SEX si hacemos un enumerado
-				Date DOB = rs.getDate("DOB");
-				Integer dni = rs.getInt("dni");
-				String report = rs.getString("report");
-				Patient p = new Patient(id,name,surname,sex,DOB,dni,report);
-				patients.add(p);			
-				}
-				rs.close();
-				search.close();
-			}catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}
-		return patients;
-	}
+//	@Override
+//	public List<Patient> checkDemandByNeed(int need_id) {
+//		List<Patient> patients = new ArrayList<Patient>();
+//		try {
+//			String sql = "SELECT p.id,p.name,p.surname,p.sex,p.DOB,p.dni,p.report FROM patient AS p JOIN patient_need AS pn ON p.id = pn.patient_id WHERE need = ?";
+//			PreparedStatement search = c.prepareStatement(sql);
+//			search.setInt(1,need_id);
+//			ResultSet rs = search.executeQuery();
+//			while(rs.next()) {
+//				Integer id = rs.getInt("id");
+//				String name = rs.getString("name");
+//				String surname = rs.getString("surname");
+//				String sex = rs.getString("sex"); //TODO cambiar a tipo SEX si hacemos un enumerado
+//				Date DOB = rs.getDate("DOB");
+//				Integer dni = rs.getInt("dni");
+//				String report = rs.getString("report");
+//				Patient p = new Patient(id,name,surname,sex,DOB,dni);
+//				patients.add(p);			
+//				}
+//				rs.close();
+//				search.close();
+//			}catch (SQLException e) {
+//			System.out.println("Error in the database");
+//			e.printStackTrace();
+//		}
+//		return patients;
+//	}
 	@Override
 	public List<Need> checkNeeds(int patient_id) {
 		List<Need> needs = new ArrayList<Need>();

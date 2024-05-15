@@ -29,34 +29,34 @@ public class JDBCProstheticManager implements ProstheticManager {
 	}
 	
 
-    @Override
-	public List<Prosthetic> getProstheticByIDandPriceandSize(){
-	
-		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
-		try {
-			String sql = "SELECT id,size,price FROM prosthetic GROUP BY id";
-			PreparedStatement search = c.prepareStatement(sql);
-			ResultSet rs = search.executeQuery();
-			while(rs.next()) {
-				Integer id = rs.getInt("id");
-				String size = rs.getString("size");
-				Integer price = rs.getInt("price");
-				Prosthetic p = new Prosthetic(id,size,price);
-				prosthetics.add(p);
-			}
-			rs.close();
-			search.close();
-		}catch (SQLException e) {
-			System.out.println("Error looking for a book");
-			e.printStackTrace();
-		}
-		return prosthetics;
-	}
+//    @Override
+//	public List<Prosthetic> getProstheticByIDandPriceandSize(){
+//	
+//		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
+//		try {
+//			String sql = "SELECT id,size,price FROM prosthetic GROUP BY id";
+//			PreparedStatement search = c.prepareStatement(sql);
+//			ResultSet rs = search.executeQuery();
+//			while(rs.next()) {
+//				Integer id = rs.getInt("id");
+//				String size = rs.getString("size");
+//				Integer price = rs.getInt("price");
+//				Prosthetic p = new Prosthetic(id,size,price);
+//				prosthetics.add(p);
+//			}
+//			rs.close();
+//			search.close();
+//		}catch (SQLException e) {
+//			System.out.println("Error looking for a book");
+//			e.printStackTrace();
+//		}
+//		return prosthetics;
+//	}
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {
-		String sql = "INSERT INTO prosthetic (size,Company_ID,Patient_ID,Need_ID,price,Material_ID) "
-				+"VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO prosthetic (size,Company_ID,Patient_ID,Need_ID,price,Material_ID,report) "
+				+"VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement prepstm= c.prepareStatement(sql);
 		
 		prepstm.setString(1, p.getSize());
@@ -65,6 +65,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 		prepstm.setInt(4, p.getNeed().getId());
 		prepstm.setInt(5, p.getPrice());
 		prepstm.setInt(6, p.getMaterial().getId());
+		prepstm.setString(7, p.getReport());
 		prepstm.executeUpdate();
 		prepstm.close();
 		
@@ -116,7 +117,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 				int material_id=rs.getInt("Material_ID");
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
-				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material);
+				String report = rs.getString("report");
+				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material,report);
 				prosthetic.add(p);
 				
 			}
@@ -155,8 +157,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 				int material_id=rs.getInt("Material_ID");
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
-				
-				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material);
+				String report = rs.getString("report");
+				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material,report);
 				prosthetic.add(p);
 			}
 			rs.close();
@@ -193,8 +195,9 @@ public class JDBCProstheticManager implements ProstheticManager {
 			Need need = needMan.getNeed(rs.getInt("Need_ID"));
 			MaterialManager materialsMan= conMan.getmaterialMan();
 			Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
-			
-			Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material);
+			String report = rs.getString("report");
+
+			Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report);
 			return p;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -221,7 +224,9 @@ public class JDBCProstheticManager implements ProstheticManager {
 				Need need = needMan.getNeed(rs.getInt("Need_ID"));
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
-				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material);
+				String report = rs.getString("report");
+
+				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report);
 				prosthetics.add(p);
 				}
 			rs.close();

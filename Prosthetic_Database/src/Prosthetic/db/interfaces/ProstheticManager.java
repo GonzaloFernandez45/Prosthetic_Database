@@ -10,6 +10,6 @@ public interface ProstheticManager {
 	public Prosthetic getProstheticByID(int id);
 	public List<Prosthetic> getProstheticbyNeed (Need n);
 	public List<Prosthetic> getProstheticbyPatient(Patient pa);
-	public List<Prosthetic> getProstheticByIDandPriceandSize();
+	//public List<Prosthetic> getProstheticByIDandPriceandSize();
 	public List<Prosthetic> listProsthetics();
 }

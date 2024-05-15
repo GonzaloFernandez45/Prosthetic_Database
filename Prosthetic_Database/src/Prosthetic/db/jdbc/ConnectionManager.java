@@ -96,8 +96,8 @@ public class ConnectionManager {
 					+ "surname TEXT NOT NULL,"
 					+ "sex SEX,"
 					+ "DOB DATE NOT NULL,"
-					+ "dni INTEGER NOT NULL,"
-					+ "report TEXT NOT NULL DEFAULT 'NO')";
+					+ "dni INTEGER NOT NULL)";
+					
 			createTables4.executeUpdate(create4);
 			createTables4.close();
 			
@@ -109,7 +109,9 @@ public class ConnectionManager {
 					+ "Patient_ID INTEGER REFERENCES patient(ID) ON DELETE RESTRICT,"
 					+ "Need_ID INTEGER REFERENCES need(ID) ON DELETE RESTRICT,"
 					+ "price INTEGER NOT NULL,"
-					+ "Material_ID INTEGER REFERENCES material(ID))";
+					+ "Material_ID INTEGER REFERENCES material(ID),"
+					+ "report TEXT NOT NULL DEFAULT 'NO')";
+					
 			createTables5.executeUpdate(create5);
 			createTables5.close();
 			

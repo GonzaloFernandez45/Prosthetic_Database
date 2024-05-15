@@ -229,7 +229,7 @@ public class Menu {
 			addPatient();
 			break;
 		case 2:
-			loginToAnExistingPatinet();
+			loginToAnExistingPatient();
 			break;
 		case 0:
 			
@@ -237,7 +237,7 @@ public class Menu {
 		}
 	}
 	}
-	private static void loginToAnExistingPatinet() throws NumberFormatException, IOException{
+	private static void loginToAnExistingPatient() throws NumberFormatException, IOException{
 		int option = -1;
 		while(option!=0) {
 		System.out.println("Welcome,choose an option");
@@ -267,10 +267,10 @@ public class Menu {
 	}
 	
 	private static void reportDelivery() throws NumberFormatException, IOException {
-		System.out.println("Please enter the patient's ID: ");
-		int id = Integer.parseInt(r.readLine());
-		String report = patMan.reportDelivery(id);
-		System.out.println(report);
+//		System.out.println("Please enter the patient's ID: ");
+//		int id = Integer.parseInt(r.readLine());
+//		String report = patMan.reportDelivery(id);
+//		System.out.println(report);
 		
 	}
 	
@@ -305,9 +305,7 @@ public class Menu {
 		Date dob = Date.valueOf(localDate);
 		System.out.println("DNI: ");
 		Integer dni = Integer.parseInt(r.readLine());
-		System.out.println("REPORT : ");
-		String report = r.readLine();
-		Patient patient = new Patient(name,surname,sex,dob,dni,report);
+		Patient patient = new Patient(name,surname,sex,dob,dni);
 		patMan.addPatient(patient);
 	}
 	
@@ -406,7 +404,7 @@ public class Menu {
 		System.out.println("prize:");
 		int price = Integer.parseInt(r.readLine());
 		
-		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,price,material);
+		Prosthetic prosthetic = new Prosthetic(size,company,patient,need,price,material,"NO");
 		prosthetic.setID(conMan.getPKofLastInsertedRow());
 		prosthMan.addProsthetic(prosthetic);
 		System.out.println("A new prosthetic has been succesfully created");
@@ -415,30 +413,26 @@ public class Menu {
 	
 	private static void checkDemand() throws NumberFormatException, IOException {
 		
-		List<Patient> patients = new ArrayList<>();
+		List<Prosthetic> prosthetics = new ArrayList<>();
 
-		for (Patient patient : patMan.listPatients()){
+		for (Prosthetic prosthetic : prosthMan.listProsthetics()){
 			
-			if (patient.getReport().equalsIgnoreCase("no")) {
-                patients.add(patient);
+			if (prosthetic.getReport().equalsIgnoreCase("no")) {
+                prosthetics.add(prosthetic);
                 
 			}
 			
 		}
-		if (patients.isEmpty()){
+		if (prosthetics.isEmpty()){
 			System.out.println("Currently there is no demand");
 		}
 		else {
-			System.out.println("This is the demand");
-			for (Patient p: patients) {
+			System.out.println("These are the undelivered prosthetics");
+			for (Prosthetic p: prosthetics) {
 				System.out.println(p);
 			}
 		}
-		
-		
-		
-		
-		
+			
 	}
 	
 	private static void printSurgeons() throws NumberFormatException, IOException{
@@ -676,12 +670,13 @@ public class Menu {
 	}
 	
 	private static void printProsthetics() throws NumberFormatException, IOException{
-		List<Prosthetic> prosthetics = new ArrayList<>();
-		for(Prosthetic prosthetic : prosthMan.listProsthetics()) {
-			prosthetics.add(prosthetic);
-		}
-		for(Prosthetic p : prosthetics) {
-			System.out.println(p);
+		List<Prosthetic> prosthetics = prosthMan.listProsthetics();
+		
+		for(Prosthetic prosthetic : prosthetics ) {
+//			int prosthetic_id = prosthetic.getID();
+//			Surgery surgery= surgeryMan.getSurgeryByProsthetic(prosthetic_id);
+//			prosthetic.setSurgery(surgery);
+			System.out.println(prosthetic);
 		}
 	}
 	

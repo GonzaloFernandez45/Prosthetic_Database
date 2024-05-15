@@ -30,7 +30,7 @@ public class JDBCPatientManager implements PatientManager {
 	public void addPatient(Patient p) {
 		
 		try {
-			String template = "INSERT INTO patient (name, surname, sex, DOB, dni, report) VALUES (?, ?, ?, ?, ?, ?)";
+			String template = "INSERT INTO patient (name, surname, sex, DOB, dni) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setString(1, p.getName());
@@ -38,7 +38,6 @@ public class JDBCPatientManager implements PatientManager {
 			pstmt.setString(3, p.getSex());
 			pstmt.setDate(4, p.getDob());
 			pstmt.setInt(5, p.getDni());
-			pstmt.setString(6, p.getReport());
 			pstmt.executeUpdate();
 			pstmt.close();
 		}catch (SQLException e) {
@@ -56,7 +55,7 @@ public class JDBCPatientManager implements PatientManager {
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Patient p = new Patient (rs.getInt("id"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"),rs.getString("report"));
+			Patient p = new Patient (rs.getInt("id"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"));
 			return p;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -74,7 +73,7 @@ public class JDBCPatientManager implements PatientManager {
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Patient patient = new Patient(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("sex"), rs.getDate("dob"), rs.getInt("dni"), rs.getString("report"));
+				Patient patient = new Patient(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("sex"), rs.getDate("dob"), rs.getInt("dni"));
 				patients.add(patient);
 				}
 			rs.close();
@@ -101,8 +100,7 @@ public class JDBCPatientManager implements PatientManager {
 				String sex = rs.getString("sex"); //TODO cambiar a tipo SEX si hacemos un enumerado
 				Date DOB = rs.getDate("DOB");
 				Integer dni = rs.getInt("dni");
-				String report = rs.getString("report");
-				Patient p = new Patient(id,PatientName,surname,sex,DOB,dni,report);
+				Patient p = new Patient(id,PatientName,surname,sex,DOB,dni);
 				patients.add(p);
 			}
 			rs.close();
@@ -114,22 +112,22 @@ public class JDBCPatientManager implements PatientManager {
 		return patients;
 	}
 
-	@Override
-	public String reportDelivery(int id) {
-		try {
-			String sql = "SELECT report FROM patient WHERE id = " + id;
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			String report = rs.getString("report");
-			return report;
-		} catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	@Override
+//	public String reportDelivery(int id) {
+//		try {
+//			String sql = "SELECT report FROM patient WHERE id = " + id;
+//			Statement st;
+//			st = c.createStatement();
+//			ResultSet rs = st.executeQuery(sql);
+//			rs.next();
+//			String report = rs.getString("report");
+//			return report;
+//		} catch (SQLException e) {
+//			System.out.println("Error in the database");
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	@Override
 	public List<Patient> getPatientByIDandName(){
 		List<Patient> patients = new ArrayList<Patient>();

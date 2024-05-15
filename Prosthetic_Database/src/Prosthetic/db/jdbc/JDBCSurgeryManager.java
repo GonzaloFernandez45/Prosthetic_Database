@@ -172,10 +172,10 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	@Override
 	public Surgery getSurgeryByProsthetic(int Prosthetic_ID) {
 		try {
-			String sql = "SELECT * FROM surgery WHERE Prosthetic_ID = ?";
-			PreparedStatement prepstmt = c.prepareStatement(sql);
-			prepstmt.setInt(1, Prosthetic_ID);
-			ResultSet rs=prepstmt.executeQuery();
+			String sql = "SELECT * FROM surgery WHERE Prosthetic_ID ="+Prosthetic_ID;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
 			rs.next();
 			int idSurgery =rs.getInt("id");
 			String time = rs.getString("time");

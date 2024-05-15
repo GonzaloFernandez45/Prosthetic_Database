@@ -15,7 +15,6 @@ public class Patient implements Serializable{
 	private String sex;
 	private Date dob;
 	private Integer dni;
-	private String report;
 	private List<Prosthetic> prosthetics;
 	private List<Need> needs;
 	
@@ -41,7 +40,7 @@ public class Patient implements Serializable{
 
 
 
-	public Patient(Integer id, String name, String surname, String sex, Date dob, Integer dni, String report) {
+	public Patient(Integer id, String name, String surname, String sex, Date dob, Integer dni) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,20 +48,18 @@ public class Patient implements Serializable{
 		this.sex = sex;
 		this.dob = dob;
 		this.dni = dni;
-		this.report = report;
 		this.prosthetics = new ArrayList<Prosthetic>();
 		this.needs = new ArrayList<Need>();
 
 	}
 
-	public Patient(String name, String surname, String sex, Date dob, Integer dni, String report) {
+	public Patient(String name, String surname, String sex, Date dob, Integer dni) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
 		this.dob = dob;
 		this.dni = dni;
-		this.report = report;
 		this.prosthetics = new ArrayList<Prosthetic>();
 		this.needs = new ArrayList<Need>();
 
@@ -127,14 +124,6 @@ public class Patient implements Serializable{
 	}
 
 	
-	public String getReport() {
-		return report;
-	}
-
-	public void setReport(String report) {
-		this.report = report;
-	}
-	
 	
 
 	public List<Prosthetic> getProsthetics() {
@@ -171,7 +160,7 @@ public class Patient implements Serializable{
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", name=" + name + ", surname=" + surname + ", sex=" + sex + ", dob=" + dob
-				+ ", dni=" + dni + ", report=" + report + ", prosthetics=" + prosthetics + ", needs=" + needs + "]";
+				+ ", dni=" + dni + "]";
 	}
 	
 

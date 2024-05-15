@@ -18,6 +18,8 @@ public class Prosthetic implements Serializable {
 	private Company company;
 	private Patient patient;
 	private Surgery surgery;
+	private String report;
+
 	
 	
 		public Prosthetic() {
@@ -26,7 +28,7 @@ public class Prosthetic implements Serializable {
 	}
 
 		public Prosthetic(Integer ID, String size, Company company, Patient patient, 
-				Need need, Integer price, Material material ) {
+				Need need, Integer price, Material material,String report ) {
 			super();
 			this.ID = ID;
 			this.price = price;
@@ -36,6 +38,7 @@ public class Prosthetic implements Serializable {
 			this.material = material;
 			this.company = company;
 			this.patient = patient;
+			this.report = report;
 		}
 		
 		
@@ -49,7 +52,7 @@ public class Prosthetic implements Serializable {
 
 		
 
-		public Prosthetic(String size,Company company, Patient patient,Need need, Integer price,Material material)
+		public Prosthetic(String size,Company company, Patient patient,Need need, Integer price,Material material,String report)
 		{
 			super();
 			this.price = price;
@@ -59,6 +62,7 @@ public class Prosthetic implements Serializable {
 			this.material = material;
 			this.company = company;
 			this.patient = patient;
+			this.report = report;
 		}
 
 		public Integer getID() {
@@ -149,7 +153,7 @@ public class Prosthetic implements Serializable {
 		@Override
 		public String toString() {
 			return "Prosthetic [ID=" + ID + ", price=" + price + ", size=" + size + ", options=" + options + ", need="
-					+ need + ", material=" + material + ", company=" + company + "]";
+					+ need + ", material=" + material + ", company=" + company +", surgery="+surgery+"]";
 		}
 
 		public void addOption (Option option) {
@@ -170,6 +174,14 @@ public class Prosthetic implements Serializable {
 
 		public void setSurgery(Surgery surgery) {
 			this.surgery = surgery;
+		}
+
+		public String getReport() {
+			return report;
+		}
+
+		public void setReport(String report) {
+			this.report = report;
 		}
 	
 
