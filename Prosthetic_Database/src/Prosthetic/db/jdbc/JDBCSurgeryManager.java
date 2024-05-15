@@ -195,7 +195,38 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<Surgery> listSurgeries(){
+		List<Surgery> surgeries = new ArrayList<Surgery>();
+		try {
+			String sql = "SELECT * FROM surgery";
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Integer idProsthetic = rs.getInt("id");
+				String size = rs.getString("size");
+				CompanyManager comMan = conMan.getcomMan();
+				Company company = comMan.getCompany(rs.getInt("Company_ID"));
+				PatientManager patientMan = conMan.getpatientMan();
+				Patient patient = patientMan.getPatientByID(rs.getInt("Patient_ID"));
+				NeedManager needMan = conMan.getneedMan();
+				Need need = needMan.getNeed(rs.getInt("Need_ID"));
+				MaterialManager materialsMan= conMan.getmaterialMan();
+				Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
+				String report = rs.getString("report");
 
+				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report);
+				prosthetics.add(p);
+				}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return surgeons;
+	}
 
 
 	
