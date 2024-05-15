@@ -40,25 +40,6 @@ public class JDBCNeedManager implements NeedManager {
 		}
 
 
-//	@Override
-//	public Need getNeedByType(String type) {
-//		try {
-//			String sql = "SELECT * FROM need WHERE name LIKE ?";
-//			PreparedStatement search = c.prepareStatement(sql);
-//			search.setString(1, "%" + type + "%");
-//			ResultSet rs = search.executeQuery();
-//			rs.next();
-//				Integer id = rs.getInt("id");
-//				String NeedType = rs.getString("type");
-//				Need need = new Need(id,NeedType);
-//				return need;
-//		}catch (SQLException e) {
-//			System.out.println("Error looking for a book");
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-
 
 	@Override
 	public void addNeed(Need need) {

@@ -29,29 +29,7 @@ public class JDBCProstheticManager implements ProstheticManager {
 	}
 	
 
-//    @Override
-//	public List<Prosthetic> getProstheticByIDandPriceandSize(){
-//	
-//		List<Prosthetic> prosthetics = new ArrayList<Prosthetic>();
-//		try {
-//			String sql = "SELECT id,size,price FROM prosthetic GROUP BY id";
-//			PreparedStatement search = c.prepareStatement(sql);
-//			ResultSet rs = search.executeQuery();
-//			while(rs.next()) {
-//				Integer id = rs.getInt("id");
-//				String size = rs.getString("size");
-//				Integer price = rs.getInt("price");
-//				Prosthetic p = new Prosthetic(id,size,price);
-//				prosthetics.add(p);
-//			}
-//			rs.close();
-//			search.close();
-//		}catch (SQLException e) {
-//			System.out.println("Error looking for a book");
-//			e.printStackTrace();
-//		}
-//		return prosthetics;
-//	}
+
 	@Override
 	public void addProsthetic(Prosthetic p) {
 		try {

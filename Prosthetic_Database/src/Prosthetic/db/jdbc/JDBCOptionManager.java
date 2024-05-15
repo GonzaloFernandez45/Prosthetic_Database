@@ -35,22 +35,7 @@ public class JDBCOptionManager implements OptionManager {
 		}
 	}
 
-//	@Override
-//	public Option getOptionByType(String type) {
-//		try {
-//			String sql = "SELECT * FROM option WHERE type LIKE ?";
-//			Statement st;
-//			st = c.createStatement();
-//			ResultSet rs = st.executeQuery(sql);
-//			rs.next();
-//			Option o = new Option (rs.getInt("id"), rs.getString("type"));
-//			return o;
-//		}catch (SQLException e) {
-//			System.out.println("Error in the database");
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
+
 
 	@Override
 	public Option getOption(int id) {
