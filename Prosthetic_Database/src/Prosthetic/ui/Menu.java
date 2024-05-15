@@ -287,6 +287,9 @@ public class Menu {
 		System.out.println("1. Create prosthetic");
 		System.out.println("2. Check demand");
 		System.out.println("3. Check the needs of a patient");
+		System.out.println("4. Add material ");
+		System.out.println("5. List all of the prosthetics");
+		
 		System.out.println("0. Exit");
 		option = Integer.parseInt(r.readLine());
 		
@@ -305,6 +308,10 @@ public class Menu {
 			break;
 		}
 		case 4: {
+			addMaterial();
+			break;
+		}
+		case 5: {
 			printProsthetics();
 			break;
 		}
@@ -685,21 +692,21 @@ public class Menu {
 		
 	}
 	private static void surgeryResult () throws NumberFormatException, IOException{
-		System.out.println("Please enter the patient's ID: ");
-		System.out.println(patMan.getPatientByIDandName());
-		int id = Integer.parseInt(r.readLine());
-		Patient p = patMan.getPatientByID(id);
-		List<Prosthetic> patientProsthetics = prosthMan.getProstheticbyPatient(p);
-		System.out.println("Select the prosthetic where you want the surgery's date");
-		for (Prosthetic prosth: patientProsthetics) {
-			System.out.println(prosth);
-			}
-		int prostheticID = Integer.parseInt(r.readLine());
-		Surgery surgery = surgeryMan.getSurgeryByProsthetic(prostheticID);
-		int surgery_id = surgery.getId();
+
+
+		
+		System.out.println("Input the surgery's date (DD-MM-YYYY format): ");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date date = Date.valueOf(localDate);
+		
+		System.out.println(surgeryMan.);
+		
+		System.out.println(surgeryMan.searchSurgerybyDate(date));
+		System.out.println("Enter the id of the surgery");
+		int surgery_id = Integer.parseInt(r.readLine());
 		String result = surgeonMan.resultSurgery(surgery_id);
 		System.out.println(result);
-		
+			
 	}
 	
 	private static void inputNeed() throws NumberFormatException, IOException{
