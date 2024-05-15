@@ -18,11 +18,22 @@ public class User implements Serializable{
 	private String username;
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Role role;
+	private int passwordHash;
 	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public User(String username, int passwordHash, Role role) {
+		super();
+		this.username = username;
+		this.role = role;
+		this.passwordHash = passwordHash;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -40,6 +51,14 @@ public class User implements Serializable{
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	
+	public int getPasswordHash() {
+		return passwordHash;
+	}
+	public void setPasswordHash(int passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 	@Override
 	public int hashCode() {

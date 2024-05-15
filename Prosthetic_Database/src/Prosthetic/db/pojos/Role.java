@@ -25,6 +25,14 @@ public class Role implements Serializable{
 		super();
 		users = new ArrayList<User>();
 	}
+	
+	
+	public Role(String name) {
+		super();
+		this.name = name;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -60,7 +68,7 @@ public class Role implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", users=" + users + "]";
+		return "Role [id=" + id + ", name=" + name +"]";
 	}
 	public void addUser (User u) {
 		if(!users.contains(u))

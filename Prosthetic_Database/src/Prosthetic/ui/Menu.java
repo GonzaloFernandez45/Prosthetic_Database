@@ -14,6 +14,7 @@ import java.util.List;
 
 import Prosthetic.db.interfaces.*;
 import Prosthetic.db.jdbc.*;
+import Prosthetic.db.jpa.JPAUserManager;
 import Prosthetic.db.pojos.*;
 
 
@@ -31,6 +32,7 @@ public class Menu {
 	private static ProstheticManager prosthMan;
 	private static SurgeonManager surgeonMan;
 	private static SurgeryManager surgeryMan;
+	private static UserManager userMan;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException{
 		System.out.println("WELCOME TO THE PROSTHETIC DATABSE");
@@ -44,24 +46,124 @@ public class Menu {
 		surgeonMan = conMan.getsurgeonMan();
 		surgeryMan = conMan.getsurgeryMan();
 		patMan = conMan.getpatientMan();
+		userMan = new JPAUserManager();
 		
-		prostheticMenu();
+		userMenu();
+		
 		
 	}
 	
-	private static void prostheticMenu() throws NumberFormatException, IOException{
-		//TODO method
+	private static void userMenu() throws NumberFormatException, IOException {
 		int option = -1;
-		while(option!=0) {
-		System.out.println("Choose your role");
-		System.out.println("1. Manager");
-		System.out.println("2. Patient");
-		System.out.println("3. Surgeon");
-		System.out.println("4. Company/Engineer");
-		System.out.println("0. Exit");
+		while(option !=0) {
+			System.out.println("Choose your desire option: ");
+			System.out.println("1. Login");
+			System.out.println("2. Register");
+			System.out.println("3. Modify information");
+			System.out.println("0. Exit Database");
+			
+			option = Integer.parseInt(r.readLine());
+			
+			
+			switch(option) {
+			case 1: {
+				 	menuLogin();
+				 	break;
+				}
+			case 2: {
+					menuRegister();
+					break;
+				}
+			case 3: {
+					modifyUser();
+					break;
+				}
+			case 0: {
+				System.out.println("Thank you for using the databse!");	
+				conMan.close();
+					return;
+				}
+			}
+		}
+	}
+	private static User readUser() throws NumberFormatException, IOException{
+		System.out.print("Username: ");
+		String username = r.readLine();
+		System.out.print("Password: ");
+		String password = r.readLine();
+		User u  = userMan.login(username, password);
+		return u;
+	}
+	private static void menuLogin() throws NumberFormatException, IOException {
+		User u = readUser();
+				if (u == null) {
+					System.out.println("User not found, try again");
+				}else {
+					System.out.println(u);
+					prostheticMenu(u);
+				}
+				
+	}
+	
+	private static void menuRegister() throws NumberFormatException, IOException {
+	System.out.print("Choose a username: ");
+	String username = r.readLine();
+	System.out.print("Choose a password: ");
+	String password = r.readLine();
+	int passwordHash = password.hashCode();
+	System.out.print("Choose your role by its name: \n" );
+	List<Role> roles = userMan.getAllRoles();
+	for (Role r : roles) {
+		System.out.print(r);
+	}
+	String roleName = r.readLine();
+	Role r = userMan.getRole(roleName);
+	User u = new User(username, passwordHash, r);
+	userMan.register(u);
+	System.out.print("New user added correctly");
+	
+	}
+	
+	private static void modifyUser() throws NumberFormatException, IOException{
+		User u = readUser();
+		System.out.print("Dedice what you want to do: ");
+		System.out.print("1. Change your password. ");
+		System.out.print("2. Delete your user. ");
+		int option = Integer.parseInt(r.readLine());
+		switch(option) {
+		case 1: {
+			changePassword(u);
+			break;
+		}
+		case 2: {
+			deleteUser(u);
+			break;
+		}
+		case 0: {
+			return;
+		}
+		}
+	}
+	
+	private static void changePassword (User u) throws NumberFormatException, IOException {
+		System.out.print("Type your new password. ");
+		String newPassword = r.readLine();
+		int newPasswordHash = newPassword.hashCode();
+		u.setPasswordHash(newPasswordHash);
+		userMan.updateUser(u,newPasswordHash);
 
-		option = Integer.parseInt(r.readLine());
+	}
+	
+	private static void deleteUser (User u) throws NumberFormatException, IOException {
+		userMan.deleteUser(u);
+		System.out.print("User deleted correctly. ");
 		
+	}
+	
+	private static void prostheticMenu(User u) throws NumberFormatException, IOException{
+		//TODO method
+		
+		int option = u.getRole().getId();		
 		
 		switch(option) {
 		case 1: {
@@ -81,13 +183,12 @@ public class Menu {
 			break;
 		}
 		case 0: {
-			System.out.println("Thank you for using the databse!");
 			conMan.close();
 			return;
 		}
 						}
 	}		
-	}
+
 	
 	private static void patientMenu() throws NumberFormatException, IOException{
 		

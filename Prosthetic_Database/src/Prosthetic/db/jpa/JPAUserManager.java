@@ -1,5 +1,7 @@
 package Prosthetic.db.jpa;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import Prosthetic.db.interfaces.UserManager;
@@ -14,6 +16,16 @@ public class JPAUserManager implements UserManager {
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
+		try {
+		this.getRole("Manager");
+		} catch(NoResultException w) {
+			this.createRole(new Role("Manager"));
+			this.createRole(new Role("Patient"));
+			this.createRole(new Role("Surgeon"));
+			this.createRole(new Role("Company"));
+		}
+		
+
 	}
 
 	@Override
@@ -33,7 +45,7 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public Role getRole(String name) {
-		Query q= em.createNamedQuery("SELECT FROM roles WHERE name LIKE ?",Role.class);
+		Query q= em.createNativeQuery("SELECT * FROM roles WHERE name LIKE ?",Role.class);
 		q.setParameter(1, name);
 		Role r= (Role)q.getSingleResult();
 		return r;
@@ -50,12 +62,41 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public User login(String username, String password) {
-		Query q = em.createNativeQuery("SELECT FROM users WHERE usermane = ? AND password = ?", User.class);
+		User u = null;
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND passwordHash = ?", User.class);
 		q.setParameter(1, username);
-		q.setParameter(2, password);
+		q.setParameter(2, password.hashCode());
 		// TODO remember to provide a bad password and see what happens
-		User u = (User) q.getSingleResult();
+		try {
+			u = (User) q.getSingleResult();
+		}catch(NoResultException e) {
+			
+			return null;
+		}
 		return u;
 	}
+	
+	@Override
+	public void deleteUser(User u) {
+		em.getTransaction().begin();
+		em.remove(u);
+		em.getTransaction().commit();
+	}
+	
+	@Override
+	public void updateUser (User u, int newPasswordHash) {
+		em.getTransaction().begin();
+		u.setPasswordHash(newPasswordHash);
+		em.getTransaction().commit();
+	}
+	
+	public List<Role> getAllRoles(){
+		Query q= em.createNativeQuery("SELECT * FROM roles",Role.class);
+		List <Role> roles = (List<Role>) q.getResultList();
+		return roles;
+	}
+	
+	
+	
 
 }
