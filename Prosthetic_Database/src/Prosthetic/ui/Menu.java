@@ -674,7 +674,7 @@ public class Menu {
 		SurgeonManager surgeonMan = conMan.getsurgeonMan();
 		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 		
-		System.out.println("Result (Completed/Not completed): ");
+		System.out.println("Result (Completed/Not completed): ");//TODO 
 		String result  = r.readLine();
 		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
 		surgery.setProsthetic(prosthetic);
@@ -692,20 +692,23 @@ public class Menu {
 		
 	}
 	private static void surgeryResult () throws NumberFormatException, IOException{
-
-
 		
 		System.out.println("Input the surgery's date (DD-MM-YYYY format): ");
-		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
-		Date date = Date.valueOf(localDate);
-		
-		System.out.println(surgeryMan.);
-		
-		System.out.println(surgeryMan.searchSurgerybyDate(date));
-		System.out.println("Enter the id of the surgery");
-		int surgery_id = Integer.parseInt(r.readLine());
-		String result = surgeonMan.resultSurgery(surgery_id);
-		System.out.println(result);
+		List<Surgery> surgeries = surgeryMan.listSurgeries();
+		System.out.println(surgeries);
+		if(!surgeries.isEmpty()) {
+			System.out.println("No surgeries scheduled");
+		}
+		else {
+			LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+			Date date = Date.valueOf(localDate);
+			System.out.println(surgeryMan.searchSurgerybyDate(date));
+			System.out.println("Enter the id of the surgery");
+			int surgery_id = Integer.parseInt(r.readLine());
+			String result = surgeonMan.resultSurgery(surgery_id);
+			System.out.println(result);
+			
+		}
 			
 	}
 	

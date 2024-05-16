@@ -204,20 +204,18 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Integer idProsthetic = rs.getInt("id");
-				String size = rs.getString("size");
-				CompanyManager comMan = conMan.getcomMan();
-				Company company = comMan.getCompany(rs.getInt("Company_ID"));
-				PatientManager patientMan = conMan.getpatientMan();
-				Patient patient = patientMan.getPatientByID(rs.getInt("Patient_ID"));
-				NeedManager needMan = conMan.getneedMan();
-				Need need = needMan.getNeed(rs.getInt("Need_ID"));
-				MaterialManager materialsMan= conMan.getmaterialMan();
-				Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
-				String report = rs.getString("report");
+				Integer idSurgery = rs.getInt("id");
+				String time = rs.getString("time");
+				Date date =rs.getDate("date");
+				Integer room = rs.getInt("room");
+				SurgeonManager surgeonMan = conMan.getsurgeonMan();
+				Surgeon surgeon = surgeonMan.getSurgeon(rs.getInt("Surgeon_ID"));
+				ProstheticManager prosMan = conMan.getprosMan();
+				Prosthetic pros = prosMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
+				String result = rs.getString("result");
 
-				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report);
-				prosthetics.add(p);
+				Surgery surgery= new Surgery(idSurgery,time,date,room,surgeon,pros,result);
+				surgeries.add(surgery);
 				}
 			rs.close();
 			pstmt.close();
@@ -225,7 +223,7 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
-		return surgeons;
+		return surgeries;
 	}
 
 
