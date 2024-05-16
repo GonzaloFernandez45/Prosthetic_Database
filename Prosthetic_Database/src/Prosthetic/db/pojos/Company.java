@@ -82,7 +82,7 @@ public class Company implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Company [id=" + id + ", name=" + name + ", location=" + location + ", prosthetics=" + prosthetics + "]";
+		return "Company [id=" + id + ", name=" + name + ", location=" + location + "]";
 	}
 
 

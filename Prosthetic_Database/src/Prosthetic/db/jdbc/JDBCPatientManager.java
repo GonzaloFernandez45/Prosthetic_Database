@@ -112,22 +112,21 @@ public class JDBCPatientManager implements PatientManager {
 		return patients;
 	}
 
-//	@Override
-//	public String reportDelivery(int id) {
-//		try {
-//			String sql = "SELECT report FROM patient WHERE id = " + id;
-//			Statement st;
-//			st = c.createStatement();
-//			ResultSet rs = st.executeQuery(sql);
-//			rs.next();
-//			String report = rs.getString("report");
-//			return report;
-//		} catch (SQLException e) {
-//			System.out.println("Error in the database");
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
+	@Override
+	public void reportDelivery(int Patient_ID, int Prosthetic_ID, String updateReport) {
+		try {
+			String sql = "UPDATE prosthetic SET report = ? WHERE Patient_ID = ? AND id = ?";
+			PreparedStatement prepstmt = c.prepareStatement(sql);
+			prepstmt.setString(1, updateReport);
+			prepstmt.setInt(2, Patient_ID);
+			prepstmt.setInt(3, Prosthetic_ID);
+			prepstmt.executeUpdate();
+			prepstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public List<Patient> getPatientByIDandName(){
 		List<Patient> patients = new ArrayList<Patient>();

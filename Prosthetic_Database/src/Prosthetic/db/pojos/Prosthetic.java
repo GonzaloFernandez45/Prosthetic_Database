@@ -182,7 +182,7 @@ public class Prosthetic implements Serializable {
 
 		@Override
 		public String toString() {
-			return "Prosthetic [ID=" + ID + ", price=" + price + ", size=" + size + ", options=" + options + ", need="
+			return "Prosthetic [ID=" + ID + ", price=" + price + ", size=" + size +", report= "+ report+", options=" + options + ", need="
 					+ need + ", material=" + material + ", company=" + company +", surgery="+surgery+"]";
 		}
 

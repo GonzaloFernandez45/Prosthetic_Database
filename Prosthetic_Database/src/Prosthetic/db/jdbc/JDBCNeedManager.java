@@ -95,5 +95,37 @@ public class JDBCNeedManager implements NeedManager {
 		}
 		return needs;
 	}
-
+	
+	@Override
+	public void insertPatientNeed(Need need, Patient p) {
+		try {
+			String template = "INSERT INTO patient_need (Patient_ID,Need_ID) VALUES (?,?)";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, p.getId());
+			pstmt.setInt(2, need.getId());			
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public Need getNeedByType(String typeNeed) {
+		try {
+			String sql = "SELECT * FROM need WHERE type LIKE ?";
+			PreparedStatement prepstmt= c.prepareStatement(sql);
+			prepstmt.setString(1, typeNeed);
+			ResultSet rs = prepstmt.executeQuery();
+			rs.next();
+			Need need = new Need (rs.getInt("id"), rs.getString("type"));
+			return need;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
