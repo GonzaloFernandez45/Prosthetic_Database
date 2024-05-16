@@ -74,7 +74,60 @@ public class JDBCOptionManager implements OptionManager {
 			return options;
 		}
 	
+	@Override
+	public void insertFulfill(Option o, Prosthetic p) {
+		try {
+			String template = "INSERT INTO fulfill (Option_ID,Prosthetic_ID) VALUES (?,?)";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, o.getId());
+			pstmt.setInt(2, p.getID());			
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+	}
 	
+	@Override
+	public List<Option> listOptionsOfProsthetic(int Prosthetic_ID){
+		List<Option> options = new ArrayList<Option>();
+		try {
+			String sql = "SELECT Option_ID FROM prosthetic JOIN fulfill ON prosthetic.id = fulfill.Prosthetic_ID WHERE Prosthetic_ID = ?";
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			pstmt.setInt(1, Prosthetic_ID);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OptionManager optMan = conMan.getoptionMan();
+				Option option = optMan.getOption(rs.getInt("Option_ID"));
+				options.add(option);
+				}
+			rs.close();
+			pstmt.close();
+		}catch(SQLException sqlE) {
+			System.out.println("Error in the data base");
+			sqlE.printStackTrace();
+		}
+		return options;
+	}
+	
+	@Override
+	public Option getOptionByType(String type) {
+		try {
+			String sql = "SELECT * FROM option WHERE type = " + type;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Option o = new Option (rs.getInt("id"), rs.getString("type"));
+			return o;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 }

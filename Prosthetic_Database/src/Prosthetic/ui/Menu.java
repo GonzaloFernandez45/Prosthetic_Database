@@ -609,10 +609,11 @@ public class Menu {
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					if(!prosthetics.isEmpty()) {
 					System.out.println("Select the prosthetic where you want to add the option");
-					printProsthetics();
+					printProstheticsOfAPatient(patient);
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
-					prosthetic.getOptions().add(optMan.getOption(finalOption));
+					Option o = optMan.getOption(finalOption);
+					optMan.insertFulfill(o,prosthetic);
 					System.out.println("Option added correctly");
 					break;
 					}else {
@@ -635,8 +636,8 @@ public class Menu {
 						}
 					int prostheticOption = Integer.parseInt(r.readLine());
 					Prosthetic prosthetic = prosthMan.getProstheticByID(prostheticOption);
-					prosthetic.getOptions().add(optMan.getOption(newOption.getId()));
-					//Metodo update options del prosthetic
+					Option o = optMan.getOptionByType(type);
+					optMan.insertFulfill(o,prosthetic);
 					System.out.println("Option added correctly");
 					break;
 				}
@@ -788,6 +789,13 @@ public class Menu {
 //			Surgery surgery= surgeryMan.getSurgeryByProsthetic(prosthetic_id);
 //			prosthetic.setSurgery(surgery);
 			System.out.println(prosthetic);
+		}
+	}
+	
+	private static void printProstheticsOfAPatient(Patient patient) {
+		List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+		for(Prosthetic p : prosthetics) {
+			System.out.println(p);
 		}
 	}
 	

@@ -4,17 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import Prosthetic.db.interfaces.CompanyManager;
-import Prosthetic.db.interfaces.MaterialManager;
-import Prosthetic.db.interfaces.NeedManager;
-import Prosthetic.db.interfaces.PatientManager;
-import Prosthetic.db.interfaces.ProstheticManager;
-import Prosthetic.db.pojos.Company;
-import Prosthetic.db.pojos.Material;
-import Prosthetic.db.pojos.Need;
-import Prosthetic.db.pojos.Patient;
-import Prosthetic.db.pojos.Prosthetic;
-import Prosthetic.db.pojos.Surgery;
+import Prosthetic.db.interfaces.*;
+import Prosthetic.db.pojos.*;
 
 public class JDBCProstheticManager implements ProstheticManager {
 
@@ -136,6 +127,10 @@ public class JDBCProstheticManager implements ProstheticManager {
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(material_id);
 				String report = rs.getString("report");
+				
+//				OptionManager optMan = conMan.getoptionMan();
+//				List<Option> options = optMan.
+				
 				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material,report);
 				prosthetic.add(p);
 			}
@@ -203,8 +198,11 @@ public class JDBCProstheticManager implements ProstheticManager {
 				MaterialManager materialsMan= conMan.getmaterialMan();
 				Material material=materialsMan.getMaterial(rs.getInt("Material_ID"));
 				String report = rs.getString("report");
-
-				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report);
+				
+				OptionManager optMan = conMan.getoptionMan();
+				List<Option> options = optMan.listOptionsOfProsthetic(idProsthetic);
+				
+				Prosthetic p = new Prosthetic(idProsthetic,size,company,patient,need,rs.getInt("price"),material,report,options);
 				prosthetics.add(p);
 				}
 			rs.close();
