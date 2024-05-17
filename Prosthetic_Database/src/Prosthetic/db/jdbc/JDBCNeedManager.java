@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Prosthetic.db.interfaces.NeedManager;
+import Prosthetic.db.interfaces.OptionManager;
 import Prosthetic.db.pojos.*;
 
 public class JDBCNeedManager implements NeedManager {
@@ -128,4 +129,6 @@ public class JDBCNeedManager implements NeedManager {
 		}
 		return null;
 	}
+	
+	
 }

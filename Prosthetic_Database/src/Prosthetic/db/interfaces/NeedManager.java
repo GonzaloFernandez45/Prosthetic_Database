@@ -12,4 +12,5 @@ public interface NeedManager {
 	public List<Need> getNeedByPatient(int Patient_ID);
 	public void insertPatientNeed(Need need, Patient p);
 	public Need getNeedByType(String typeNeed);
+	
 }

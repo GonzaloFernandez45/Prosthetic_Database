@@ -587,7 +587,6 @@ public class Menu {
 		Patient patient = patMan.getPatientByID(patient_id);
 		List<Need> patientNeeds = needMan.getNeedByPatient(patient_id);
 		patient.setNeeds(patientNeeds);
-		System.out.println(patientNeeds);
 		System.out.println("Name: "+patient.getName()+", Surname: "+patient.getSurname());
 		for (Need need: patientNeeds) {
 			System.out.println(need);
@@ -659,8 +658,7 @@ public class Menu {
 		System.out.println("Choose the id of your patient:");
 	    System.out.println(patMan.getPatientByIDandName());
 		int patient_id= Integer.parseInt(r.readLine());
-		PatientManager patient_manager=conMan.getpatientMan();
-		Patient patient =patient_manager.getPatientByID(patient_id);
+		Patient patient =patMan.getPatientByID(patient_id);
 		
 		
 		System.out.println("Please add the surgery info: ");
@@ -686,16 +684,14 @@ public class Menu {
 		SurgeonManager surgeonMan = conMan.getsurgeonMan();
 		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 		
-		System.out.println("Result (Completed/Not completed): ");//TODO 
-		String result  = r.readLine();
-		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
+		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,"Not completed");
 		surgery.setProsthetic(prosthetic);
 		surgeryMan.addSurgery(surgery);
 		prosthetic.setSurgery(surgery);
 		
 		
 		System.out.println("Surgery scheduled correctly");
-		System.out.println("Surgery id: "+surgery.getId());
+		System.out.println("Surgery id: "+surgeryMan.getSurgeryByProsthetic(prosthetic_id).getId());
 		
 		
 		}else {
@@ -705,10 +701,14 @@ public class Menu {
 	}
 	private static void surgeryResult () throws NumberFormatException, IOException{
 		
+		System.out.println("Choose the id of your patient:");
+	    System.out.println(patMan.getPatientByIDandName());
+		int patient_id= Integer.parseInt(r.readLine());
+		
 		System.out.println("Input the surgery's date (DD-MM-YYYY format): ");
-		List<Surgery> surgeries = surgeryMan.listSurgeries();
+		List<Surgery> surgeries = surgeryMan.listSurgeriesOfAPatient(patient_id);
 		System.out.println(surgeries);
-		if(!surgeries.isEmpty()) {
+		if(surgeries.isEmpty()) {
 			System.out.println("No surgeries scheduled");
 		}
 		else {
