@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -25,7 +23,8 @@ import javax.xml.transform.stream.StreamSource;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import Prosthetic.db.interfaces.XmlPatientManager;
+import Prosthetic.db.interfaces.*;
+import Prosthetic.db.jdbc.ConnectionManager;
 import Prosthetic.db.pojos.Need;
 import Prosthetic.db.pojos.Patient;
 import Prosthetic.db.pojos.Prosthetic;
@@ -33,28 +32,48 @@ import Prosthetic.db.xml.utils.CustomErrorHandler;
 
 
 public class XMLPatientManager implements XmlPatientManager {
-
-	private static EntityManager em;
+	
+	private static Connection c;
+	private ConnectionManager conMan ;
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	private static final String PERSISTENCE_PROVIDER = "prosthetic-provider";
-	private static EntityManagerFactory factory;
+	
+	public XMLPatientManager(ConnectionManager conMan) {
+		this.conMan = conMan;
+		this.c = conMan.getConnection();
+	}
 	
 	private static void printPatients() {
-		Query q1 = em.createNativeQuery("SELECT * FROM patient", Patient.class);
-		List<Patient> patients = (List<Patient>) q1.getResultList();
+		try{
+		String sql = "SELECT * FROM patient";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		List<Patient> patients = new ArrayList<>();
+		while(rs.next()) {
+			Integer id = rs.getInt("id");
+			String PatientName = rs.getString("name");
+			String surname = rs.getString("surname");
+			String sex = rs.getString("sex");
+			Date dob = rs.getDate("dob");
+			Integer dni = rs.getInt("dni");
+			Patient p = new Patient(id,PatientName,surname,sex,dob,dni);
+			patients.add(p);
+		}
+		
 		for (Patient pat : patients) {
 			System.out.println(pat);
+		}
+		rs.close();
+		ps.close();
+		}catch(SQLException e) {
+			System.out.println("Error looking for a book");
+			e.printStackTrace();
 		}
 	} 
 	
 	
 	@Override
 	public void createXml(){
-		em = Persistence.createEntityManagerFactory("prosthetic-provider").createEntityManager();
-		em.getTransaction().begin();
-		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
-		em.getTransaction().commit();
-				
+	
 		try {
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
 		Marshaller marshaller = jaxbContext.createMarshaller();
@@ -65,14 +84,25 @@ public class XMLPatientManager implements XmlPatientManager {
 		printPatients();
 		System.out.print("Choose a patient to turn into an XML file:");
 		int pat_id = Integer.parseInt(reader.readLine());
-		Query q2 = em.createNativeQuery("SELECT * FROM patient WHERE id = ?", Patient.class);
-		q2.setParameter(1, pat_id);
-		Patient patient = (Patient) q2.getSingleResult();
+		String sql = "SELECT * FROM patient WHERE id = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, pat_id);
+		ResultSet rs = ps.executeQuery();
+		rs.next();
 		
+		ProstheticManager prosthMan = conMan.getprosMan();
+		List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(pat_id);
+		NeedManager needMan= conMan.getneedMan();
+		List<Need> needs = needMan.getNeedByPatient(pat_id);
+		
+		Patient patient = new Patient(rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("sex"), rs.getDate("dob"), rs.getInt("dni"));
+		patient.setProsthetics(prosthetics);
+		patient.setNeeds(needs);
 		
 		File file = new File("./xmls/PatientFile.xml");
-		marshaller.marshal(patient, file);
 		
+		
+		marshaller.marshal(patient, file);
 		marshaller.marshal(patient, System.out);
 		}catch(Exception ext){
 			System.out.print(ext);
@@ -126,9 +156,14 @@ public class XMLPatientManager implements XmlPatientManager {
 		System.out.println("dob: " + patient.getSurname());
 		System.out.println("dni: " + patient.getSurname());
 		
+		ProstheticManager prosthMan = conMan.getprosMan();
+		NeedManager needMan = conMan.getneedMan();
+		PatientManager patMan = conMan.getpatientMan();
+
+
 		
+		List<Prosthetic> pros = prosthMan.getProstheticbyPatient();
 		
-		List<Prosthetic> pros = patient.getProsthetics();
 		for (Prosthetic p : pros) {
 			System.out.println("Prosthetic: ");
 			System.out.println("Price: " + p.getPrice());
@@ -140,33 +175,20 @@ public class XMLPatientManager implements XmlPatientManager {
 		for (Need need : needs) {
 			System.out.println("Need: " + need.getType());
 		}
-
 		
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_PROVIDER);
-		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
-		em.getTransaction().commit();
-
-		
-		EntityTransaction tx1 = em.getTransaction();
-
-		
-		tx1.begin();
-
 		
 		for (Prosthetic prosthetic : pros) {
-			em.persist(prosthetic);
+			prosthMan.addProsthetic(prosthetic);
 		}
-		em.persist(patient);
-		
+		patient.setProsthetics(pros);
 		
 		for (Need need : needs) {
-			em.persist(need);
+			needMan.insertPatientNeed(need, patient);
 		}
-		em.persist(patient);
+		patient.setNeeds(needs);
 		
-		tx1.commit();
+		patMan.addPatient(patient);
+		
 		}catch(Exception ext) {
 			System.out.print(ext);
 		}

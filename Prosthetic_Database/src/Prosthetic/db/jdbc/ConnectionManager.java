@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Prosthetic.db.interfaces.*;
+import Prosthetic.db.xml.XMLPatientManager;
 
 
 
@@ -21,6 +22,7 @@ public class ConnectionManager {
 	private SurgeonManager surgeonMan;
 	private SurgeryManager surgeryMan;
 	private MaterialManager materialMan;
+	private XMLPatientManager xmlpatMan;
 	
 	public Connection getConnection() {
 		return c;
@@ -35,6 +37,7 @@ public class ConnectionManager {
 		this.surgeonMan = new JDBCSurgeonManager(this);
 		this.surgeryMan = new JDBCSurgeryManager(this);
 		this.materialMan = new JDBCMaterialManager(this);
+		this.xmlpatMan = new XMLPatientManager(this);
 		this.createTables();
 		this.insertNeeds();
 		this.insertOption();
@@ -328,6 +331,12 @@ public class ConnectionManager {
 	}
 	public MaterialManager getmaterialMan() {
 		return materialMan;
+	}
+	public XMLPatientManager getXmlpatMan() {
+		return xmlpatMan;
+	}
+	public void setXmlpatMan(XMLPatientManager xmlpatMan) {
+		this.xmlpatMan = xmlpatMan;
 	}
 	
 	

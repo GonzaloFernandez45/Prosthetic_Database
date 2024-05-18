@@ -9,11 +9,12 @@
    <!ELEMENT dni (#PCDATA)>
     
    <!ELEMENT Prosthetics (Prosthetic+)>
-   <!ELEMENT Prosthetic (price)>
+   <!ELEMENT Prosthetic (price, need)>
    <!ATTLIST Prosthetic size CDATA #REQUIRED
                   	  	report CDATA #REQUIRED>
                   	  	
-   <!ELEMENT price (#PCDATA)>               	  
+   <!ELEMENT price (#PCDATA)>  
+   <!ELEMENT need (#PCDATA)>               	  
    
    <!ELEMENT Needs (Need+)>
    <!ELEMENT Need >

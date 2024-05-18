@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient name="Fabian" surname="Ruiz" sex="Man" dni="456789">
+    <dob>2004-06-19</dob>
+    <Prosthetics>
+        <Prosthetic size="l" price="8000" report="NO">
+            <need type="Bellow Wrist"/>
+        </Prosthetic>
+    </Prosthetics>
+    <Needs>
+        <Need type="Bellow Ankle"/>
+        <Need type="Bellow Wrist"/>
+    </Needs>
+</Patient>

@@ -18,7 +18,7 @@ public class User implements Serializable{
 	private String username;
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Role role;
-	private int passwordHash;
+	private String passwordHash;
 	
 	public User() {
 		super();
@@ -26,7 +26,7 @@ public class User implements Serializable{
 	}
 	
 	
-	public User(String username, int passwordHash, Role role) {
+	public User(String username, String passwordHash, Role role) {
 		super();
 		this.username = username;
 		this.role = role;
@@ -54,10 +54,10 @@ public class User implements Serializable{
 	}
 	
 	
-	public int getPasswordHash() {
+	public String getPasswordHash() {
 		return passwordHash;
 	}
-	public void setPasswordHash(int passwordHash) {
+	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
 	@Override

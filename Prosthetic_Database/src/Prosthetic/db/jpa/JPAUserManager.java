@@ -1,5 +1,7 @@
 package Prosthetic.db.jpa;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.persistence.*;
@@ -27,7 +29,36 @@ public class JPAUserManager implements UserManager {
 		
 
 	}
+	
+	@Override
+	public String securePassword(String password){
+	String passwordToHash = password;
+    String generatedPassword = null;
 
+    try 
+    {
+      // Create MessageDigest instance for MD5
+      MessageDigest md = MessageDigest.getInstance("MD5");
+
+      // Add password bytes to digest
+      md.update(passwordToHash.getBytes());
+
+      // Get the hash's bytes
+      byte[] bytes = md.digest();
+
+      // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < bytes.length; i++) {
+        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+      }
+
+      // Get complete hashed password in hex format
+      generatedPassword = sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    return generatedPassword;
+  }
 	@Override
 	public void register(User u) {
 		em.getTransaction().begin();
@@ -63,9 +94,9 @@ public class JPAUserManager implements UserManager {
 	@Override
 	public User login(String username, String password) {
 		User u = null;
-		Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND passwordHash = ?", User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE username LIKE ? AND passwordHash LIKE ?", User.class);
 		q.setParameter(1, username);
-		q.setParameter(2, password.hashCode());
+		q.setParameter(2, securePassword(password));
 		// TODO remember to provide a bad password and see what happens
 		try {
 			u = (User) q.getSingleResult();
@@ -84,7 +115,7 @@ public class JPAUserManager implements UserManager {
 	}
 	
 	@Override
-	public void updateUser (User u, int newPasswordHash) {
+	public void updateUser (User u, String newPasswordHash) {
 		em.getTransaction().begin();
 		u.setPasswordHash(newPasswordHash);
 		em.getTransaction().commit();

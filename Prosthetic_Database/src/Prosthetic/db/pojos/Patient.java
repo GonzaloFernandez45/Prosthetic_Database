@@ -14,7 +14,7 @@ import Prosthetic.db.xml.utils.SQLDateAdapter;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "patients")
+@XmlRootElement(name = "Patient")
 @XmlType(propOrder = {"name", "surname", "sex", "dob", "dni", "prosthetics", "needs"})
 public class Patient implements Serializable{
 	

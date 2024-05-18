@@ -14,6 +14,6 @@ public interface UserManager {
 	//return null if there is no user,login
 	public User login(String username, String password);
 	public void deleteUser(User u);
-	public void updateUser (User u, int newPasswordHash);
-
+	public void updateUser (User u, String newPasswordHash);
+	public String securePassword(String password);
 }

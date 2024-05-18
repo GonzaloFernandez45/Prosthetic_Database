@@ -103,12 +103,12 @@ public class JDBCProstheticManager implements ProstheticManager {
 		
 
 	@Override
-	public List<Prosthetic> getProstheticbyPatient(Patient pa) {
+	public List<Prosthetic> getProstheticbyPatient(int Patient_ID) {
 		List<Prosthetic>prosthetic= new ArrayList<Prosthetic>();
 		try {
 			String sql = "SELECT * FROM prosthetic WHERE Patient_ID = ?";
 			PreparedStatement prepstm = c.prepareStatement(sql);
-			prepstm.setInt(1, pa.getId());
+			prepstm.setInt(1, Patient_ID);
 			ResultSet rs = prepstm.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("id");

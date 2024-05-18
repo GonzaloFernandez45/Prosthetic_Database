@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Prosthetic")
-@XmlType(propOrder = {"size", "price", "report"})
+@XmlType(propOrder = {"size", "price", "report", "need"})
 public class Prosthetic implements Serializable {
 	
 	
 	private static final long serialVersionUID = -6478906863426691556L;
-	@XmlTransient  // the things you don´t want to put in the xml you put transient
+	@XmlTransient 
 	private Integer ID;
 	@XmlAttribute
 	private Integer price;
@@ -24,7 +24,7 @@ public class Prosthetic implements Serializable {
 	private String size;
 	@XmlTransient
 	private List<Option> options;
-	@XmlTransient
+	@XmlElement
 	private Need need;
 	@XmlTransient
 	private Material material;
