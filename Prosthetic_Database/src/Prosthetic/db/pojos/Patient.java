@@ -6,16 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "patients")
+@XmlType(propOrder = {"name", "surname", "sex", "dob", "dni", "prosthetics", "needs"})
 public class Patient implements Serializable{
 	
 	private static final long serialVersionUID = -8363292112398466611L;
+	@XmlTransient
 	private Integer id;
+	@XmlAttribute
 	private String name;
+	@XmlAttribute
 	private String surname;
+	@XmlAttribute
 	private String sex;
+	@XmlAttribute
 	private Date dob;
+	@XmlAttribute
 	private Integer dni;
+	@XmlElement(name = "Prosthetic")
+    @XmlElementWrapper(name = "Prosthetics")
 	private List<Prosthetic> prosthetics;
+	@XmlElement(name = "Need")
+    @XmlElementWrapper(name = "Needs")
 	private List<Need> needs;
 	
 	

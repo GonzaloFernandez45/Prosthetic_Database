@@ -5,14 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "needs")
+@XmlType(propOrder = {"type"})
 public class Need implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3018484467545691840L;
 	private Integer id;
+	@XmlAttribute
 	private String type;
+	@XmlTransient
 	private List<Prosthetic> prosthetics;
+	@XmlTransient
 	private List<Patient> patients;
 	
 	public Need() {

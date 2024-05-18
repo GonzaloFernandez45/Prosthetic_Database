@@ -1,0 +1,22 @@
+
+
+<!DOCTYPE Patient [
+   <!ELEMENT Patient (dob, dni, prosthetics, needs)>
+   <!ATTLIST Patient 	 name CDATA #REQUIRED
+                  	  	 surname CDATA #REQUIRED
+                  	  	 sex CDATA #REQUIRED>
+   <!ELEMENT dob (#PCDATA)>
+   <!ELEMENT dni (#PCDATA)>
+    
+   <!ELEMENT Prosthetics (Prosthetic+)>
+   <!ELEMENT Prosthetic (price)>
+   <!ATTLIST Prosthetic size CDATA #REQUIRED
+                  	  	report CDATA #REQUIRED>
+                  	  	
+   <!ELEMENT price (#PCDATA)>               	  
+   
+   <!ELEMENT Needs (Need+)>
+   <!ELEMENT Need >
+   <!ATTLIST Need type CDATA #REQUIRED>
+   
+]>

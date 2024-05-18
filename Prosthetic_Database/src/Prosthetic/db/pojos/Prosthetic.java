@@ -8,30 +8,29 @@ import java.util.Objects;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "prosthetics")
-@XmlType(propOrder = {"size", "price", "report", "company_id", "need_id", "material_id", "patient", "options"})
+@XmlRootElement(name = "Prosthetic")
+@XmlType(propOrder = {"size", "price", "report"})
 public class Prosthetic implements Serializable {
 	
 	
 	private static final long serialVersionUID = -6478906863426691556L;
-	@XmlTransient
+	@XmlTransient  // the things you don´t want to put in the xml you put transient
 	private Integer ID;
 	@XmlAttribute
 	private Integer price;
 	@XmlAttribute
 	private String size;
-	@XmlElement(name = "Option")
-	@XmlElementWrapper(name = "Options")
+	@XmlTransient
 	private List<Option> options;
-	@XmlAttribute
+	@XmlTransient
 	private Need need;
-	@XmlAttribute
+	@XmlTransient
 	private Material material;
-	@XmlAttribute
+	@XmlTransient
 	private Company company;
-	@XmlElement
+	@XmlTransient
 	private Patient patient;
-	
+	@XmlTransient
 	private Surgery surgery;
 	@XmlAttribute
 	private String report;
