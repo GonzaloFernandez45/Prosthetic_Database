@@ -171,24 +171,25 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	@Override
 	public Surgery getSurgeryByProsthetic(int Prosthetic_ID) {
 		try {
-			String sql = "SELECT * FROM surgery WHERE Prosthetic_ID ="+Prosthetic_ID;
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			int idSurgery =rs.getInt("id");
-			String time = rs.getString("time");
-			Date date = rs.getDate("date");
-			int room =rs.getInt("room");
+			String sql1 = "SELECT * FROM surgery WHERE Prosthetic_ID ="+Prosthetic_ID;
+			Statement st1;
+			st1 = c.createStatement();
+			ResultSet rs1 = st1.executeQuery(sql1);
+			if(rs1.next()) {
+			int idSurgery =rs1.getInt("id");
+			String time = rs1.getString("time");
+			Date date = rs1.getDate("date");
+			int room =rs1.getInt("room");
 			ProstheticManager prostheticMan = conMan.getprosMan();
-			Prosthetic prosthetic = prostheticMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
-			int surgeon_id = rs.getInt("Surgeon_ID");
+			Prosthetic prosthetic = prostheticMan.getProstheticByID(rs1.getInt("Prosthetic_ID"));
+			int surgeon_id = rs1.getInt("Surgeon_ID");
 			SurgeonManager surgeonMan = conMan.getsurgeonMan();
 			Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
-			String result = rs.getString("result");
+			String result = rs1.getString("result");
 			Surgery surgery = new Surgery(idSurgery,time,date,room,surgeon,prosthetic,result);
-			return surgery;
 			
+			return surgery;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -254,6 +255,34 @@ public class JDBCSurgeryManager implements SurgeryManager {
 			e.printStackTrace();
 		}
 		return surgeries;
+	}
+	
+	@Override
+	public Surgery getSurgeryOfAProsthetic(int Prosthetic_ID) {
+		try {
+		String sql = "SELECT * FROM surgery WHERE Prosthetic_ID = ? ";
+		PreparedStatement pstmt= c.prepareStatement(sql);
+		pstmt.setInt(1,Prosthetic_ID);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		Integer idSurgery = rs.getInt("id");
+		String time = rs.getString("time");
+		Date date =rs.getDate("date");
+		Integer room = rs.getInt("room");
+		SurgeonManager surgeonMan = conMan.getsurgeonMan();
+		Surgeon surgeon = surgeonMan.getSurgeon(rs.getInt("Surgeon_ID"));
+		ProstheticManager prosMan = conMan.getprosMan();
+		Prosthetic pros = prosMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
+		String result = rs.getString("result");
+
+		Surgery surgery= new Surgery(idSurgery,time,date,room,surgeon,pros,result);
+		return surgery;
+		
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}	
+		return null;
 	}
 
 
