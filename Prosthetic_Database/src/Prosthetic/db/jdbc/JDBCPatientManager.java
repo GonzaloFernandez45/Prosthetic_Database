@@ -149,7 +149,7 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return patients;
 	}
-	
+	@Override
 	public Patient getPatientNameSurname(int id) {
 		try {
 			String sql = "SELECT name,surname FROM patient WHERE id = " + id;
@@ -164,6 +164,26 @@ public class JDBCPatientManager implements PatientManager {
 			e.printStackTrace();
 		}
 		return null;
+		
+	}
+	
+	@Override
+	public int getIDofAPatient(String name, String surname, int dni) {
+		try {
+			String sql = "SELECT id FROM patient WHERE name LIKE ? AND surname LIKE ? AND dni = ? ";
+			PreparedStatement prepstmt = c.prepareStatement(sql);
+			prepstmt.setString(1, name);
+			prepstmt.setString(2, surname);
+			prepstmt.setInt(3, dni);
+			ResultSet rs = prepstmt.executeQuery();
+			rs.next();
+			int Patient_ID = rs.getInt("id");
+			return Patient_ID;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return -1;
 		
 	}
 	

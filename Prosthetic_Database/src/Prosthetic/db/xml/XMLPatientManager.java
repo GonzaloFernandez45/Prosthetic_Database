@@ -152,17 +152,18 @@ public class XMLPatientManager implements XmlPatientManager {
 		System.out.println("Patient:");
 		System.out.println("Name: " + patient.getName());
 		System.out.println("Surname: " + patient.getSurname());
-		System.out.println("sex: " + patient.getSurname());
-		System.out.println("dob: " + patient.getSurname());
-		System.out.println("dni: " + patient.getSurname());
+		System.out.println("sex: " + patient.getSex());
+		System.out.println("dob: " + patient.getDob());
+		System.out.println("dni: " + patient.getDni());
 		
 		ProstheticManager prosthMan = conMan.getprosMan();
 		NeedManager needMan = conMan.getneedMan();
 		PatientManager patMan = conMan.getpatientMan();
 
-
-		
-		List<Prosthetic> pros = prosthMan.getProstheticbyPatient();
+		patMan.addPatient(patient);
+		patient.setId(patMan.getIDofAPatient(patient.getName(), patient.getSurname(), patient.getDni()));
+		System.out.println(patMan.getIDofAPatient(patient.getName(), patient.getSurname(), patient.getDni()));
+		List<Prosthetic> pros = prosthMan.getProstheticbyPatient(patient.getId());
 		
 		for (Prosthetic p : pros) {
 			System.out.println("Prosthetic: ");
@@ -171,7 +172,7 @@ public class XMLPatientManager implements XmlPatientManager {
 			System.out.println("Report: " + p.getReport());
 		}
 		
-		List<Need> needs = patient.getNeeds();
+		List<Need> needs = needMan.getNeedByPatient(patient.getId());
 		for (Need need : needs) {
 			System.out.println("Need: " + need.getType());
 		}
@@ -187,7 +188,7 @@ public class XMLPatientManager implements XmlPatientManager {
 		}
 		patient.setNeeds(needs);
 		
-		patMan.addPatient(patient);
+		
 		
 		}catch(Exception ext) {
 			System.out.print(ext);
