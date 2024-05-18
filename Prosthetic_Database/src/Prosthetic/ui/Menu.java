@@ -16,6 +16,7 @@ import Prosthetic.db.interfaces.*;
 import Prosthetic.db.jdbc.*;
 import Prosthetic.db.jpa.JPAUserManager;
 import Prosthetic.db.pojos.*;
+import Prosthetic.db.xml.XMLPatientManager;
 
 
 public class Menu {
@@ -32,7 +33,9 @@ public class Menu {
 	private static ProstheticManager prosthMan;
 	private static SurgeonManager surgeonMan;
 	private static SurgeryManager surgeryMan;
+	private static XmlPatientManager xmlpatMan;
 	private static UserManager userMan;
+	
 	
 	public static void main(String[] args) throws NumberFormatException, IOException{
 		System.out.println("WELCOME TO THE PROSTHETIC DATABSE");
@@ -237,6 +240,9 @@ public class Menu {
 		System.out.println("5. See all patients");
 		System.out.println("6. See all surgeons");
 		System.out.println("7. See all companies");
+		System.out.println("8. Create patient XMl");
+		System.out.println("9. Import patient XML");
+		System.out.println("10. Create HTML");
 		System.out.println("0. Exit");
 		option = Integer.parseInt(r.readLine());
 		
@@ -268,6 +274,25 @@ public class Menu {
 		}
 		case 7: {
 			printCompanies();
+			break;
+		}
+		case 8: {
+			xmlpatMan.createXml();
+			break;
+		}
+		case 9: {
+			xmlpatMan.Xml2JavaPatient();
+			break;
+		}
+		case 10: {
+			System.out.println("Insert the XML source path");
+			String sourcePath = r.readLine();
+			System.out.println("Insert the XSLT source path");
+			String xsltPath = r.readLine();
+			System.out.println("Insert the result directory path (where you want to save the html)");
+			String directoryPath = r.readLine();
+			
+			xmlpatMan.Xml2Html(sourcePath,xsltPath,directoryPath);
 			break;
 		}
 		

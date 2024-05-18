@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.*;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "needs")
@@ -15,6 +17,7 @@ public class Need implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3018484467545691840L;
+	@XmlTransient
 	private Integer id;
 	@XmlAttribute
 	private String type;

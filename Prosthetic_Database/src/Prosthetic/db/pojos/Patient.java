@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import Prosthetic.db.xml.utils.SQLDateAdapter;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "patients")
@@ -22,7 +27,8 @@ public class Patient implements Serializable{
 	private String surname;
 	@XmlAttribute
 	private String sex;
-	@XmlAttribute
+	@XmlElement
+	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date dob;
 	@XmlAttribute
 	private Integer dni;
