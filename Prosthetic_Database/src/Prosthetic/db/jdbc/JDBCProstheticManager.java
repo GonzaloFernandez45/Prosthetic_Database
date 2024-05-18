@@ -131,6 +131,8 @@ public class JDBCProstheticManager implements ProstheticManager {
 				OptionManager optMan = conMan.getoptionMan();
 				List<Option> options = optMan.listOptionsOfProsthetic(id);
 				
+				
+				
 				Prosthetic p = new Prosthetic(id,size,company,patient,need,price,material,report,options);
 				prosthetic.add(p);
 			}

@@ -12,4 +12,5 @@ public interface CompanyManager {
 	public List<Company> listCompanies();
 	public List<Company> listCompaniesIDandName();
 	
+	
 }
