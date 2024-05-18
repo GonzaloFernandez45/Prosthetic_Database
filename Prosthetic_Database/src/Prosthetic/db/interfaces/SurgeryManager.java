@@ -13,5 +13,6 @@ public interface SurgeryManager {
 	public List<Surgery> searchSurgerybySurgeon (Surgeon s);
 	public Surgery getSurgeryByProsthetic(int id);
 	public List<Surgery> listSurgeries();
+	public List<Surgery> listSurgeriesOfAPatient(int Patient_ID);
 
 }

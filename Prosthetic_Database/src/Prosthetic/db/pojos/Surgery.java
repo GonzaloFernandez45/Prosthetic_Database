@@ -131,7 +131,7 @@ public class Surgery implements Serializable {
 	@Override
 	public String toString() {
 		return "Surgery [ id" + id+",time=" + time + ", date=" + date + ", result=" + result + ", room=" + room
-				+ ", surgeon=" + surgeon + ", prosthetic=" + prosthetic + "]";
+				+ ", surgeon=" + surgeon +"]";
 	}
 
 	

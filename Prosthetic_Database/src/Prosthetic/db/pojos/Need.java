@@ -101,7 +101,7 @@ public class Need implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Need [id=" + id + ", type=" + type + ", prosthetics=" + prosthetics + ", patients=" + patients + "]";
+		return "Need [id=" + id + ", type=" + type +"]";
 	}
 	
 	

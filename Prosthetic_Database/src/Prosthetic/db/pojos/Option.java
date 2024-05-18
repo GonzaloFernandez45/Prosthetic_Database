@@ -80,7 +80,7 @@ public class Option implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Option [id=" + id + ", type=" + type + ", prosthetics=" + prosthetics + "]";
+		return "Option [id=" + id + ", type=" + type +"]";
 	}
 	
 	

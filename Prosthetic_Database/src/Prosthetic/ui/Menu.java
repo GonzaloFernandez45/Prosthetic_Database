@@ -375,10 +375,16 @@ public class Menu {
 	}
 	
 	private static void reportDelivery() throws NumberFormatException, IOException {
-//		System.out.println("Please enter the patient's ID: ");
-//		int id = Integer.parseInt(r.readLine());
-//		String report = patMan.reportDelivery(id);
-//		System.out.println(report);
+		System.out.println("Please enter the patient's ID: ");
+		int id = Integer.parseInt(r.readLine());
+		System.out.println("Choose the prosthetic to change its report");
+		Patient patient = patMan.getPatientByID(id);
+		printProstheticsOfAPatient(patient);
+		Integer Prosthetic_ID = Integer.parseInt(r.readLine());
+		System.out.println("Have you received your prosthetic? (Write YES/NO)");
+		String updatedReport = r.readLine();
+		patMan.reportDelivery(id,Prosthetic_ID,updatedReport);
+		System.out.println("The report has been updated.");
 		
 	}
 	
@@ -581,7 +587,6 @@ public class Menu {
 		Patient patient = patMan.getPatientByID(patient_id);
 		List<Need> patientNeeds = needMan.getNeedByPatient(patient_id);
 		patient.setNeeds(patientNeeds);
-		System.out.println(patientNeeds);
 		System.out.println("Name: "+patient.getName()+", Surname: "+patient.getSurname());
 		for (Need need: patientNeeds) {
 			System.out.println(need);
@@ -630,6 +635,7 @@ public class Menu {
 					
 					Patient patient = patMan.getPatientByID(id);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
+					if(!prosthetics.isEmpty()) {
 					System.out.println("Select the prosthetic where you want to add the option");
 					for (Prosthetic prosth: prosthetics) {
 						System.out.println(prosth);
@@ -640,6 +646,10 @@ public class Menu {
 					optMan.insertFulfill(o,prosthetic);
 					System.out.println("Option added correctly");
 					break;
+					}else {
+						System.out.println("There are no prosthetics");
+						break;
+					}
 				}
 			}
 		}
@@ -648,8 +658,7 @@ public class Menu {
 		System.out.println("Choose the id of your patient:");
 	    System.out.println(patMan.getPatientByIDandName());
 		int patient_id= Integer.parseInt(r.readLine());
-		PatientManager patient_manager=conMan.getpatientMan();
-		Patient patient =patient_manager.getPatientByID(patient_id);
+		Patient patient =patMan.getPatientByID(patient_id);
 		
 		
 		System.out.println("Please add the surgery info: ");
@@ -675,16 +684,14 @@ public class Menu {
 		SurgeonManager surgeonMan = conMan.getsurgeonMan();
 		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
 		
-		System.out.println("Result (Completed/Not completed): ");//TODO 
-		String result  = r.readLine();
-		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,result);
+		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,"Not completed");
 		surgery.setProsthetic(prosthetic);
 		surgeryMan.addSurgery(surgery);
 		prosthetic.setSurgery(surgery);
 		
 		
 		System.out.println("Surgery scheduled correctly");
-		System.out.println("Surgery id: "+surgery.getId());
+		System.out.println("Surgery id: "+surgeryMan.getSurgeryByProsthetic(prosthetic_id).getId());
 		
 		
 		}else {
@@ -694,10 +701,14 @@ public class Menu {
 	}
 	private static void surgeryResult () throws NumberFormatException, IOException{
 		
+		System.out.println("Choose the id of your patient:");
+	    System.out.println(patMan.getPatientByIDandName());
+		int patient_id= Integer.parseInt(r.readLine());
+		
 		System.out.println("Input the surgery's date (DD-MM-YYYY format): ");
-		List<Surgery> surgeries = surgeryMan.listSurgeries();
+		List<Surgery> surgeries = surgeryMan.listSurgeriesOfAPatient(patient_id);
 		System.out.println(surgeries);
-		if(!surgeries.isEmpty()) {
+		if(surgeries.isEmpty()) {
 			System.out.println("No surgeries scheduled");
 		}
 		else {
@@ -727,10 +738,9 @@ public class Menu {
 				case 0: {
 					System.out.println("Please select the wanted need by its ID: ");
 					int need_id = Integer.parseInt(r.readLine());
+					Need need = needMan.getNeed(need_id);
 					Patient patient = patMan.getPatientByID(id);
-					List<Need> patientNeeds = patient.getNeeds();
-					patientNeeds.add(needMan.getNeed(need_id));
-					patient.setNeeds(patientNeeds);
+					needMan.insertPatientNeed(need, patient);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					 if(prosthetics.isEmpty()) {
 						 System.out.println("No prosthetics found for the patient");
@@ -739,10 +749,9 @@ public class Menu {
 						 System.out.println("Choose the id of one of the patient's prosthetic");
 						 System.out.println(prosthMan.getProstheticbyPatient(patient));
 						 int prosthetic_id=Integer.parseInt(r.readLine());
+						 
 						 for(Prosthetic prosthetic:prosthetics) {
 							 if(prosthetic.getID()==prosthetic_id) {
-								 NeedManager needManager= conMan.getneedMan();
-								 Need need = needManager.getNeed(need_id);
 								 prosthetic.setNeed(need);
 							 }
 						 }
@@ -759,6 +768,8 @@ public class Menu {
 					Need need = new Need(type);
 					needMan.addNeed(need);
 					Patient patient = patMan.getPatientByID(id);
+					Need newNeed = needMan.getNeedByType(type);
+					needMan.insertPatientNeed(newNeed, patient);
 					List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(patient);
 					 if(prosthetics.isEmpty()) {
 						 System.out.println("No prosthetics found for the patient");

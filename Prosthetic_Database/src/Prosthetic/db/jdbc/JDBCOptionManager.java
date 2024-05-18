@@ -113,12 +113,12 @@ public class JDBCOptionManager implements OptionManager {
 	}
 	
 	@Override
-	public Option getOptionByType(String type) {
+	public Option getOptionByType(String typeOption) {
 		try {
-			String sql = "SELECT * FROM option WHERE type = " + type;
-			Statement st;
-			st = c.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			String sql = "SELECT * FROM option WHERE type LIKE ?";
+			PreparedStatement prepstmt= c.prepareStatement(sql);
+			prepstmt.setString(1, typeOption);
+			ResultSet rs = prepstmt.executeQuery();
 			rs.next();
 			Option o = new Option (rs.getInt("id"), rs.getString("type"));
 			return o;

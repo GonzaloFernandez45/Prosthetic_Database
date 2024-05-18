@@ -24,16 +24,15 @@ public class JDBCSurgeryManager implements SurgeryManager {
 	@Override
 	public void addSurgery(Surgery s) {
 		try {
-		String sql= "INSERT INTO surgery (id,  time, date, room, Surgeon_ID,Prosthetic_ID,result )"
-				+ "VALUES (?,?,?,?,?,?,?)" ;
+		String sql= "INSERT INTO surgery (time, date, room, Surgeon_ID,Prosthetic_ID,result )"
+				+ "VALUES (?,?,?,?,?,?)" ;
 		PreparedStatement prepstm= c.prepareStatement(sql);
-		prepstm.setInt(1,s.getId());
-		prepstm.setString(2,s.getTime());
-		prepstm.setDate(3,s.getDate());
-		prepstm.setInt(4,s.getRoom());
-		prepstm.setInt(5,s.getSurgeon().getId());
-		prepstm.setInt(6,s.getProsthetic().getID());
-		prepstm.setString(7,s.getResult());
+		prepstm.setString(1,s.getTime());
+		prepstm.setDate(2,s.getDate());
+		prepstm.setInt(3,s.getRoom());
+		prepstm.setInt(4,s.getSurgeon().getId());
+		prepstm.setInt(5,s.getProsthetic().getID());
+		prepstm.setString(6,s.getResult());
 		prepstm.executeUpdate();
 		prepstm.close();
 		
@@ -202,6 +201,37 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		try {
 			String sql = "SELECT * FROM surgery";
 			PreparedStatement pstmt = c.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Integer idSurgery = rs.getInt("id");
+				String time = rs.getString("time");
+				Date date =rs.getDate("date");
+				Integer room = rs.getInt("room");
+				SurgeonManager surgeonMan = conMan.getsurgeonMan();
+				Surgeon surgeon = surgeonMan.getSurgeon(rs.getInt("Surgeon_ID"));
+				ProstheticManager prosMan = conMan.getprosMan();
+				Prosthetic pros = prosMan.getProstheticByID(rs.getInt("Prosthetic_ID"));
+				String result = rs.getString("result");
+
+				Surgery surgery= new Surgery(idSurgery,time,date,room,surgeon,pros,result);
+				surgeries.add(surgery);
+				}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return surgeries;
+	}
+	
+	@Override
+	public List<Surgery> listSurgeriesOfAPatient(int Patient_ID){
+		List<Surgery> surgeries = new ArrayList<Surgery>();
+		try {
+			String sql = "SELECT s.id,time,date,room,Surgeon_ID,Prosthetic_ID,result FROM surgery AS s JOIN prosthetic ON prosthetic.id = s.Prosthetic_ID WHERE Patient_ID = ?";
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			pstmt.setInt(1,Patient_ID);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Integer idSurgery = rs.getInt("id");
