@@ -82,7 +82,7 @@ public class Material implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Material [id=" + id + ", type=" + type + ", availability=" + availability +"]";
+		return "Material [id=" + id + ", type=" + type+"]";
 	}
 	
 	

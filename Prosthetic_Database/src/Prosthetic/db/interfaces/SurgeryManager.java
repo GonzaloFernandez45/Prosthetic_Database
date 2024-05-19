@@ -15,5 +15,6 @@ public interface SurgeryManager {
 	public List<Surgery> listSurgeries();
 	public List<Surgery> listSurgeriesOfAPatient(int Patient_ID);
 	public Surgery getSurgeryOfAProsthetic(int Prosthetic_ID);
+	public void reportSurgery(int Surgery_ID, String updateResult);
 
 }

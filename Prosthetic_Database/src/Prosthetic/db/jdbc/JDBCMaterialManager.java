@@ -91,6 +91,7 @@ public class JDBCMaterialManager implements MaterialManager{
 		
 	}
 	
+	@Override
 	public List<Material> listMaterials() {
 		List<Material> materials = new ArrayList<Material>();
 		try {
@@ -110,6 +111,26 @@ public class JDBCMaterialManager implements MaterialManager{
 		return materials;
 	}
 
+	@Override
+	public void updateAvailability(int Material_ID, String updateAvailability) {
+		String availability = null;
+		try {
+			String sql = "UPDATE material SET availability = ? WHERE id = ?";
+			PreparedStatement prepstmt = c.prepareStatement(sql);
+			if(updateAvailability.equalsIgnoreCase("yes")) {
+				availability = "YES";
+			}else {
+				availability = "NO";
+			}
+			prepstmt.setString(1,availability);
+			prepstmt.setInt(2, Material_ID);
+			prepstmt.executeUpdate();
+			prepstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+	}
 	
 
 }

@@ -284,6 +284,27 @@ public class JDBCSurgeryManager implements SurgeryManager {
 		}	
 		return null;
 	}
+	
+	@Override
+	public void reportSurgery(int Surgery_ID, String updateResult) {
+		String result = null;
+		try {
+			String sql = "UPDATE surgery SET result = ? WHERE id = ?";
+			PreparedStatement prepstmt = c.prepareStatement(sql);
+			if(updateResult.equalsIgnoreCase("yes")) {
+				result = "Completed";
+			}else {
+				result = "Not completed";
+			}
+			prepstmt.setString(1,result);
+			prepstmt.setInt(2, Surgery_ID);
+			prepstmt.executeUpdate();
+			prepstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+	}
 
 
 	

@@ -10,7 +10,7 @@ public interface MaterialManager {
 	public String checkAvailability(int id);
 	public void addMaterial(Material m);
 	public List<Material> listMaterials();
-	
+	public void updateAvailability(int Material_ID, String updateAvailability);
 	
 
 }
