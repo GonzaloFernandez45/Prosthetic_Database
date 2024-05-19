@@ -141,14 +141,16 @@ public class XMLPatientManager implements XmlPatientManager {
 	@Override
 	public void Xml2JavaPatient() {
 		try {
+			// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
-		
+		// Get the unmarshaller
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
+		
+		// Use the Unmarshaller to unmarshal the XML document from a file
 		File file = new File("./xmls/External-Patient.xml");
 		Patient patient = (Patient) unmarshaller.unmarshal(file);
 
-		
+		// Print the report
 		System.out.println("Patient:");
 		System.out.println("Name: " + patient.getName());
 		System.out.println("Surname: " + patient.getSurname());
@@ -156,43 +158,84 @@ public class XMLPatientManager implements XmlPatientManager {
 		System.out.println("dob: " + patient.getDob());
 		System.out.println("dni: " + patient.getDni());
 		
-		ProstheticManager prosthMan = conMan.getprosMan();
-		NeedManager needMan = conMan.getneedMan();
+		String sqlPatient = "SELECT * FROM patient WHERE name LIKE ? AND surname LIKE ? and dni = ?";
+		PreparedStatement ps = c.prepareStatement(sqlPatient);
+		ps.setString(1, patient.getName());
+		ps.setString(2, patient.getSurname());
+		ps.setInt(3, patient.getDni());
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) { //si existe lo actualiza
+			patient.setId(rs.getInt("id"));
+			String sqlUpdatePatient = "UPDATE patient SET name = ?, surname = ?, sex = ?, dob = ?, dni = ? WHERE id = ?";
+			PreparedStatement psUpdate = c.prepareStatement(sqlUpdatePatient);
+			psUpdate.setString(1, patient.getName());
+			psUpdate.setString(2, patient.getSurname());
+			psUpdate.setString(3, patient.getSex());
+			psUpdate.setDate(4, patient.getDob());
+			psUpdate.setInt(5, patient.getDni());
+			psUpdate.setInt(6, patient.getId());
+			psUpdate.executeUpdate();
+			psUpdate.close();
+		}else { // si no existe lo inserta
+			String sqlInsertPatient = "INSERT INTO patient (name, surname, sex, DOB, dni) VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement psUpdate = c.prepareStatement(sqlInsertPatient);
+			psUpdate.setString(1, patient.getName());
+			psUpdate.setString(2, patient.getSurname());
+			psUpdate.setString(3, patient.getSex());
+			psUpdate.setDate(4, patient.getDob());
+			psUpdate.setInt(5, patient.getDni());
+			psUpdate.executeUpdate();
+			psUpdate.close();
+		}
+		rs.close();
+		ps.close();
+		
 		PatientManager patMan = conMan.getpatientMan();
-
-		patMan.addPatient(patient);
-		patient.setId(patMan.getIDofAPatient(patient.getName(), patient.getSurname(), patient.getDni()));
-		System.out.println(patMan.getIDofAPatient(patient.getName(), patient.getSurname(), patient.getDni()));
-		List<Prosthetic> pros = prosthMan.getProstheticbyPatient(patient.getId());
+		int patient_id = patMan.getIDofAPatient(patient.getName(), patient.getSurname(), patient.getDni());
+		patient.setId(patient_id);
 		
-		for (Prosthetic p : pros) {
-			System.out.println("Prosthetic: ");
-			System.out.println("Price: " + p.getPrice());
-			System.out.println("Size: " + p.getSize());
-			System.out.println("Report: " + p.getReport());
+		NeedManager needMan = conMan.getneedMan();
+	
+		List<Prosthetic> prosthetics = patient.getProsthetics();
+		List<Need> needs = patient.getNeeds();
+		
+		for(Need need : needs) {
+			System.out.println("Type: "+need.getType());
 		}
 		
-		List<Need> needs = needMan.getNeedByPatient(patient.getId());
-		for (Need need : needs) {
-			System.out.println("Need: " + need.getType());
+		for (Prosthetic prosthetic : prosthetics) {
+			System.out.println("Size: "+prosthetic.getSize()+" Price: "+prosthetic.getPrice()+" Report: "+prosthetic.getReport()+" Need: "+prosthetic.getNeed().getType());
 		}
 		
-		
-		for (Prosthetic prosthetic : pros) {
-			prosthMan.addProsthetic(prosthetic);
-		}
-		patient.setProsthetics(pros);
-		
-		for (Need need : needs) {
+		// Store the report in the database
+		for(Need need : needs) {
+			int need_id = needMan.getNeedByType(need.getType()).getId();
+			need.setId(need_id);
 			needMan.insertPatientNeed(need, patient);
 		}
-		patient.setNeeds(needs);
 		
+		System.out.println("MEte en patient_need");
+		
+		for (Prosthetic prosthetic : prosthetics) {
+			System.out.println(prosthetic.getNeed());
+			int need_id = needMan.getNeedByType(prosthetic.getNeed().getType()).getId();
+			System.out.println(need_id);
+			String sqlInsertProsthetic = "INSERT INTO prosthetic (size,Patient_ID,Need_ID,price,report) VALUES (?,?,?,?,?)";
+			PreparedStatement psInsertProsthetic = c.prepareStatement(sqlInsertProsthetic);
+			psInsertProsthetic.setString(1, prosthetic.getSize());
+			psInsertProsthetic.setInt(2, patient.getId());
+			psInsertProsthetic.setInt(3, needMan.getNeedByType(prosthetic.getNeed().getType()).getId());
+			psInsertProsthetic.setInt(4, prosthetic.getPrice());
+			psInsertProsthetic.setString(5, prosthetic.getReport());
+			psInsertProsthetic.executeUpdate();
+			psInsertProsthetic.close();
+		}
 		
 		
 		}catch(Exception ext) {
 			System.out.print(ext);
 		}
+		
 	}
 
 

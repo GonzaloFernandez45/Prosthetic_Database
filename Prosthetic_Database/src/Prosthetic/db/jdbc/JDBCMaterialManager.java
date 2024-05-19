@@ -30,6 +30,8 @@ public class JDBCMaterialManager implements MaterialManager{
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
 			Material material = new Material(rs.getInt("id"),rs.getString("type"), rs.getString("availability"));
+			rs.close();
+			st.close();
 			return material;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

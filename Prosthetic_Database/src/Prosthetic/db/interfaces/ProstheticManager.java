@@ -11,4 +11,5 @@ public interface ProstheticManager {
 	public List<Prosthetic> getProstheticbyNeed (Need n);
 	public List<Prosthetic> getProstheticbyPatient(int Patient_ID);
 	public List<Prosthetic> listProsthetics();
+
 }

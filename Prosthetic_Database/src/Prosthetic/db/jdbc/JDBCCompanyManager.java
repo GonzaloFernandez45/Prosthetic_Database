@@ -89,6 +89,8 @@ public class JDBCCompanyManager implements CompanyManager {
 		rs.next();
 		Company company = new Company(rs.getString("name"), rs.getString("location"));
 		company.setId(id);
+		rs.close();
+		pstmt.close();
 		return company;
 		
 		}catch (SQLException e) {

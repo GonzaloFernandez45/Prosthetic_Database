@@ -130,5 +130,22 @@ public class JDBCNeedManager implements NeedManager {
 		return null;
 	}
 	
+	@Override
+	public Need getNeedOfProsthetic(int Prosthetic_ID) {
+		try {
+			String sql = "SELECT need.id,need.type FROM need JOIN prosthetic ON need.id = prosthetic.Need_ID WHERE prosthetic.id = ?";
+			PreparedStatement prepstmt= c.prepareStatement(sql);
+			prepstmt.setInt(1, Prosthetic_ID);
+			ResultSet rs = prepstmt.executeQuery();
+			rs.next();
+			Need need = new Need (rs.getInt("id"), rs.getString("type"));
+			return need;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	
 }
