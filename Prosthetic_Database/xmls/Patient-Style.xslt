@@ -13,21 +13,21 @@
                         <a href="index.html">homepage</a> | 
                         <a href="mailto:prostheticDBinfo@gmail.com">contact</a> | 
                         <h1>www.prostheticDB.com</h1>
+                        
                     </div>
 
                     <!-- Begin Top Menu -->
                     <ul id="navlist">
                         <li id="active"><a id="current" href="#">HOMEPAGE</a></li>
-                        <li><a href="#">PATIENT</a></li>
-                        <li><a href="#">SURGEON</a></li>
-                        <li><a href="#">COMPANY</a></li>
-                        <li><a href="#">MANAGER</a></li>
+                        <li><a href="#">GET YOUR INFORMATION</a></li>
+                        <li><a href="#">INPUT OPTION</a></li>
+                        <li><a href="#">REPORT DELIVERY OF PROSTHETIC</a></li>
                         <li><a href="#">HELP</a></li>
                     </ul>
                     <!-- End Top Menu -->
 
                     <div id="sidebar-a">
-                        <img class="border" src="images/image02.jpg" alt="box" />
+                         <img class="border" src="images/Users.jpg" alt="box" width="100" height="100" />
                         <h2>USERS</h2>
                         <div class="menu">
                             <ul>
@@ -45,7 +45,7 @@
                         <h3>PROSTHETIC DB</h3>
                         <p> LO QUE QUERAIS PONER </p>
                         
-                        <img class="border" src="images/image01.jpg" alt="box" />
+                        <img class="border" src="images/ProsIm.webp" alt="box" width="100" height="100" />
                         
                     </div>
 
@@ -61,7 +61,7 @@
                         </div>
                         <div class="intro3">
                             <h4>News  Updates</h4>
-                            <p class="update">LO QUE QUERAIS PONER ME CAIGO DE SUEÑO</p>
+                         	<p> LO QUE QUERAIS PONER </p>
                         </div>
 
                        
@@ -101,8 +101,8 @@
                         <a href="mailto:denise@mitchinson.net">contact</a> | 
                         <a href="http://validator.w3.org/check?uri=referer">xhtml</a> | 
                         <a href="http://jigsaw.w3.org/css-validator">css</a> |  
-                         2006 Anyone |  Design by 
-                        <a href="http://www.mitchinson.net">www.mitchinson.net</a>
+                         2024 Anyone |  Design by 
+                        <a href="http://www.mitchinson.net">www.prostheticDB.net</a>
                     </div>
                 </div>
                 

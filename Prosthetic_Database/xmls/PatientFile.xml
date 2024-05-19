@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Patient name="Enrique" surname="Gomez" sex="Man" dni="567986">
-    <dob>1999-03-12</dob>
+<Patient name="Marta" surname="Diez" sex="WOMAN" dni="58483">
+    <dob>2003-11-05</dob>
     <Prosthetics>
-        <Prosthetic size="S" price="3000" report="NO">
-            <need type="Bellow Elbow"/>
+        <Prosthetic size="M" price="3000" report="NO">
+            <need type="Bellow Shoulder"/>
+        </Prosthetic>
+        <Prosthetic size="M" price="2500" report="NO">
+            <need type="Bellow Pelvis"/>
+        </Prosthetic>
+        <Prosthetic size="M" price="2500" report="NO">
+            <need type="Bellow Ankle"/>
         </Prosthetic>
     </Prosthetics>
     <Needs>
         <Need type="Bellow Shoulder"/>
-        <Need type="Bellow Knee"/>
+        <Need type="Bellow Pelvis"/>
+        <Need type="Bellow Ankle"/>
         <Need type="Bellow Elbow"/>
     </Needs>
 </Patient>
