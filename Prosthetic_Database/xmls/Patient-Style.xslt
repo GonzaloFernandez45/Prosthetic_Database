@@ -45,7 +45,7 @@
                         <h3>PROSTHETIC DB</h3>
                         <p> LO QUE QUERAIS PONER </p>
                         
-                        <img class="border" src="imagen1.jpg" alt="box" />
+                        <img class="border" src="images/image01.jpg" alt="box" />
                         
                     </div>
 
