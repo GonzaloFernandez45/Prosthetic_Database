@@ -433,9 +433,12 @@ public class Menu {
 	private static void getPatientByID(int Patient_ID) throws NumberFormatException, IOException {
 		
 		Patient patient = patMan.getPatientByID(Patient_ID);
+		if(patient == null) {System.out.println("There is still no information");
+		}else {
 		List<Prosthetic> prosthetics = prosthMan.getProstheticbyPatient(Patient_ID);
 		patient.setProsthetics(prosthetics);
 		System.out.println(patient);
+		}
 	}
 	
 
@@ -528,7 +531,10 @@ public class Menu {
 		String size = r.readLine();
 		
 		System.out.println("Select the company´s ID");
-		System.out.println(comMan.listCompaniesIDandName());
+		for(Company company : comMan.listCompaniesIDandName() ) {
+			System.out.println("[Company [id="+company.getId()+", name="+company.getName()+"]]");
+		}
+		
 		int company_id = Integer.parseInt(r.readLine());
 		Company company = comMan.getCompany(company_id);
 		

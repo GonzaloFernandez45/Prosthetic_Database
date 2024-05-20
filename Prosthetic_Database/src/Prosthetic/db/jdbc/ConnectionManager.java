@@ -235,7 +235,7 @@ public class ConnectionManager {
 			insertOption2.close();
 			
 			Statement insertOption3 = c.createStatement();
-			String option3 = "INSERT INTO option VALUES (3, 'carbon fiber')";
+			String option3 = "INSERT INTO option VALUES (3, 'camouflage')";
 			insertOption3.executeUpdate(option3);
 			insertOption3.close();
 			
@@ -244,10 +244,6 @@ public class ConnectionManager {
 			insertOption4.executeUpdate(option4);
 			insertOption4.close();
 			
-			Statement insertOption5 = c.createStatement();
-			String option5 = "INSERT INTO option VALUES (5, 'camouflage')";
-			insertOption5.executeUpdate(option5);
-			insertOption5.close();
 			
 		}catch(SQLException sqlE) {
 			if (sqlE.getMessage().contains("UNIQUE constraint failed")){

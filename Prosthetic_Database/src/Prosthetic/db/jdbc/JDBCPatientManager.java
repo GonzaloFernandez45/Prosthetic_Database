@@ -54,8 +54,10 @@ public class JDBCPatientManager implements PatientManager {
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			Patient p = new Patient (rs.getInt("id"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"));
+			Patient p = null;
+			while(rs.next()) {
+			p = new Patient (rs.getInt("id"),rs.getString("name"),rs.getString("surname"),rs.getString("sex"),rs.getDate("DOB"),rs.getInt("dni"));
+			}
 			return p;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
