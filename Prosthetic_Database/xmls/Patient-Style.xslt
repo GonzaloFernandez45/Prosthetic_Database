@@ -43,7 +43,8 @@
 
                     <div id="sidebar-b">
                         <h3>PROSTHETIC DB</h3>
-                        <p> LO QUE QUERAIS PONER </p>
+                        <p> BEING AN AMPUTEE HAS NEVER BEEN THIS EASY. </p>
+                         <p> YOUR HEALTH IS THE PRIORITY </p>
                         
                         <img class="border" src="images/ProsIm.webp" alt="box" width="100" height="100" />
                         
@@ -61,7 +62,9 @@
                         </div>
                         <div class="intro3">
                             <h4>News  Updates</h4>
-                         	<p> LO QUE QUERAIS PONER </p>
+                         	<li><p><a hhref="https://www.redaccionmedica.com/secciones/tecnologia/protesis-de-rodilla-y-cadera-sin-cemento-para-acelerar-la-recuperacion-6252"> New knee and hit prosthetics </a></p></li>
+                         	<li><p><a href="https://www.redaccionmedica.com/secciones/sanidad-hoy/protesis-y-estimulacion-neuronal-para-que-amputados-vuelvan-a-sentir-calor-7011"> Prosthetic with neuronal stimulation </a></p></li>
+                         	<li><p><a href="https://www.redaccionmedica.com/autonomias/madrid/hospital-clinico-san-carlos-madrid-pionero-protesis-rodilla-cirugia-robotica-4117"> Pioneers in knee with robotic surgery </a></p></li>
                         </div>
 
                        
@@ -110,4 +113,3 @@
         </html>
    </xsl:template>
 </xsl:stylesheet>
-
