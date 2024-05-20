@@ -86,9 +86,11 @@ public class JDBCCompanyManager implements CompanyManager {
 		PreparedStatement pstmt= c.prepareStatement(sql);
 		pstmt.setInt(1,id);
 		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		Company company = new Company(rs.getString("name"), rs.getString("location"));
+		Company company =null;
+		while (rs.next()) {
+		company = new Company(rs.getString("name"), rs.getString("location"));
 		company.setId(id);
+		}
 		rs.close();
 		pstmt.close();
 		return company;

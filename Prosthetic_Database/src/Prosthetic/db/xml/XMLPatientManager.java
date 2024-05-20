@@ -214,12 +214,9 @@ public class XMLPatientManager implements XmlPatientManager {
 			needMan.insertPatientNeed(need, patient);
 		}
 		
-		System.out.println("MEte en patient_need");
 		
 		for (Prosthetic prosthetic : prosthetics) {
-			System.out.println(prosthetic.getNeed());
-			int need_id = needMan.getNeedByType(prosthetic.getNeed().getType()).getId();
-			System.out.println(need_id);
+			
 			String sqlInsertProsthetic = "INSERT INTO prosthetic (size,Patient_ID,Need_ID,price,report) VALUES (?,?,?,?,?)";
 			PreparedStatement psInsertProsthetic = c.prepareStatement(sqlInsertProsthetic);
 			psInsertProsthetic.setString(1, prosthetic.getSize());

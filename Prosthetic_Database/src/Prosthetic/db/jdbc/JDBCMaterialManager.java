@@ -28,8 +28,10 @@ public class JDBCMaterialManager implements MaterialManager{
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			Material material = new Material(rs.getInt("id"),rs.getString("type"), rs.getString("availability"));
+			Material material = null;
+			while(rs.next()) {
+			 material = new Material(rs.getInt("id"),rs.getString("type"), rs.getString("availability"));
+			}
 			rs.close();
 			st.close();
 			return material;
