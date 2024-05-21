@@ -116,8 +116,11 @@ public class JDBCSurgeonManager implements SurgeonManager {
 		PreparedStatement pstmt= c.prepareStatement(sql);
 		pstmt.setInt(1,id);
 		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		Surgeon s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
+		Surgeon s = null;
+		while(rs.next()) {
+		s = new Surgeon (rs.getInt("id"), rs.getInt("Salary"), rs.getString("name"), rs.getString("surname"),rs.getString("Specialization"), rs.getDate("Hiredate"));
+		}
+		rs.close();
 		return s;
 		}catch (SQLException e) {
 			System.out.println("Error in the database");

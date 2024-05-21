@@ -110,6 +110,8 @@ public class Menu {
 	}
 	
 	private static void menuRegister() throws NumberFormatException, IOException {
+	System.out.println("THE USERNAME MUST BE THE NAME+USERNAME ALTOGETHER IF YOU'RE A NEW PATIENT OR A SURGEON");
+	System.out.println("THE USERNAME MUST BE THE NAME THE NAME OF THE COMPANY IF YOU'RE A NEW COMPANY");
 	System.out.print("Choose a username: ");
 	String username = r.readLine();
 	System.out.print("Choose a password: ");
@@ -175,15 +177,15 @@ public class Menu {
 			break;
 		}
 		case 2: {
-			patientMenu();
+			patientMenu(u);
 			break;
 		}
 		case 3:{
-			surgeonMenu();
+			surgeonMenu(u);
 			break;
 		}
 		case 4: {
-			companyMenu();
+			companyMenu(u);
 			break;
 		}
 		case 0: {
@@ -194,10 +196,22 @@ public class Menu {
 	}		
 
 	
-	private static void patientMenu() throws NumberFormatException, IOException{
+	private static void patientMenu(User u) throws NumberFormatException, IOException{
 		
 		System.out.println("Please enter the patient's ID: ");
 		int Patient_ID = Integer.parseInt(r.readLine());
+		
+		//Checks if the seleted ID equals the ID of the patient in the database
+		//For our database, the username is the name and surname of the patient (with maybe some capital letters)
+		Patient patient = patMan.getPatientNameSurname(Patient_ID);
+		if(patient == null) {
+			System.out.println("There is no existing patient");
+			return;
+		}
+		if(!u.getUsername().equalsIgnoreCase(patient.getName()+patient.getSurname())) {
+			System.out.println("Incorrect ID, please select your correct one");
+			return;
+		}else {
 		
 		int option = -1;
 		while(option!=0) {
@@ -228,9 +242,12 @@ public class Menu {
 			return;
 		}
 		}
+		}
 	}
 	
 	private static void managerMenu() throws NumberFormatException, IOException{
+		
+		
 		
 		int option = -1;
 		while(option!=0) {
@@ -308,7 +325,20 @@ public class Menu {
 		
 	}
 	
-	private static void companyMenu() throws NumberFormatException, IOException{
+	private static void companyMenu(User u) throws NumberFormatException, IOException{
+		System.out.println("Please enter the company's ID: ");
+		int Company_ID = Integer.parseInt(r.readLine());
+		//Checks if the seleted ID equals the ID of the company in the database
+		//For our database, the username is the name of the company (with maybe some capital letters)
+				Company company = comMan.getCompany(Company_ID);
+				if(company == null) {
+					System.out.println("There is no existing company");
+					return;
+				}
+				if(!u.getUsername().equalsIgnoreCase(company.getName())) {
+					System.out.println("Incorrect ID, please select your correct one");
+					return;
+				}else {
 		
 		int option = -1;
 		while(option!=0) {
@@ -326,7 +356,7 @@ public class Menu {
 		
 		switch(option) {
 		case 1: {
-			addProsthetic();
+			addProsthetic(Company_ID);
 			break;
 		}
 		case 2: {
@@ -354,8 +384,23 @@ public class Menu {
 			return;
 		}
 		}
+				}
 	}
-	private static void surgeonMenu() throws NumberFormatException, IOException{
+	private static void surgeonMenu(User u) throws NumberFormatException, IOException{
+		
+		System.out.println("Please enter the surgeon's ID: ");
+		int Surgeon_ID = Integer.parseInt(r.readLine());
+		//Checks if the seleted ID equals the ID of the surgeon in the database
+		//For our database, the username is the name and surname of the surgeon (with maybe some capital letters)
+				Surgeon surgeon = surgeonMan.getSurgeon(Surgeon_ID);
+				if(surgeon == null) {
+					System.out.println("There is no existing surgeon");
+					return;
+				}
+				if(!u.getUsername().equalsIgnoreCase(surgeon.getName()+surgeon.getSurname())) {
+					System.out.println("Incorrect ID, please select your correct one");
+					return;
+				}else {
 		int option = -1;
 		while(option!=0) {
 		System.out.println("Welcome Surgeon, choose what do you want to do");
@@ -371,15 +416,16 @@ public class Menu {
 			addPatient();
 			break;
 		case 2:
-			loginToAnExistingPatient();
+			loginToAnExistingPatient(Surgeon_ID);
 			break;
 		case 0:
 			
 			break;
 		}
 	}
+				}
 	}
-	private static void loginToAnExistingPatient() throws NumberFormatException, IOException{
+	private static void loginToAnExistingPatient(int Surgeon_ID) throws NumberFormatException, IOException{
 		System.out.println("Please enter the patient's ID: ");
 		int Patient_ID = Integer.parseInt(r.readLine());
 		int option = -1;
@@ -399,7 +445,7 @@ public class Menu {
 		
 		switch(option) {
 		case 1:
-			scheduleSurgery(Patient_ID);
+			scheduleSurgery(Patient_ID, Surgeon_ID);
 			break;
 		case 2:
 			surgeryResult(Patient_ID);
@@ -525,18 +571,13 @@ public class Menu {
 		matMan.updateAvailability(Material_ID,newAvailability);
 	}
 	
-	private static void  addProsthetic() throws NumberFormatException, IOException {
+	private static void  addProsthetic(int Company_ID) throws NumberFormatException, IOException {
 		System.out.println("Add prosthetic information");
 		System.out.println("Size:");
 		String size = r.readLine();
 		
-		System.out.println("Select the company´s ID");
-		for(Company company : comMan.listCompaniesIDandName() ) {
-			System.out.println("[Company [id="+company.getId()+", name="+company.getName()+"]]");
-		}
 		
-		int company_id = Integer.parseInt(r.readLine());
-		Company company = comMan.getCompany(company_id);
+		Company company = comMan.getCompany(Company_ID);
 		
 		
 		System.out.println("Select the patient´s ID");
@@ -723,7 +764,7 @@ public class Menu {
 				}
 			}
 		}
-	private static void scheduleSurgery(int Patient_ID) throws NumberFormatException, IOException{
+	private static void scheduleSurgery(int Patient_ID, int Surgeon_ID) throws NumberFormatException, IOException{
 		
 		System.out.println("Please add the surgery info: ");
 		System.out.println("Time: ");
@@ -747,13 +788,8 @@ public class Menu {
 		Prosthetic prosthetic= prosthMan.getProstheticByID(prosthetic_id);
 
 		if(!prosthetics.isEmpty()) {
-		System.out.println("Choose the ID of the surgeon: ");
-		for(Surgeon surgeon : surgeonMan.listSurgeonIDandName()) {
-			System.out.println("ID = "+surgeon.getId()+", Name = "+surgeon.getName()+", Surname = "+surgeon.getSurname());
-		}
-		int surgeon_id = Integer.parseInt(r.readLine());
-		SurgeonManager surgeonMan = conMan.getsurgeonMan();
-		Surgeon surgeon = surgeonMan.getSurgeon(surgeon_id);
+		
+		Surgeon surgeon = surgeonMan.getSurgeon(Surgeon_ID);
 		
 		Surgery surgery = new Surgery(time,date,room,surgeon,prosthetic,"Not completed");
 		surgery.setProsthetic(prosthetic);
